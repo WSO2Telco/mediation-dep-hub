@@ -6,6 +6,7 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>mediation-dep-hub</artifactId>
     <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
   <packaging>pom</packaging>

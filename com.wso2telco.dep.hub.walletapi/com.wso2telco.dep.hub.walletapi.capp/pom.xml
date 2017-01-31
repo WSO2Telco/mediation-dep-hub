@@ -6,6 +6,7 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>com.wso2telco.dep.hub.walletapi</artifactId>
     <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>com.wso2telco.dep.hub.walletapi.capp</artifactId>
   <packaging>carbon/application</packaging>
