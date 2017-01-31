@@ -11,7 +11,6 @@
   <modules>
     <module>com.wso2telco.dep.hub.walletapi</module>
     <module>com.wso2telco.dep.hub.creditapi</module>
-    <module>com.wso2telco.dep.hub.creditapi</module>
   </modules>
   <build>
     <plugins>
