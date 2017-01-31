@@ -7,7 +7,7 @@
     <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
     <version>1.0.0</version>
   </parent>
-  <groupId>com.example.com.wso2telco.dep.hub.creditapi.synapse</groupId>
+  <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.creditapi.synapse</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
