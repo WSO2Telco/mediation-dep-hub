@@ -6,7 +6,6 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>mediation-dep-hub</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.walletapi</artifactId>
@@ -14,6 +13,10 @@
   <packaging>pom</packaging>
   <name>com.wso2telco.dep.hub.walletapi</name>
   <description>com.wso2telco.dep.hub.walletapi</description>
+  <modules>
+    <module>com.wso2telco.dep.hub.walletapi.synapse</module>
+    <module>com.wso2telco.hub.walletapi.capp</module>
+  </modules>
   <build>
     <plugins>
       <plugin>
@@ -28,7 +31,4 @@
       </plugin>
     </plugins>
   </build>
-      <modules>
-  	<module>com.wso2telco.dep.hub.walletapi.synapse</module>
-   </modules>
 </project>
