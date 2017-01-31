@@ -15,7 +15,7 @@
   <description>com.wso2telco.dep.hub.walletapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.walletapi.synapse</module>
-    <module>com.wso2telco.hub.walletapi.capp</module>
+    <module>com.wso2telco.dep.hub.walletapi.capp</module>
   </modules>
   <build>
     <plugins>
