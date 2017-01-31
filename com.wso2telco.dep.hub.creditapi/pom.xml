@@ -7,9 +7,7 @@
     <artifactId>mediation-dep-hub</artifactId>
     <version>1.0.0</version>
   </parent>
-  <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
-  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>com.wso2telco.dep.hub.creditapi</name>
   <description>com.wso2telco.dep.hub.creditapi</description>
