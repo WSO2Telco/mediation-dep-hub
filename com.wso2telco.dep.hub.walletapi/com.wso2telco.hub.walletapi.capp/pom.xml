@@ -8,7 +8,7 @@
     <version>1.0.0</version>
   </parent>
   <groupId>com.example.com.wso2telco.hub.walletapi.capp</groupId>
-  <artifactId>com.wso2telco.hub.walletapi.capp</artifactId>
+  <artifactId>com.wso2telco.dep.hub.walletapi.capp</artifactId>
   <version>1.0.0</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.hub.walletapi.capp</name>
