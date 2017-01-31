@@ -2,8 +2,12 @@
 <api context="/transaction" name="walletAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/payments">
     <inSequence>
+      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+      <property expression="json-eval($.makePayment.clientCorrelator)"
+        name="clientCorrelator" scope="default" type="STRING"/>
       <log>
         <property name="body" value="$body"/>
+        <property expression="get-property('clientCorrelator')" name="clientCor"/>
       </log>
     </inSequence>
     <outSequence/>
