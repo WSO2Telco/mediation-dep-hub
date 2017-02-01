@@ -8,8 +8,10 @@
     <version>1.0.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+  <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.creditapi.synapse</artifactId>
   <packaging>pom</packaging>
+  <version>1.0.0</version>
   <name>com.wso2telco.dep.hub.creditapi.synapse</name>
   <description>com.wso2telco.dep.hub.creditapi.synapse</description>
   <properties>
