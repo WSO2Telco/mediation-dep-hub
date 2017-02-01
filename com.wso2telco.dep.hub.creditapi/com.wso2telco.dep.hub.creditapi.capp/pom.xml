@@ -6,9 +6,10 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
+  <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.creditapi.capp</artifactId>
+  <version>1.0.0</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.dep.hub.creditapi.capp</name>
   <description>com.wso2telco.dep.hub.creditapi.capp</description>
