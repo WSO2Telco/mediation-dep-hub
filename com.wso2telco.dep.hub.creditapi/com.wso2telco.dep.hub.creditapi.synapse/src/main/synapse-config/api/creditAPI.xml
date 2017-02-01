@@ -1,7 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET">
-        <inSequence/>
+<api context="/credit/v1/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" protocol="http" uri-template="/{+msisdn}/apply">
+        <inSequence>
+            <!-- Response with a validation error -->
+            <property name="isValid" scope="default" type="BOOLEAN" value="false"/>
+            <property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true"/>
+            <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="$ctx:msisdn" name="msisdn"/>
+                <property expression="$ctx:type" name="type"/>
+                <property expression="$ctx:amount" name="amount"/>
+                <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+                <property expression="$ctx:referenceCode" name="referenceCode"/>
+                <property expression="$ctx:reasonForCredit" name="reasonForCredit"/>
+                <property expression="$ctx:merchantIdentification" name="merchantIdentification"/>
+                <property expression="$ctx:notifyURL" name="notifyURL"/>
+                <property expression="$ctx:callbackData" name="callbackData"/>
+            </log>
+            <filter xpath="boolean($ctx:msisdn) and boolean($ctx:type) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
+                <then>
+                    <switch source="$ctx:type">
+                        <case regex="^(money|data|minutes)$">
+                            <filter regex="^[0-9]+(\.[0-9]{1,2})?$" source="$ctx:amount">
+                                <then>
+                                    <property name="isValid" scope="default" type="BOOLEAN" value="true"/>
+                                </then>
+                                <else/>
+                            </filter>
+                        </case>
+                        <case regex="^sms$">
+                            <filter regex="^[0-9]+" source="$ctx:amount">
+                                <then>
+                                    <property name="isValid" scope="default" type="BOOLEAN" value="true"/>
+                                </then>
+                                <else/>
+                            </filter>
+                        </case>
+                        <default/>
+                    </switch>
+                </then>
+                <else/>
+            </filter>
+            <log category="DEBUG" level="custom">
+                <property expression="$ctx:isValid" name="isValid"/>
+            </log>
+            <filter regex="^false$" source="$ctx:isValid">
+                <then/>
+                <else/>
+            </filter>
+            <drop/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" protocol="http" uri-template="/{+msisdn}/refund">
+        <inSequence>
+            <property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true"/>
+            <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="$ctx:msisdn" name="msisdn"/>
+                <property expression="$ctx:type" name="type"/>
+                <property expression="$ctx:amount" name="amount"/>
+                <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+                <property expression="$ctx:referenceCode" name="referenceCode"/>
+                <property expression="$ctx:reasonForCredit" name="reasonForCredit"/>
+                <property expression="$ctx:merchantIdentification" name="merchantIdentification"/>
+                <property expression="$ctx:notifyURL" name="notifyURL"/>
+                <property expression="$ctx:callbackData" name="callbackData"/>
+            </log>
+            <drop/>
+        </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
