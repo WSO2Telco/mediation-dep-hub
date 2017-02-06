@@ -79,7 +79,7 @@
                         </then>
                         <else/>
                     </filter>
-                    <property expression="fn:substring($ctx:missingParameters, 0, string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+                    <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
                 </else>
             </filter>
             <log category="DEBUG" level="custom">
