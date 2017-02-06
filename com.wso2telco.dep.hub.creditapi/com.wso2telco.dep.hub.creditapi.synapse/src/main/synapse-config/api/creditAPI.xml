@@ -30,7 +30,7 @@
                 <then>
                     <switch source="$ctx:type">
                         <case regex="^(money|data|minutes)$">
-                            <filter regex="^[0-9]+(\.[0-9]{1,2})?$" source="$ctx:amount">
+                            <filter regex="(\+)?[0-9]+(\.[0-9]+)?$" source="$ctx:amount">
                                 <then>
                                     <property name="isValid" scope="default" type="BOOLEAN" value="true"/>
                                 </then>
@@ -82,7 +82,7 @@
                     <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
                 </else>
             </filter>
-            <log category="DEBUG" level="custom">
+            <log category="INFO" level="custom">
                 <property expression="$ctx:isValid" name="isValid"/>
             </log>
             <filter regex="^false$" source="$ctx:isValid">
@@ -102,11 +102,7 @@
         </inSequence>
         <outSequence/>
         <faultSequence>
-            <property name="httpStatusCode" scope="default" type="STRING" value="500"/>
-            <property name="messageId" scope="default" type="STRING" value="POL0299"/>
-            <property name="errorText" scope="default" type="STRING" value="Unexpected Error "/>
-            <property name="errorVariable" scope="default" type="STRING" value=""/>
-            <sequence key="mediation.common.response.ServiceException.Sequence"/>
+			<sequence key="mediation.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
     <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
