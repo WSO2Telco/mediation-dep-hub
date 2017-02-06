@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/credit/v1/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" protocol="http" uri-template="/{+msisdn}/apply">
+    <resource methods="POST" uri-template="/{+msisdn}/apply">
         <inSequence>
             <!-- Response with a validation error -->
+            <!-- TODO  identify correct http status codes-->
             <property name="isValid" scope="default" type="BOOLEAN" value="false"/>
             <property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true"/>
             <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
@@ -47,13 +48,54 @@
                         <default/>
                     </switch>
                 </then>
-                <else/>
+                <else>
+                    <filter xpath="not(boolean($ctx:msisdn))">
+                        <then>
+                            <property expression="fn:concat('msisdn',',')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <filter xpath="not(boolean($ctx:type))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'type,')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <filter xpath="not(boolean($ctx:amount))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'amount,')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <filter xpath="not(boolean($ctx:referenceCode))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'referenceCode,')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <filter xpath="not(boolean($ctx:merchantIdentification))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'merchantIdentification,')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <property expression="fn:substring($ctx:missingParameters, 0, string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+                </else>
             </filter>
             <log category="DEBUG" level="custom">
                 <property expression="$ctx:isValid" name="isValid"/>
             </log>
             <filter regex="^false$" source="$ctx:isValid">
-                <then/>
+                <then>
+                    <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+                    <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+                    <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+                    <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+                    <sequence key="mediation.common.responseServiceException.Sequence"/>
+                    <log level="custom">
+                        <property expression="$ctx:missingParameters" name="missingParameters"/>
+                    </log>
+                </then>
                 <else/>
             </filter>
             <drop/>
@@ -61,7 +103,7 @@
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" protocol="http" uri-template="/{+msisdn}/refund">
+    <resource methods="POST" uri-template="/{+msisdn}/refund">
         <inSequence>
             <property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true"/>
             <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
