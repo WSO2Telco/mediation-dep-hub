@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/credit/v1/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/{+msisdn}/apply">
+<api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/apply">
         <inSequence>
             <!-- Response with a validation error -->
             <!-- TODO  identify correct http status codes-->
@@ -101,9 +101,15 @@
             <drop/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <property name="httpStatusCode" scope="default" type="STRING" value="500"/>
+            <property name="messageId" scope="default" type="STRING" value="POL0299"/>
+            <property name="errorText" scope="default" type="STRING" value="Unexpected Error "/>
+            <property name="errorVariable" scope="default" type="STRING" value=""/>
+            <sequence key="mediation.common.response.ServiceException.Sequence"/>
+        </faultSequence>
     </resource>
-    <resource methods="POST" uri-template="/{+msisdn}/refund">
+    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
         <inSequence>
             <property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true"/>
             <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
