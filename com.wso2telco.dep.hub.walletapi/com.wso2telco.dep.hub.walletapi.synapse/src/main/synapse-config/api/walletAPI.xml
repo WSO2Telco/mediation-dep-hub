@@ -29,6 +29,11 @@
       <property
         expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
         name="channel" scope="default" type="STRING"/>
+      <property
+        expression="get-property('registry', 'gov:/repository/wso2telco/configurations/notificationURL.xml')"
+        name="notificationURLConfig" scope="default" type="OM"/>
+      <property expression="$ctx:notificationURLConfig//wallet"
+        name="NOTIFICATION_URL" scope="default" type="STRING"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
