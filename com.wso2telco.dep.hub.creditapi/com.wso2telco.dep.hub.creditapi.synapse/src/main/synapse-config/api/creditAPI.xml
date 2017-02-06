@@ -15,7 +15,7 @@
             <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
             <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
             <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
-            <log level="custom">
+            <log category="DEBUG" level="custom">
                 <property expression="$ctx:msisdn" name="msisdn"/>
                 <property expression="$ctx:type" name="type"/>
                 <property expression="$ctx:amount" name="amount"/>
@@ -91,8 +91,8 @@
                     <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
                     <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
                     <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
-                    <sequence key="mediation.common.responseServiceException.Sequence"/>
-                    <log level="custom">
+                    <sequence key="mediation.common.response.ServiceException.Sequence"/>
+                    <log category="WARN" level="full">
                         <property expression="$ctx:missingParameters" name="missingParameters"/>
                     </log>
                 </then>
