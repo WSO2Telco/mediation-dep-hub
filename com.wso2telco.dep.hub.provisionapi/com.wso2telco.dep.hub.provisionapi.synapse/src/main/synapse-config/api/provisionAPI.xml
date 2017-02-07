@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/provisioning" name="provisionAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable*">
+        <inSequence>
+            <sequence key="queryApplicableRequestDataExtractingSequence"/>
+            <sequence key="mediation.common.mccMncValidator.Sequence"/>
+            <sequence key="mediation.common.telephoneValidation.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}/remove">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/active">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
