@@ -2,6 +2,7 @@
 <api context="/transaction" name="walletAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/payment">
     <inSequence>
+      <sequence key="mediation.common.main.request.Sequence"/>
       <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
       <property expression="json-eval($.makePayment.clientCorrelator)"
         name="clientCorrelator" scope="default" type="STRING"/>
@@ -29,6 +30,7 @@
       <property
         expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
         name="channel" scope="default" type="STRING"/>
+      <sequence key="mediation.common.telephoneValidation.Sequence"/>
       <property
         expression="get-property('registry', 'gov:/repository/wso2telco/configurations/notificationURL.xml')"
         name="notificationURLConfig" scope="default" type="OM"/>
@@ -40,15 +42,18 @@
   </resource>
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/list">
     <inSequence>
+      <sequence key="mediation.common.main.request.Sequence"/>
       <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
       <property expression="get-property('uri.var.endUserId')"
         name="endUserId" scope="default" type="STRING"/>
+      <sequence key="mediation.common.telephoneValidation.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/refund">
     <inSequence>
+      <sequence key="mediation.common.main.request.Sequence"/>
       <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
       <property
         expression="json-eval($.refundTransaction.clientCorrelator)"
@@ -82,15 +87,18 @@
       <property
         expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
         name="channel" scope="default" type="STRING"/>
+      <sequence key="mediation.common.telephoneValidation.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/balance">
     <inSequence>
+      <sequence key="mediation.common.main.request.Sequence"/>
       <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
       <property expression="get-property('uri.var.endUserId')"
         name="endUserId" scope="default" type="STRING"/>
+      <sequence key="mediation.common.telephoneValidation.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
