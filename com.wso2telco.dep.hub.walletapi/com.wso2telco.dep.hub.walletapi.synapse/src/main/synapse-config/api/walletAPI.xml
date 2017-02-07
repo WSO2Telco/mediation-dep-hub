@@ -172,7 +172,97 @@
       <property
         expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
         name="channel" scope="default" type="STRING"/>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
+      <filter xpath="boolean($ctx:endUserId) and boolean($ctx:originalReferenceCode) and boolean($ctx:originalServerReferenceCode) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
+        <then>
+          <call-template target="mediation.common.doubleValidation.Template">
+            <with-param name="paramName" value="amount"/>
+            <with-param name="paramValue" value="{$ctx:amount}"/>
+            <with-param name="validationType" value="GE_ZERO"/>
+          </call-template>
+          <sequence key="mediation.common.telephoneValidation.Sequence"/>
+        </then>
+        <else>
+          <filter xpath="not(boolean($ctx:endUserId))">
+            <then>
+              <property expression="fn:concat('endUserId',',')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:originalReferenceCode))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'originalReferenceCode,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:originalServerReferenceCode))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'originalServerReferenceCode,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:referenceCode))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'referenceCode,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:description))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'description,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:currency))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'currency,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <filter xpath="not(boolean($ctx:amount))">
+            <then>
+              <property
+                expression="fn:concat($ctx:missingParameters, 'amount,')"
+                name="missingParameters" scope="default" type="STRING"/>
+            </then>
+            <else/>
+          </filter>
+          <property
+            expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))"
+            name="missingParameters" scope="default" type="STRING"/>
+          <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+          <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+          <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+          <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+          <property
+            expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+          <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </else>
+      </filter>
+      <sequence key="mediation.common.purchaseCategoryCodeValidate.Sequence"/>
+      <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+        <then>
+          <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+      </filter>
+      <filter regex="true" source="get-property('INTERNAL_ERROR')">
+        <then>
+          <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+      </filter>
     </inSequence>
     <outSequence/>
     <faultSequence/>
