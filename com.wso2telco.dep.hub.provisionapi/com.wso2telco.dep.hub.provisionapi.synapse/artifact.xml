@@ -5,9 +5,6 @@
     <artifact name="queryApplicableRequestDataExtractingSequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/queryApplicableRequestDataExtractingSequence.xml</file>
     </artifact>
-    <artifact name="dsafdsafdsfa.xml" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/dsafdsafdsfa.xml.xml</file>
-    </artifact>
     <artifact name="queryAppliableRequestDataValidatorSequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/queryAppliableRequestDataValidatorSequence.xml</file>
     </artifact>
