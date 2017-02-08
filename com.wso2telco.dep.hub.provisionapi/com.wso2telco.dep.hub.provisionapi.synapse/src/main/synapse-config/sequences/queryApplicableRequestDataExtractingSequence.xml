@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="queryApplicableRequestDataExtractingSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <property description="msisdn" expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+    <property description="endUserId" expression="$ctx:uri.var.msisdn" name="endUserId" scope="default" type="STRING"/>
     <property description="mcc" expression="$ctx:query.param.mcc" name="mcc" scope="default" type="STRING"/>
     <property description="mnc" expression="$ctx:query.param.mnc" name="mnc" scope="default" type="STRING"/>
     <property description="onBehalfOf" expression="$ctx:query.param.onBehalfOf" name="onBehalfOf" scope="default" type="STRING"/>

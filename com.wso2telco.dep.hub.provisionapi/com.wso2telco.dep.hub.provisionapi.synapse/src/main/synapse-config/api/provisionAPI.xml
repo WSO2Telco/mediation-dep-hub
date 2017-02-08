@@ -3,8 +3,7 @@
     <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable*">
         <inSequence>
             <sequence key="queryApplicableRequestDataExtractingSequence"/>
-            <sequence key="mediation.common.mccMncValidator.Sequence"/>
-            <sequence key="mediation.common.telephoneValidation.Sequence"/>
+            <sequence key="queryAppliableRequestDataValidatorSequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
