@@ -2,103 +2,28 @@
 <api context="/transaction" name="walletAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/payment">
     <inSequence>
-      <sequence key="mediation.common.main.request.Sequence"/>
-      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-      <property expression="json-eval($.makePayment.clientCorrelator)"
-        name="clientCorrelator" scope="default" type="STRING"/>
-      <property expression="json-eval($.makePayment.endUserId)"
-        name="endUserId" scope="default" type="STRING"/>
-      <property expression="json-eval($.makePayment.referenceCode)"
-        name="referenceCode" scope="default" type="STRING"/>
-      <property expression="json-eval($.makePayment.notifyURL)"
-        name="notifyURL" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingInformation.amount)"
-        name="amount" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingInformation.currency)"
-        name="currency" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingInformation.description)"
-        name="description" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingMetaData.onBehalfOf)"
-        name="onBehalfOf" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingMetaData.purchaseCategoryCode)"
-        name="purchaseCategoryCode" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
-        name="channel" scope="default" type="STRING"/>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
-      <property
-        expression="get-property('registry', 'gov:/repository/wso2telco/configurations/notificationURL.xml')"
-        name="notificationURLConfig" scope="default" type="OM"/>
-      <property expression="$ctx:notificationURLConfig//wallet"
-        name="NOTIFICATION_URL" scope="default" type="STRING"/>
+      <sequence key="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/list">
     <inSequence>
-      <sequence key="mediation.common.main.request.Sequence"/>
-      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-      <property expression="get-property('uri.var.endUserId')"
-        name="endUserId" scope="default" type="STRING"/>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
+      <sequence key="com.wso2telco.dep.hub.walletapi.handle.listing.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/refund">
     <inSequence>
-      <sequence key="mediation.common.main.request.Sequence"/>
-      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-      <property
-        expression="json-eval($.refundTransaction.clientCorrelator)"
-        name="clientCorrelator" scope="default" type="STRING"/>
-      <property expression="json-eval($.refundTransaction.endUserId)"
-        name="endUserId" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.originalReferenceCode)"
-        name="originalReferenceCode" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.originalServerReferenceCode)"
-        name="originalServerReferenceCode" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.referenceCode)"
-        name="referenceCode" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.amount)"
-        name="amount" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.currency)"
-        name="currency" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.description)"
-        name="description" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.onBehalfOf)"
-        name="onBehalfOf" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.purchaseCategoryCode)"
-        name="purchaseCategoryCode" scope="default" type="STRING"/>
-      <property
-        expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
-        name="channel" scope="default" type="STRING"/>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
+      <sequence key="com.wso2telco.dep.hub.walletapi.handle.refund.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/balance">
     <inSequence>
-      <sequence key="mediation.common.main.request.Sequence"/>
-      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-      <property expression="get-property('uri.var.endUserId')"
-        name="endUserId" scope="default" type="STRING"/>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
+      <sequence key="com.wso2telco.dep.hub.walletapi.handle.balance.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>

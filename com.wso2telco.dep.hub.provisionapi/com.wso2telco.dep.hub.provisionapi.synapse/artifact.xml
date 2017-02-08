@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="provisionAPI" groupId="com.wso2telco.dep.hub.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/provisionAPI.xml</file>
+    </artifact>
+    <artifact name="queryApplicableRequestDataExtractingSequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/queryApplicableRequestDataExtractingSequence.xml</file>
+    </artifact>
+    <artifact name="queryApplicableRequestDataValidatorSequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/queryApplicableRequestDataValidatorSequence.xml</file>
+    </artifact>
+</artifacts>
