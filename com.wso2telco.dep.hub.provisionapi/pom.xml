@@ -2,16 +2,18 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.wso2telco.dep.hub</groupId>
-  <artifactId>mediation-dep-hub</artifactId>
+  <parent>
+    <groupId>com.wso2telco.dep.hub</groupId>
+    <artifactId>mediation-dep-hub</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>com.wso2telco.dep.hub.provisionapi</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
-  <name>mediation-dep-hub</name>
-  <description>mediation-dep-hub</description>
+  <name>com.wso2telco.dep.hub.provisionapi</name>
+  <description>com.wso2telco.dep.hub.provisionapi</description>
   <modules>
-    <module>com.wso2telco.dep.hub.walletapi</module>
-    <module>com.wso2telco.dep.hub.creditapi</module>
-    <module>com.wso2telco.dep.hub.provisionapi</module>
+    <module>com.wso2telco.dep.hub.provisionapi.synapse</module>
   </modules>
   <build>
     <plugins>
