@@ -29,6 +29,9 @@
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
     name="channel" scope="default" type="STRING"/>
+  <property
+    expression="fn:concat('/transaction/', get-property('endUserId'),'/payment')"
+    name="RESOURCE_PATH" scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
       <call-template target="mediation.common.urlValidation.Template">
@@ -96,7 +99,7 @@
     </else>
   </filter>
   <property
-    expression="get-property('registry', 'gov:/repository/wso2telco/configurations/notificationURL.xml')"
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
     name="notificationURLConfig" scope="default" type="OM"/>
   <property expression="$ctx:notificationURLConfig//wallet"
     name="NOTIFICATION_URL" scope="default" type="STRING"/>
