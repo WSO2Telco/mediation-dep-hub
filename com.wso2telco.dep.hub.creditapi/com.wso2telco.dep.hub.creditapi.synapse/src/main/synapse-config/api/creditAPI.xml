@@ -43,7 +43,7 @@
 				<property expression="$ctx:callbackData" name="callbackData" />
 			</log>
 		
-			<sequence key="mediation.api.credit.validator.Sequence"/>			
+			<sequence key="mediation.api.credit.resource.apply.validator.Sequence"/>			
 			
 			<respond />
 		</inSequence>
