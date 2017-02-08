@@ -2,7 +2,6 @@
 <sequence name="mediation.api.credit.resource.apply.validator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <filter xpath="boolean($ctx:msisdn) and boolean($ctx:type) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
         <then>
-            <property expression="$ctx:msisdn" name="enduserId" scope="default" type="STRING"/>
             <call-template target="mediation.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdn}"/>
