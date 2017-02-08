@@ -2,4 +2,7 @@
     <artifact name="creditAPI" groupId="com.wso2telco.dep.hub.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/creditAPI.xml</file>
     </artifact>
+    <artifact name="mediation.api.credit.resource.apply.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.api.credit.resource.apply.validator.Sequence.xml</file>
+    </artifact>
 </artifacts>
