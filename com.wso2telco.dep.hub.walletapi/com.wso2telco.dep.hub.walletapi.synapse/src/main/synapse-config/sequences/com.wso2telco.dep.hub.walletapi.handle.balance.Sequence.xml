@@ -5,5 +5,8 @@
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="get-property('uri.var.endUserId')"
     name="endUserId" scope="default" type="STRING"/>
+  <property
+    expression="fn:concat('/transaction/', get-property('endUserId'),'/balance')"
+    name="RESOURCE_PATH" scope="default" type="STRING"/>
   <sequence key="mediation.common.telephoneValidation.Sequence"/>
 </sequence>
