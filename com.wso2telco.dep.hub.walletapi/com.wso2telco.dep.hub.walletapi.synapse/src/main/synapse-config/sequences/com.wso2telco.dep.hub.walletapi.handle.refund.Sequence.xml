@@ -33,6 +33,9 @@
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
     name="channel" scope="default" type="STRING"/>
+  <property
+    expression="fn:concat('/transaction/', get-property('endUserId'),'/refund')"
+    name="RESOURCE_PATH" scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:originalReferenceCode) and boolean($ctx:originalServerReferenceCode) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
       <call-template target="mediation.common.doubleValidation.Template">
