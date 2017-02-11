@@ -9,4 +9,6 @@
     expression="fn:concat('/transaction/', get-property('endUserId'),'/list')"
     name="RESOURCE_PATH" scope="default" type="STRING"/>
   <sequence key="mediation.common.telephoneValidation.Sequence"/>
+  <sequence key="mediation.common.endpoint.retriever.Sequence"/>
+  <sequence key="mediation.common.select.token.Sequence"/>
 </sequence>
