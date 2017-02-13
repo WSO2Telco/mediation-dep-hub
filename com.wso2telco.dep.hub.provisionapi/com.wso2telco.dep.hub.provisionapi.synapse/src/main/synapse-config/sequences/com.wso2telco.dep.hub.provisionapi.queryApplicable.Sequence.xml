@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <property description="endUserId" expression="$ctx:uri.var.msisdn" name="endUserId" scope="default" type="STRING"/>
+    <property description="msisdn" expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
     <property description="mcc" expression="$ctx:query.param.mcc" name="mcc" scope="default" type="STRING"/>
     <property description="mnc" expression="$ctx:query.param.mnc" name="mnc" scope="default" type="STRING"/>
     <property description="onBehalfOf" expression="$ctx:query.param.onBehalfOf" name="onBehalfOf" scope="default" type="STRING"/>
@@ -9,7 +9,10 @@
     <property description="offset" expression="$ctx:query.param.offset" name="offset" scope="default" type="STRING"/>
     <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
     <!-- REQUEST PARAMETER VALIDATION -->
-    <sequence key="mediation.common.telephoneValidation.Sequence"/>
+    <call-template target="mediation.common.msisdnValidator.Template">
+        <with-param name="paramName" value="msisdn"/>
+        <with-param name="paramValue" value="{$ctx:msisdn}"/>
+    </call-template>
     <filter xpath="not(boolean(fn:normalize-space($ctx:requestIdentifier)))">
         <then>
             <property expression="fn:concat('requestIdentifier',',')" name="missingParameters" scope="default" type="STRING"/>
