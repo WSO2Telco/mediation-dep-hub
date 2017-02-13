@@ -1,82 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-	<resource methods="POST" uri-template="/v1/credit/{+msisdn}/apply">
-		<inSequence>
-			<!-- Response with a validation error -->
-			<!-- TODO identify correct http status codes -->
- 			<property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:msisdn)" name="type" scope="default" type="STRING" />
-						
-			<property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING" />
-			
-			<property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING" />
-			<property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING" />
-			
- 			<log category="DEBUG" level="custom">
-				<property expression="$ctx:msisdn" name="msisdn" />
-				<property expression="$ctx:type" name="type" />
-				<property expression="$ctx:amount" name="amount" />
-				<property expression="$ctx:clientCorrelator" name="clientCorrelator" />
-				<property expression="$ctx:referenceCode" name="referenceCode" />
-				<property expression="$ctx:reasonForCredit" name="reasonForCredit" />
-				<property expression="$ctx:merchantIdentification" name="merchantIdentification" />
-				<property expression="$ctx:notifyURL" name="notifyURL" />
-				<property expression="$ctx:callbackData" name="callbackData" />
-			</log>
-		
-			<sequence key="mediation.api.credit.resource.apply.validator.Sequence"/>			
-			
-			<respond />
-		</inSequence>
-		<outSequence />
-		<faultSequence>
-			<sequence key="mediation.common.response.unexpectedError.Sequence" />
-		</faultSequence>
-	</resource>
-	<resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
-		<inSequence>
-			<property name="FORCE_ERROR_ON_SOAP_FAULT" scope="default" type="STRING" value="true" />
-			<property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.refundAmount)" name="refundAmount" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.reasonForRefund)" name="reasonForRefund" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.notifyURL)" name="notifyURL" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.callbackData)" name="callbackData" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.amount)" name="amount" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.currency)" name="currency" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.description)" name="description" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.channel)" name="channel" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.taxAmount)" name="taxAmount" scope="default" type="STRING" />
-			<property expression="json-eval($.refundRequest.referenceCode)" name="referenceCode" scope="default" type="STRING" />
-			<log level="custom">
-				<property expression="$ctx:msisdn" name="msisdn" />
-			</log>
-			<drop />
-		</inSequence>
-		<outSequence />
-		<faultSequence />
-	</resource>
+    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/apply">
+        <inSequence>
+            <!-- Response with a validation error -->
+            <!-- TODO identify correct http status codes -->
+            <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <log category="DEBUG" level="custom">
+                <property expression="$ctx:msisdn" name="msisdn"/>
+                <property expression="$ctx:type" name="type"/>
+                <property expression="$ctx:amount" name="amount"/>
+                <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+                <property expression="$ctx:referenceCode" name="referenceCode"/>
+                <property expression="$ctx:reasonForCredit" name="reasonForCredit"/>
+                <property expression="$ctx:merchantIdentification" name="merchantIdentification"/>
+                <property expression="$ctx:notifyURL" name="notifyURL"/>
+                <property expression="$ctx:callbackData" name="callbackData"/>
+            </log>
+            <sequence key="mediation.api.credit.resource.apply.validator.Sequence"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
+        <inSequence>
+            <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.refundAmount)" name="refundAmount" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:refundAmount)" name="refundAmount" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.reasonForRefund)" name="reasonForRefund" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:reasonForRefund)" name="reasonForRefund" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.currency)" name="currency" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:currency)" name="currency" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.description)" name="description" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:description)" name="description" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.channel)" name="channel" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:channel)" name="channel" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.taxAmount)" name="taxAmount" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:taxAmount)" name="taxAmount" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="$ctx:msisdn" name="msisdn"/>
+                <property expression="$ctx:originalServerReferenceCode" name="originalServerReferenceCode"/>
+                <property expression="$ctx:refundAmount" name="refundAmount"/>
+                <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+                <property expression="$ctx:reasonForRefund" name="reasonForRefund"/>
+                <property expression="$ctx:merchantIdentification" name="merchantIdentification"/>
+                <property expression="$ctx:notifyURL" name="notifyURL"/>
+                <property expression="$ctx:callbackData" name="callbackData"/>
+                <property expression="$ctx:amount" name="amount"/>
+                <property expression="$ctx:currency" name="currency"/>
+                <property expression="$ctx:description" name="description"/>
+                <property expression="$ctx:onBehalfOf" name="onBehalfOf"/>
+                <property expression="$ctx:purchaseCategoryCode" name="purchaseCategoryCode"/>
+                <property expression="$ctx:channel" name="channel"/>
+                <property expression="$ctx:taxAmount" name="taxAmount"/>
+                <property expression="$ctx:referenceCode" name="referenceCode"/>
+            </log>
+            <sequence key="mediation.api.credit.resource.refund.validator.Sequence"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
 </api>
