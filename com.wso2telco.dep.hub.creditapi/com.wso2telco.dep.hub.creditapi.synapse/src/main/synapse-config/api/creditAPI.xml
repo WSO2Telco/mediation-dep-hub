@@ -65,13 +65,13 @@
             <property expression="fn:normalize-space($ctx:currency)" name="currency" scope="default" type="STRING"/>
             <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.description)" name="description" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:description)" name="description" scope="default" type="STRING"/>
-            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
-            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
-            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.channel)" name="channel" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.channel)" name="channel" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:channel)" name="channel" scope="default" type="STRING"/>
-            <property expression="json-eval($.refundRequest.paymentAmount.changingMetaData.taxAmount)" name="taxAmount" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.taxAmount)" name="taxAmount" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:taxAmount)" name="taxAmount" scope="default" type="STRING"/>
             <property expression="json-eval($.refundRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
