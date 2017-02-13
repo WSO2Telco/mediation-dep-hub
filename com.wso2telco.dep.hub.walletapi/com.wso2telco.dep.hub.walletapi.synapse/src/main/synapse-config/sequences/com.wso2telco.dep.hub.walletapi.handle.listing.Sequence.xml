@@ -8,7 +8,10 @@
   <property
     expression="fn:concat('/transaction/', get-property('endUserId'),'/list')"
     name="RESOURCE_PATH" scope="default" type="STRING"/>
-  <sequence key="mediation.common.telephoneValidation.Sequence"/>
+  <call-template target="mediation.common.msisdnValidator.Template">
+    <with-param name="paramName" value="endUserId"/>
+    <with-param name="paramValue" value="{$ctx:endUserId}"/>
+  </call-template>
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
   <sequence key="mediation.common.select.token.Sequence"/>
 </sequence>

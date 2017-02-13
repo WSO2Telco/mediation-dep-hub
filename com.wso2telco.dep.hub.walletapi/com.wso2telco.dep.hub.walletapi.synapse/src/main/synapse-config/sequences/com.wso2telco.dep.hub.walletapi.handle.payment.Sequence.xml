@@ -43,7 +43,10 @@
         <with-param name="paramValue" value="{$ctx:amount}"/>
         <with-param name="validationType" value="GE_ZERO"/>
       </call-template>
-      <sequence key="mediation.common.telephoneValidation.Sequence"/>
+      <call-template target="mediation.common.msisdnValidator.Template">
+        <with-param name="paramName" value="endUserId"/>
+        <with-param name="paramValue" value="{$ctx:endUserId}"/>
+      </call-template>
     </then>
     <else>
       <filter xpath="not(boolean($ctx:endUserId))">
