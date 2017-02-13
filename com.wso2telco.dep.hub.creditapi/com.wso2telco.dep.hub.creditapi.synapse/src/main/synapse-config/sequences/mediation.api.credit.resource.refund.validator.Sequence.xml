@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.api.credit.resource.refund.validator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter xpath="boolean($ctx:msisdn) and boolean($ctx:refundAmount) and boolean($ctx:notifyURL) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
+        <then>
+        
+            <call-template target="mediation.common.msisdnValidator.Template">
+                <with-param name="paramName" value="msisdn"/>
+                <with-param name="paramValue" value="{$ctx:msisdn}"/>
+            </call-template>
+            
+            <call-template target="mediation.common.urlValidation.Template">
+                <with-param name="paramName" value="notifyURL"/>
+                <with-param name="paramValue" value="{$ctx:notifyURL}"/>
+            </call-template>
+            
+            <call-template target="mediation.common.doubleValidation.Template">
+                <with-param name="paramName" value="refundAmount"/>
+                <with-param name="paramValue" value="{$ctx:refundAmount}"/>
+                <with-param name="validationType" value="GE_ZERO"/>
+            </call-template>
+            
+            <call-template target="mediation.common.doubleValidation.Template">
+                <with-param name="paramName" value="amount"/>
+                <with-param name="paramValue" value="{$ctx:amount}"/>
+                <with-param name="validationType" value="GE_ZERO"/>
+            </call-template>    
+            
+            <filter xpath="boolean($ctx:taxAmount)">
+            	<then>
+		             <call-template target="mediation.common.doubleValidation.Template">
+		                <with-param name="paramName" value="taxAmount"/>
+		                <with-param name="paramValue" value="{$ctx:taxAmount}"/>
+		                <with-param name="validationType" value="GE_ZERO"/>
+		            </call-template>           	
+            	</then>
+            </filter> 
+            
+            <filter xpath="boolean($ctx:channel)">
+            	<then>
+		             <call-template target="mediation.common.channelValidation.Template">
+		                <with-param name="paramName" value="channel"/>
+		                <with-param name="paramValue" value="{$ctx:channel}"/>
+		            </call-template>           	
+            	</then>
+            </filter>                   
+        </then>
+        <else>
+            <filter xpath="not(boolean($ctx:msisdn))">
+                <then>
+                    <property expression="fn:concat('msisdn',',')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:refundAmount))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'refundAmount,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:amount))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'amount,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:notifyURL))">
+                <then>
+                    <property expression="fn:concat($ctx:notifyURL, 'notifyURL,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>            
+            <filter xpath="not(boolean($ctx:referenceCode))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'referenceCode,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:merchantIdentification))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'merchantIdentification,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+            <log category="DEBUG" level="full">
+                <property expression="$ctx:missingParameters" name="missingParameters"/>
+            </log>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+            <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </else>
+    </filter>	
+</sequence>
