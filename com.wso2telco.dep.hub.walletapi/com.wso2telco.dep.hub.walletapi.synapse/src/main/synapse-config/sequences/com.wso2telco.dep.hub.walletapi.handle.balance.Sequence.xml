@@ -12,6 +12,8 @@
     <with-param name="paramName" value="endUserId"/>
     <with-param name="paramValue" value="{$ctx:endUserId}"/>
   </call-template>
+  <property expression="get-property('endUserId')" name="MSISDN"
+    scope="default" type="STRING"/>
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
   <sequence key="mediation.common.select.token.Sequence"/>
 </sequence>
