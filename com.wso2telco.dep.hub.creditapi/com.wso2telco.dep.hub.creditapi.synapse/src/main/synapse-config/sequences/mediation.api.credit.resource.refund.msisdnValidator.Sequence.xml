@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.api.credit.resource.refund.msisdnValidator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    
+    <property expression="$ctx:msisdnUrl" group="9" name="msisdnUrlNo" pattern="^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$" scope="default" type="STRING"/>
+    <property expression="$ctx:msisdnPayload" group="9" name="msisdnPayloadNo" pattern="^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$" scope="default" type="STRING"/>
+    
+    <log category="DEBUG" level="custom">
+        <property expression="$ctx:msisdnUrlNo" name="msisdnUrlNo"/>
+        <property expression="$ctx:msisdnPayloadNo" name="msisdnPayloadNo"/>
+    </log>
+    
+    <filter regex="^true$" source="boolean($ctx:msisdnUrlNo = $ctx:msisdnPayloadNo)">
+        <then>
+            <property expression="$ctx:msisdnUrl" name="msisdn" scope="default" type="STRING"/>
+        </then>
+        <else>
+            <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
+            <property name="errorText" scope="default" type="STRING" value="msisdn format invalid. %1"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property expression="$ctx:msisdnUrlNo" name="errorVariable" scope="default" type="STRING"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </else>
+    </filter>
+</sequence>
