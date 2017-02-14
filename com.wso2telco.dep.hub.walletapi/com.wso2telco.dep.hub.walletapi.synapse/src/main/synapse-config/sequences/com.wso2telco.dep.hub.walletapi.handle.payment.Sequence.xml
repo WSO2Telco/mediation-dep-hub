@@ -7,6 +7,8 @@
     name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.endUserId)"
     name="endUserId" scope="default" type="STRING"/>
+  <property expression="get-property('endUserId')" name="MSISDN"
+    scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.referenceCode)"
     name="referenceCode" scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.notifyURL)"

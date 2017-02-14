@@ -7,6 +7,8 @@
     name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="json-eval($.refundTransaction.endUserId)"
     name="endUserId" scope="default" type="STRING"/>
+  <property expression="get-property('endUserId')" name="MSISDN"
+    scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.originalReferenceCode)"
     name="originalReferenceCode" scope="default" type="STRING"/>
