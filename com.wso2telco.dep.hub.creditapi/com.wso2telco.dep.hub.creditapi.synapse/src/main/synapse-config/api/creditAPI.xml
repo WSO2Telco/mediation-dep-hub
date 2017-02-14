@@ -53,8 +53,10 @@
     </resource>
     <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
         <inSequence>
-            <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
-            <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+            <property expression="$ctx:uri.var.msisdn" name="msisdnUrl" scope="default" type="STRING"/>
+            
+            <property expression="json-eval($.refundRequest.msisdn)" name="msisdnPayload" scope="default" type="STRING"/>            
+            <property expression="fn:normalize-space($ctx:msisdnPayload)" name="msisdnPayload" scope="default" type="STRING"/>
             
             <property expression="json-eval($.refundRequest.originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
@@ -71,10 +73,10 @@
             <property expression="json-eval($.refundRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
             
-            <property expression="json-eval($.refundRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
             
-            <property expression="json-eval($.refundRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+            <property expression="json-eval($.refundRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
             <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
             
             <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.amount)" name="amount" scope="default" type="STRING"/>
@@ -102,7 +104,8 @@
             <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
             
             <log level="custom">
-                <property expression="$ctx:msisdn" name="msisdn"/>
+                <property expression="$ctx:msisdnUrl" name="msisdnUrl"/>
+                <property expression="$ctx:msisdnPayload" name="msisdnPayload"/>
                 <property expression="$ctx:originalServerReferenceCode" name="originalServerReferenceCode"/>
                 <property expression="$ctx:refundAmount" name="refundAmount"/>
                 <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
