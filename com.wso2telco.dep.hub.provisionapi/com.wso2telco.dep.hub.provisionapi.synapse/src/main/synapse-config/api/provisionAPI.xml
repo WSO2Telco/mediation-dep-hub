@@ -8,7 +8,9 @@
         <faultSequence/>
     </resource>
     <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}">
-        <inSequence/>
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.provisionService.Sequence"/>
+        </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
