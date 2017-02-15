@@ -134,4 +134,45 @@
   </filter>
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
   <sequence key="mediation.common.select.token.Sequence"/>
+  <payloadFactory media-type="json">
+    <format>
+		{
+		  "refundTransaction": {
+		    "clientCorrelator": "$1",
+		    "endUserId": "$2",
+		    "originalReferenceCode": "$3",
+		    "originalServerReferenceCode": "$4",
+		    "paymentAmount": {
+		      "chargingInformation": {
+		        "amount": "$5",
+		        "currency": "$6",
+		        "description": "$7"
+		      },
+		      "chargingMetaData": {
+		        "onBehalfOf": "$8",
+		        "purchaseCategoryCode": "$9",
+		        "channel": "$10"
+		      }
+		    },
+		    "referenceCode": "$11"
+		  }
+		}
+		</format>
+    <args>
+      <arg evaluator="xml" expression="get-property('clientCorrelator')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('endUserId')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml"
+        expression="get-property('originalReferenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml"
+        expression="get-property('originalServerReferenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('amount')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('currency')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('description')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('onBehalfOf')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml"
+        expression="get-property('purchaseCategoryCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('channel')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="get-property('referenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
 </sequence>
