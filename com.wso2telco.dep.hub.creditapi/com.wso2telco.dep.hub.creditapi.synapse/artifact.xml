@@ -8,4 +8,7 @@
     <artifact name="mediation.api.credit.resource.refund.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.api.credit.resource.refund.validator.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.api.credit.resource.refund.msisdnValidator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.api.credit.resource.refund.msisdnValidator.Sequence.xml</file>
+    </artifact>
 </artifacts>

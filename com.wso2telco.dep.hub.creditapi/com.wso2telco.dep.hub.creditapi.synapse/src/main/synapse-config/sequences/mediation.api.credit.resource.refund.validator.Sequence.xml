@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="mediation.api.credit.resource.refund.validator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <filter xpath="boolean($ctx:msisdn) and boolean($ctx:refundAmount) and boolean($ctx:notifyURL) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
+    <filter xpath="boolean($ctx:msisdnPayload) and boolean($ctx:refundAmount) and boolean($ctx:notifyURL) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
         <then>
         
             <call-template target="mediation.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
-                <with-param name="paramValue" value="{$ctx:msisdn}"/>
+                <with-param name="paramValue" value="{$ctx:msisdnPayload}"/>
             </call-template>
+            
+            <call-template target="mediation.common.msisdnValidator.Template">
+                <with-param name="paramName" value="msisdn"/>
+                <with-param name="paramValue" value="{$ctx:msisdnUrl}"/>
+            </call-template>
+            
+            <!-- match the numeric value of the msisdn between msisdn path param and payload value -->
+			<sequence key="mediation.api.credit.resource.refund.msisdnValidator.Sequence"/>	
             
             <call-template target="mediation.common.urlValidation.Template">
                 <with-param name="paramName" value="notifyURL"/>
