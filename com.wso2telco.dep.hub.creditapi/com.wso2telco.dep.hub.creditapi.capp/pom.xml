@@ -16,6 +16,7 @@
   <properties>
     <com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.refund.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.refund.validator.Sequence>
     <com.wso2telco.dep.hub.api_._creditAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._creditAPI>
+    <com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.refund.msisdnValidator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.refund.msisdnValidator.Sequence>
     <com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.apply.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._mediation.api.credit.resource.apply.validator.Sequence>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
   </properties>
@@ -35,6 +36,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>mediation.api.credit.resource.refund.validator.Sequence</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>mediation.api.credit.resource.refund.msisdnValidator.Sequence</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
