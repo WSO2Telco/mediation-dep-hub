@@ -5,16 +5,17 @@
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="get-property('uri.var.endUserId')"
     name="endUserId" scope="default" type="STRING"/>
-  <property
-    expression="fn:concat('/transaction/', get-property('endUserId'),'/balance')"
-    name="RESOURCE_PATH" scope="default" type="STRING"/>
   <call-template target="mediation.common.msisdnValidator.Template">
     <with-param name="paramName" value="endUserId"/>
     <with-param name="paramValue" value="{$ctx:endUserId}"/>
   </call-template>
   <property expression="get-property('endUserId')" name="MSISDN"
     scope="default" type="STRING"/>
+  <!-- retrieve operator's endpoint -->
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
+  <!-- retrieve operator's access token -->
   <sequence key="mediation.common.select.token.Sequence"/>
+  <!-- send request to operator endpoint -->
   <sequence key="mediation.common.call.endpoint.Sequence"/>
+  <!-- generating response json -->
 </sequence>
