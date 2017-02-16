@@ -169,4 +169,5 @@
         expression="get-property('generatedNotifyURL')" xmlns:ns="http://org.apache.synapse/xsd"/>
     </args>
   </payloadFactory>
+  <sequence key="mediation.common.call.endpoint.Sequence"/>
 </sequence>

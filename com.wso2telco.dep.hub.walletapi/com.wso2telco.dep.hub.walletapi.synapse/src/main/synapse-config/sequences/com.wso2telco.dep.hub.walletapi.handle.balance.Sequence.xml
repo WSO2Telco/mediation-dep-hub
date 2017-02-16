@@ -16,4 +16,5 @@
     scope="default" type="STRING"/>
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
   <sequence key="mediation.common.select.token.Sequence"/>
+  <sequence key="mediation.common.call.endpoint.Sequence"/>
 </sequence>

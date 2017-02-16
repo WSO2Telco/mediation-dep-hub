@@ -175,4 +175,5 @@
       <arg evaluator="xml" expression="get-property('referenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
     </args>
   </payloadFactory>
+  <sequence key="mediation.common.call.endpoint.Sequence"/>
 </sequence>
