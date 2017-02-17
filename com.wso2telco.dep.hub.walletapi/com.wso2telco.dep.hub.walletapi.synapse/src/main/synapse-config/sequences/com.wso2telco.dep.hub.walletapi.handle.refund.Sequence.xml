@@ -35,9 +35,6 @@
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
     name="channel" scope="default" type="STRING"/>
-  <property
-    expression="fn:concat('/transaction/', get-property('endUserId'),'/refund')"
-    name="RESOURCE_PATH" scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:originalReferenceCode) and boolean($ctx:originalServerReferenceCode) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
       <call-template target="mediation.common.doubleValidation.Template">
@@ -119,6 +116,7 @@
       <sequence key="mediation.common.response.exceptions.Sequence"/>
     </else>
   </filter>
+  <!-- validate purchase category code in request -->
   <sequence key="mediation.common.purchaseCategoryCodeValidate.Sequence"/>
   <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
     <then>
@@ -132,31 +130,40 @@
     </then>
     <else/>
   </filter>
+  <!-- retrieve hub url from registry -->
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+    name="mediationConfig" scope="default" type="OM"/>
+  <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
+    scope="default" type="STRING"/>
+  <!-- retrieve operator's endpoint -->
   <sequence key="mediation.common.endpoint.retriever.Sequence"/>
+  <!-- retrieve operator's access token -->
   <sequence key="mediation.common.select.token.Sequence"/>
+  <!-- generating request json -->
   <payloadFactory media-type="json">
     <format>
-		{
-		  "refundTransaction": {
-		    "clientCorrelator": "$1",
-		    "endUserId": "$2",
-		    "originalReferenceCode": "$3",
-		    "originalServerReferenceCode": "$4",
-		    "paymentAmount": {
-		      "chargingInformation": {
-		        "amount": "$5",
-		        "currency": "$6",
-		        "description": "$7"
-		      },
-		      "chargingMetaData": {
-		        "onBehalfOf": "$8",
-		        "purchaseCategoryCode": "$9",
-		        "channel": "$10"
-		      }
-		    },
-		    "referenceCode": "$11"
-		  }
-		}
+			{
+			  "refundTransaction": {
+			    "clientCorrelator": "$1",
+			    "endUserId": "$2",
+			    "originalReferenceCode": "$3",
+			    "originalServerReferenceCode": "$4",
+			    "paymentAmount": {
+			      "chargingInformation": {
+			        "amount": "$5",
+			        "currency": "$6",
+			        "description": "$7"
+			      },
+			      "chargingMetaData": {
+			        "onBehalfOf": "$8",
+			        "purchaseCategoryCode": "$9",
+			        "channel": "$10"
+			      }
+			    },
+			    "referenceCode": "$11"
+			  }
+			}
 		</format>
     <args>
       <arg evaluator="xml" expression="get-property('clientCorrelator')" xmlns:ns="http://org.apache.synapse/xsd"/>
@@ -175,5 +182,19 @@
       <arg evaluator="xml" expression="get-property('referenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
     </args>
   </payloadFactory>
+  <!-- send request to operator endpoint -->
   <sequence key="mediation.common.call.endpoint.Sequence"/>
+  <!-- generating response json -->
+  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+	var hubURL = mc.getProperty("HUB_URL");
+	var apiName = mc.getProperty("API_NAME");
+	var apiVersion = mc.getProperty("API_VERSION");
+	var payload = mc.getPayloadJSON();
+	payload.refundTransaction.clientCorrelator = mc.getProperty("clientCorrelator");
+	var gatewayResourceURL = payload.refundTransaction.resourceURL;
+	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+	payload.refundTransaction.resourceURL = hubResourceURL;
+	mc.setPayloadJSON(payload);]]></script>
+  <respond/>
 </sequence>
