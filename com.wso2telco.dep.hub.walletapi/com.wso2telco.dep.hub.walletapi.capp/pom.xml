@@ -22,6 +22,7 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.balance.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.balance.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.walletapi.handle.refund.Sequence>
   </properties>
   <dependencies>
@@ -70,6 +71,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

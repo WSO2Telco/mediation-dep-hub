@@ -117,7 +117,7 @@
     </else>
   </filter>
   <!-- validate purchase category code in request -->
-  <sequence key="mediation.common.purchaseCategoryCodeValidate.Sequence"/>
+  <sequence key="mediation.common.purchase.category.code.validate.Sequence"/>
   <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
     <then>
       <sequence key="mediation.common.response.exceptions.Sequence"/>
