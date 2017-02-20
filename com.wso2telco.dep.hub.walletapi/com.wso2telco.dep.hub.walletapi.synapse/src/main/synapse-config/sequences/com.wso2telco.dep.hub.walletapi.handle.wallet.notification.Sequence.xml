@@ -6,14 +6,13 @@
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="get-property('uri.var.notifyURLId')"
     name="NOTIFY_URL_ID" scope="default" type="STRING"/>
-  <!-- retrieve hub url from registry -->
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
-  <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
-    scope="default" type="STRING"/>
   <!-- retrieve notification endpoint -->
   <sequence key="mediation.common.notification.url.retriever.Sequence"/>
+  <!-- generating request json -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+	payload.makePayment.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
+	payload.makePayment.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+	mc.setPayloadJSON(payload);]]></script>
   <!-- send notification to notification endpoint -->
   <sequence key="mediation.common.call.notification.endpoint.Sequence"/>
   <respond/>
