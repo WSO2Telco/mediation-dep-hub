@@ -47,4 +47,16 @@
     <sequence key="mediation.common.endpoint.retriever.Sequence"/>
     <sequence key="mediation.common.select.token.Sequence"/>
     <sequence key="mediation.common.call.endpoint.Sequence"/>
+    <property expression="json-eval($)" name="responseBody" scope="default" type="STRING"/>
+    <property expression="json-eval($.serviceList)" name="serviceList" scope="default" type="STRING"/>
+    <filter xpath="not(boolean(fn:normalize-space($ctx:responseBody))) or not(boolean(fn:normalize-space($ctx:serviceList)))">
+        <then>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC1000"/>
+            <sequence key="mediation.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <respond/>
 </sequence>
