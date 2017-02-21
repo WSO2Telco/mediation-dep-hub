@@ -105,4 +105,13 @@
 	
 	<sequence key="mediation.common.call.endpoint.Sequence"/>
 	
+	<script language="js">
+		<![CDATA[var payload = mc.getPayloadJSON();
+			payload.refundResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+			payload.refundResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			mc.setPayloadJSON(payload);
+		]]>
+	</script>
+	
+	<respond/>	
 </sequence>
