@@ -64,35 +64,14 @@
 	<sequence key="mediation.common.select.token.Sequence"/>
 	<!-- generating request json -->
 	
- 	<payloadFactory media-type="json">
-	  	<format>
-			{
-			    "creditApplyRequest": {
-   			        "type": $1,
-			        "amount": $2,
-			        "clientCorrelator": "$3,
-			        "reasonForCredit": $4,
-			        "merchantIdentification": $5,			        
-			        "receiptRequest": {			            
-			            "notifyURL": $6,
-			            "callbackData": $7
-			        },
-			        "referenceCode": $8
-			    }
-			}
-	  	</format>
-		<args>  
-		  <arg evaluator="xml" expression="get-property('type')"/>
-		  <arg evaluator="xml" expression="get-property('amount')"/>
-		  <arg evaluator="xml" expression="get-property('clientCorrelator')"/>
-		  <arg evaluator="xml" expression="get-property('reasonForCredit')"/>
-		  <arg evaluator="xml" expression="get-property('merchantIdentification')"/>
-  		  <arg evaluator="xml" expression="get-property('generatedNotifyURL')"/>
-		  <arg evaluator="xml" expression="get-property('callbackData')"/>
-		  <arg evaluator="xml" expression="get-property('referenceCode')"/>
-		</args>	  		
-	</payloadFactory>
+	<script language="js">
+		<![CDATA[
+			var payload = mc.getPayloadJSON();
+			payload.creditApplyRequest.receiptRequest.notifyURL = mc.getProperty("generatedNotifyURL");
+			mc.setPayloadJSON(payload);
+		]]>
+	</script>
+	
 	<sequence key="mediation.common.call.endpoint.Sequence"/>
   
-    <!-- <respond/> -->
 </sequence>

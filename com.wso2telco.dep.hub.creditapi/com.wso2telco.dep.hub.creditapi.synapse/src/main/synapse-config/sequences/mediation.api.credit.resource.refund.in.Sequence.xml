@@ -95,56 +95,14 @@
 	<sequence key="mediation.common.select.token.Sequence"/>
 	<!-- generating request json -->   
 	
- 	<payloadFactory media-type="json">
-	  	<format>
-			{
-				"refundRequest": {					
-					"clientCorrelator":$1,
-					"msisdn": $2,
-					"originalServerReferenceCode" : $3,
-					"reasonForRefund": $4,
-					"refundAmount": $5,
-					"merchantIdentification": $6,
-					"receiptRequest": {
-						"notifyURL": $7,
-						"callbackData": $8
-					},		
-					"paymentAmount" : {
-						"chargingInformation": {
-							"amount": $9,
-							"currency": $10,
-							"description": $11
-						},
-						"chargingMetaData": {
-							"onBehalfOf": $12,
-							"purchaseCategoryCode": $13,
-							"channel": $14,
-							"taxAmount": $15
-						}
-					},
-					"referenceCode": $16
-				}
-			}
-	  	</format>
-		<args>  
-		  <arg evaluator="xml" expression="get-property('clientCorrelator')"/>
-		  <arg evaluator="xml" expression="get-property('msisdn')"/>
-		  <arg evaluator="xml" expression="get-property('originalServerReferenceCode')"/>
-		  <arg evaluator="xml" expression="get-property('reasonForRefund')"/>
-		  <arg evaluator="xml" expression="get-property('refundAmount')"/>
-  		  <arg evaluator="xml" expression="get-property('merchantIdentification')"/>
-  		  <arg evaluator="xml" expression="get-property('generatedNotifyURL')"/>
-		  <arg evaluator="xml" expression="get-property('callbackData')"/>
-		  <arg evaluator="xml" expression="get-property('amount')"/>
-		  <arg evaluator="xml" expression="get-property('currency')"/>
-		  <arg evaluator="xml" expression="get-property('description')"/>
-		  <arg evaluator="xml" expression="get-property('onBehalfOf')"/>
-		  <arg evaluator="xml" expression="get-property('purchaseCategoryCode')"/>
-		  <arg evaluator="xml" expression="get-property('channel')"/>
-		  <arg evaluator="xml" expression="get-property('taxAmount')"/>
-		  <arg evaluator="xml" expression="get-property('referenceCode')"/>
-		</args>	  		
-	</payloadFactory>
+	<script language="js">
+		<![CDATA[
+			var payload = mc.getPayloadJSON();
+			payload.refundRequest.receiptRequest.notifyURL = mc.getProperty("generatedNotifyURL");
+			mc.setPayloadJSON(payload);
+		]]>
+	</script>
 	
 	<sequence key="mediation.common.call.endpoint.Sequence"/>
+	
 </sequence>
