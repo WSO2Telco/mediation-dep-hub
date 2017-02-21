@@ -28,7 +28,7 @@
     <outSequence/>
     <faultSequence/>
   </resource>
-  <resource methods="POST" protocol="http" uri-template="/{endUserId}/refund/{requestId}">
+  <resource methods="GET" protocol="http" uri-template="/{endUserId}/refund/{requestId}">
     <inSequence>
       <sequence key="com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence"/>
     </inSequence>
@@ -45,6 +45,13 @@
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/balance/{requestId}">
     <inSequence>
       <sequence key="com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+  <resource methods="POST" protocol="http" uri-template="/walletnotification/{notifyURLId}">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence"/>
     </inSequence>
     <outSequence/>
     <faultSequence/>

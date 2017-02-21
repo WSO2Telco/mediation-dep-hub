@@ -106,7 +106,7 @@
   <property expression="$ctx:notificationURLConfig//wallet"
     name="NOTIFICATION_URL" scope="default" type="STRING"/>
   <!-- save service provider's notify url and generate new notify url from hub -->
-  <sequence key="mediation.common.notificationURLModify.Sequence"/>
+  <sequence key="mediation.common.notification.url.modify.Sequence"/>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
       <sequence key="mediation.common.response.exceptions.Sequence"/>
@@ -114,7 +114,7 @@
     <else/>
   </filter>
   <!-- validate purchase category code in request -->
-  <sequence key="mediation.common.purchaseCategoryCodeValidate.Sequence"/>
+  <sequence key="mediation.common.purchase.category.code.validate.Sequence"/>
   <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
     <then>
       <sequence key="mediation.common.response.exceptions.Sequence"/>
