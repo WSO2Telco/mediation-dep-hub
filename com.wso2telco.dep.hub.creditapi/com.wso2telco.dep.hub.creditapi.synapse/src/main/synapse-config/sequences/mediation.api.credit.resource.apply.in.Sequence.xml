@@ -76,8 +76,8 @@
 	
 	<script language="js">
 		<![CDATA[var payload = mc.getPayloadJSON();
-			payload.creditApplyRequest.clientCorrelator = mc.getProperty("clientCorrelator");
-			payload.creditApplyRequest.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			payload.creditApplyResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+			payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
