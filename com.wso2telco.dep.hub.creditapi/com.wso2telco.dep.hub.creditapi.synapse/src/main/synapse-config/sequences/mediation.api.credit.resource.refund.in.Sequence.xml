@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="mediation.api.credit.resource.refund.in.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+  	<sequence key="mediation.common.main.request.Sequence"/>
+
     <property expression="$ctx:uri.var.msisdn" name="msisdnUrl" scope="default" type="STRING"/>
     
     <property expression="json-eval($.refundRequest.msisdn)" name="msisdnPayload" scope="default" type="STRING"/>
@@ -71,5 +74,77 @@
     </log>
     
     <sequence key="mediation.api.credit.resource.refund.validator.Sequence"/>
-    <respond/>
+    
+	<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+	  name="notificationURLConfig" scope="default" type="OM"/>
+	<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+	<!-- save service provider's notify url and generate new notify url from hub -->
+	<sequence key="mediation.common.notification.url.modify.Sequence"/>
+	<filter regex="true" source="get-property('INTERNAL_ERROR')">
+	  <then>
+	    <sequence key="mediation.common.response.exceptions.Sequence"/>
+	  </then>
+	  <else/>
+	</filter>
+	
+	<!-- Parameter for endpoint retrieval -->
+	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
+	<!-- retrieve operator's endpoint -->
+	<sequence key="mediation.common.endpoint.retriever.Sequence"/>
+	<!-- retrieve operator's access token -->
+	<sequence key="mediation.common.select.token.Sequence"/>
+	<!-- generating request json -->   
+	
+ 	<payloadFactory media-type="json">
+	  	<format>
+			{
+				"refundRequest": {					
+					"clientCorrelator":$1,
+					"msisdn": $2,
+					"originalServerReferenceCode" : $3,
+					"reasonForRefund": $4,
+					"refundAmount": $5,
+					"merchantIdentification": $6,
+					"receiptRequest": {
+						"notifyURL": $7,
+						"callbackData": $8
+					},		
+					"paymentAmount" : {
+						"chargingInformation": {
+							"amount": $9,
+							"currency": $10,
+							"description": $11
+						},
+						"chargingMetaData": {
+							"onBehalfOf": $12,
+							"purchaseCategoryCode": $13,
+							"channel": $14,
+							"taxAmount": $15
+						}
+					},
+					"referenceCode": $16
+				}
+			}
+	  	</format>
+		<args>  
+		  <arg evaluator="xml" expression="get-property('clientCorrelator')"/>
+		  <arg evaluator="xml" expression="get-property('msisdn')"/>
+		  <arg evaluator="xml" expression="get-property('originalServerReferenceCode')"/>
+		  <arg evaluator="xml" expression="get-property('reasonForRefund')"/>
+		  <arg evaluator="xml" expression="get-property('refundAmount')"/>
+  		  <arg evaluator="xml" expression="get-property('merchantIdentification')"/>
+  		  <arg evaluator="xml" expression="get-property('generatedNotifyURL')"/>
+		  <arg evaluator="xml" expression="get-property('callbackData')"/>
+		  <arg evaluator="xml" expression="get-property('amount')"/>
+		  <arg evaluator="xml" expression="get-property('currency')"/>
+		  <arg evaluator="xml" expression="get-property('description')"/>
+		  <arg evaluator="xml" expression="get-property('onBehalfOf')"/>
+		  <arg evaluator="xml" expression="get-property('purchaseCategoryCode')"/>
+		  <arg evaluator="xml" expression="get-property('channel')"/>
+		  <arg evaluator="xml" expression="get-property('taxAmount')"/>
+		  <arg evaluator="xml" expression="get-property('referenceCode')"/>
+		</args>	  		
+	</payloadFactory>
+	
+	<sequence key="mediation.common.call.endpoint.Sequence"/>
 </sequence>
