@@ -5,36 +5,59 @@
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="json-eval($.refundTransaction.clientCorrelator)"
     name="clientCorrelator" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:clientCorrelator)"
+    name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="json-eval($.refundTransaction.endUserId)"
+    name="endUserId" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:endUserId)"
     name="endUserId" scope="default" type="STRING"/>
   <property expression="get-property('endUserId')" name="MSISDN"
     scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.originalReferenceCode)"
     name="originalReferenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:originalReferenceCode)"
+    name="originalReferenceCode" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.originalServerReferenceCode)"
     name="originalServerReferenceCode" scope="default" type="STRING"/>
+  <property
+    expression="fn:normalize-space($ctx:originalServerReferenceCode)"
+    name="originalServerReferenceCode" scope="default" type="STRING"/>
   <property expression="json-eval($.refundTransaction.referenceCode)"
+    name="referenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:referenceCode)"
     name="referenceCode" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.amount)"
     name="amount" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:amount)" name="amount"
+    scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.currency)"
+    name="currency" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:currency)"
     name="currency" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingInformation.description)"
     name="description" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:description)"
+    name="description" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.onBehalfOf)"
+    name="onBehalfOf" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:onBehalfOf)"
     name="onBehalfOf" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.purchaseCategoryCode)"
     name="purchaseCategoryCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
+    name="purchaseCategoryCode" scope="default" type="STRING"/>
   <property
     expression="json-eval($.refundTransaction.paymentAmount.chargingMetaData.channel)"
     name="channel" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:channel)" name="channel"
+    scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:originalReferenceCode) and boolean($ctx:originalServerReferenceCode) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
       <call-template target="mediation.common.doubleValidation.Template">
@@ -130,6 +153,10 @@
     </then>
     <else/>
   </filter>
+  <!-- generating request clientCorrelator -->
+  <call-template target="mediation.common.clientCorrelator.generator.Template">
+    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+  </call-template>
   <!-- retrieve hub url from registry -->
   <property
     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
@@ -142,7 +169,7 @@
   <sequence key="mediation.common.select.token.Sequence"/>
   <!-- generating request json -->
   <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
+	payload.makePayment.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	payload.makePayment.notifyURL = mc.getProperty("generatedNotifyURL");
 	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to operator endpoint -->

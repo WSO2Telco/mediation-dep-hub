@@ -5,32 +5,52 @@
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="json-eval($.makePayment.clientCorrelator)"
     name="clientCorrelator" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:clientCorrelator)"
+    name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.endUserId)"
+    name="endUserId" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:endUserId)"
     name="endUserId" scope="default" type="STRING"/>
   <property expression="get-property('endUserId')" name="MSISDN"
     scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.referenceCode)"
     name="referenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:referenceCode)"
+    name="referenceCode" scope="default" type="STRING"/>
   <property expression="json-eval($.makePayment.notifyURL)"
+    name="notifyURL" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:notifyURL)"
     name="notifyURL" scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingInformation.amount)"
     name="amount" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:amount)" name="amount"
+    scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingInformation.currency)"
+    name="currency" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:currency)"
     name="currency" scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingInformation.description)"
     name="description" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:description)"
+    name="description" scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingMetaData.onBehalfOf)"
+    name="onBehalfOf" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:onBehalfOf)"
     name="onBehalfOf" scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingMetaData.purchaseCategoryCode)"
     name="purchaseCategoryCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
+    name="purchaseCategoryCode" scope="default" type="STRING"/>
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
     name="channel" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:channel)" name="channel"
+    scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
       <call-template target="mediation.common.urlValidation.Template">
@@ -100,12 +120,17 @@
       <sequence key="mediation.common.response.exceptions.Sequence"/>
     </else>
   </filter>
+  <!-- generating request clientCorrelator -->
+  <call-template target="mediation.common.clientCorrelator.generator.Template">
+    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+  </call-template>
   <property
     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
     name="notificationURLConfig" scope="default" type="OM"/>
   <property expression="$ctx:notificationURLConfig//wallet"
     name="NOTIFICATION_URL" scope="default" type="STRING"/>
-  <!-- save service provider's notify url and generate new notify url from hub -->
+  <!-- save service provider's notify url and generate new notify url from 
+		hub -->
   <sequence key="mediation.common.notification.url.modify.Sequence"/>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
@@ -133,7 +158,7 @@
   <sequence key="mediation.common.select.token.Sequence"/>
   <!-- generating request json -->
   <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
+	payload.makePayment.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	payload.makePayment.notifyURL = mc.getProperty("generatedNotifyURL");
 	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to the gateway -->
