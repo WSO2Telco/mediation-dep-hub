@@ -53,7 +53,7 @@
     <property expression="json-eval($.refundRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
     
-    <log level="custom">
+    <log level="custom" category="DEBUG">
         <property expression="$ctx:msisdnUrl" name="msisdnUrl"/>
         <property expression="$ctx:msisdnPayload" name="msisdnPayload"/>
         <property expression="$ctx:originalServerReferenceCode" name="originalServerReferenceCode"/>
