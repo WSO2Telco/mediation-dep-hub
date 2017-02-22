@@ -2,9 +2,14 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example.com.wso2telco.dep.hub.provisionapi.capp</groupId>
+  <parent>
+    <groupId>com.wso2telco.dep.hub</groupId>
+    <artifactId>com.wso2telco.dep.hub.provisionapi</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+  </parent>  
+  <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.provisionapi.capp</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0-SNAPSHOT</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.dep.hub.provisionapi.capp</name>
   <description>com.wso2telco.dep.hub.provisionapi.capp</description>
