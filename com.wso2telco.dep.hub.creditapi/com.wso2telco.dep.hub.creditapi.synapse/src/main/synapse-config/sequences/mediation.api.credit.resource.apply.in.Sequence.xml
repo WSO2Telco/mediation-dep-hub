@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="mediation.api.credit.resource.apply.in.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+  	<sequence key="mediation.common.main.request.Sequence"/>
+    
     <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+    
     <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    	
     <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+    
     <log category="DEBUG" level="custom">
         <property expression="$ctx:msisdn" name="msisdn"/>
         <property expression="$ctx:type" name="type"/>
@@ -29,6 +41,47 @@
         <property expression="$ctx:notifyURL" name="notifyURL"/>
         <property expression="$ctx:callbackData" name="callbackData"/>
     </log>
+    
     <sequence key="mediation.api.credit.resource.apply.validator.Sequence"/>
-    <respond/>
+    
+	<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+	  name="notificationURLConfig" scope="default" type="OM"/>
+	<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+	<!-- save service provider's notify url and generate new notify url from hub -->
+	<sequence key="mediation.common.notification.url.modify.Sequence"/>
+	<filter regex="true" source="get-property('INTERNAL_ERROR')">
+	  <then>
+	    <sequence key="mediation.common.response.exceptions.Sequence"/>
+	  </then>
+	  <else/>
+	</filter>
+	
+	<!-- Parameter for endpoint retrieval -->
+	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
+	<!-- retrieve operator's endpoint -->
+	<sequence key="mediation.common.endpoint.retriever.Sequence"/>
+	<!-- retrieve operator's access token -->
+	<sequence key="mediation.common.select.token.Sequence"/>
+	<!-- generating request json -->
+	
+	<script language="js">
+		<![CDATA[
+			var payload = mc.getPayloadJSON();
+			payload.creditApplyRequest.receiptRequest.notifyURL = mc.getProperty("generatedNotifyURL");
+			mc.setPayloadJSON(payload);
+		]]>
+	</script>
+	
+	<sequence key="mediation.common.call.endpoint.Sequence"/>
+	
+	<script language="js">
+		<![CDATA[var payload = mc.getPayloadJSON();
+			payload.creditApplyResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+			payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			mc.setPayloadJSON(payload);
+		]]>
+	</script>
+	
+	<respond/>
+  
 </sequence>
