@@ -132,44 +132,10 @@
   <!-- retrieve operator's access token -->
   <sequence key="mediation.common.select.token.Sequence"/>
   <!-- generating request json -->
-  <payloadFactory media-type="json">
-    <format>
-			{
-				"makePayment" : {
-					"clientCorrelator" "$1",
-					"endUserId" : "$2",
-					"paymentAmount" : {
-						"chargingInformation" : {
-							"amount" : "$3",
-							"currency" : "$4",
-							"description" : "$5"
-						},
-						"chargingMetaData" : {
-							"onBehalfOf" : "$6",
-							"purchaseCategoryCode" : "$7",
-							"channel" : "$8"
-						}
-					},
-					"referenceCode" : "$9",
-					"notifyURL" : "$10"
-				}
-			}			
-		</format>
-    <args>
-      <arg evaluator="xml" expression="get-property('clientCorrelator')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('endUserId')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('amount')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('currency')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('description')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('onBehalfOf')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml"
-        expression="get-property('purchaseCategoryCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('channel')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml" expression="get-property('referenceCode')" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <arg evaluator="xml"
-        expression="get-property('generatedNotifyURL')" xmlns:ns="http://org.apache.synapse/xsd"/>
-    </args>
-  </payloadFactory>
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
+	payload.makePayment.notifyURL = mc.getProperty("generatedNotifyURL");
+	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to the gateway -->
   <sequence key="mediation.common.call.endpoint.Sequence"/>
   <!-- generating response json -->
