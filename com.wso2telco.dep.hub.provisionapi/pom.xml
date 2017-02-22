@@ -14,6 +14,7 @@
   <description>com.wso2telco.dep.hub.provisionapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.provisionapi.synapse</module>
+    <module>com.wso2telco.dep.hub.provisionapi.capp</module>
   </modules>
   <build>
     <plugins>
