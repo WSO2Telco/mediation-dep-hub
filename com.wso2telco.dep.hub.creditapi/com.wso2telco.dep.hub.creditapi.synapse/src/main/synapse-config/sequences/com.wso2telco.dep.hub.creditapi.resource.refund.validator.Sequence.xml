@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.api.credit.resource.refund.validator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <filter xpath="boolean($ctx:msisdnPayload) and boolean($ctx:refundAmount) and boolean($ctx:notifyURL) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
         <then>
         
-            <call-template target="mediation.common.msisdnValidator.Template">
+            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdnPayload}"/>
             </call-template>
             
-            <call-template target="mediation.common.msisdnValidator.Template">
+            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdnUrl}"/>
             </call-template>
             
             <!-- match the numeric value of the msisdn between msisdn path param and payload value -->
-			<sequence key="mediation.api.credit.resource.refund.msisdnValidator.Sequence"/>	
+			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence"/>	
             
-            <call-template target="mediation.common.urlValidation.Template">
+            <call-template target="com.wso2telco.dep.common.urlValidation.Template">
                 <with-param name="paramName" value="notifyURL"/>
                 <with-param name="paramValue" value="{$ctx:notifyURL}"/>
             </call-template>
             
-            <call-template target="mediation.common.doubleValidation.Template">
+            <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
                 <with-param name="paramName" value="refundAmount"/>
                 <with-param name="paramValue" value="{$ctx:refundAmount}"/>
                 <with-param name="validationType" value="GE_ZERO"/>
             </call-template>
             
-            <call-template target="mediation.common.doubleValidation.Template">
+            <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
                 <with-param name="paramName" value="amount"/>
                 <with-param name="paramValue" value="{$ctx:amount}"/>
                 <with-param name="validationType" value="GE_ZERO"/>
@@ -35,7 +35,7 @@
             
             <filter xpath="boolean($ctx:taxAmount)">
             	<then>
-		             <call-template target="mediation.common.doubleValidation.Template">
+		             <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
 		                <with-param name="paramName" value="taxAmount"/>
 		                <with-param name="paramValue" value="{$ctx:taxAmount}"/>
 		                <with-param name="validationType" value="GE_ZERO"/>
@@ -45,7 +45,7 @@
             
             <filter xpath="boolean($ctx:channel)">
             	<then>
-		             <call-template target="mediation.common.channelValidation.Template">
+		             <call-template target="com.wso2telco.dep.common.channelValidation.Template">
 		                <with-param name="paramName" value="channel"/>
 		                <with-param name="paramValue" value="{$ctx:channel}"/>
 		            </call-template>           	
@@ -98,7 +98,7 @@
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
             <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </else>
     </filter>	
 </sequence>
