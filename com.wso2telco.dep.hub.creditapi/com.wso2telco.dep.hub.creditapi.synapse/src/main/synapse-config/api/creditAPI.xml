@@ -2,20 +2,20 @@
 <api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" uri-template="/v1/credit/{+msisdn}/apply">
         <inSequence>
-			<sequence key="mediation.api.credit.resource.apply.in.Sequence"/>
+			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence>
-            <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
     <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
         <inSequence>
-			<sequence key="mediation.api.credit.resource.refund.in.Sequence"/>
+			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence>
-            <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
 </api>
