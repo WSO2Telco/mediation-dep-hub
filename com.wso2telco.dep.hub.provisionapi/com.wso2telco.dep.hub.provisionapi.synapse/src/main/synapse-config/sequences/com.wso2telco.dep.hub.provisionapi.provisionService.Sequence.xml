@@ -45,9 +45,9 @@
             </filter>
         </else>
     </filter>
-    <call-template target="mediation.common.msisdnValidator.Template">
+    <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
         <with-param name="paramName" value="msisdn"/>
         <with-param name="paramValue" value="{$ctx:msisdn}"/>
     </call-template>
-    <sequence key="mediation.common.mccMncValidator.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.mccMncValidator.Sequence"/>
 </sequence>
