@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <sequence key="mediation.common.main.request.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <property description="msisdn" expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
     <property description="MSISDN" expression="get-property('msisdn')" name="MSISDN" scope="default" type="STRING"/>
     <property description="mcc" expression="$ctx:query.param.mcc" name="mcc" scope="default" type="STRING"/>
@@ -11,7 +11,7 @@
     <property description="offset" expression="$ctx:query.param.offset" name="offset" scope="default" type="STRING"/>
     <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
     <!-- REQUEST PARAMETER VALIDATION -->
-    <call-template target="mediation.common.msisdnValidator.Template">
+    <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
         <with-param name="paramName" value="msisdn"/>
         <with-param name="paramValue" value="{$ctx:msisdn}"/>
     </call-template>
@@ -24,29 +24,29 @@
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
             <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </then>
         <else/>
     </filter>
-    <sequence key="mediation.common.mccMncValidator.Sequence"/>
-    <call-template target="mediation.common.integerOffsetAndLimitValidation.Template">
+    <sequence key="com.wso2telco.dep.common.mccMncValidator.Sequence"/>
+    <call-template target="com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template">
         <with-param name="paramName" value="offset"/>
         <with-param name="paramValue" value="{$ctx:offset}"/>
     </call-template>
-    <call-template target="mediation.common.integerOffsetAndLimitValidation.Template">
+    <call-template target="com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template">
         <with-param name="paramName" value="limit"/>
         <with-param name="paramValue" value="{$ctx:limit}"/>
     </call-template>
-    <sequence key="mediation.common.purchaseCategoryCodeValidate.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.purchaseCategoryCodeValidate.Sequence"/>
     <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
         <then>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </then>
         <else/>
     </filter>
-    <sequence key="mediation.common.endpoint.retriever.Sequence"/>
-    <sequence key="mediation.common.select.token.Sequence"/>
-    <sequence key="mediation.common.call.endpoint.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
     <property expression="json-eval($)" name="responseBody" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceList)" name="serviceList" scope="default" type="STRING"/>
     <filter xpath="not(boolean(fn:normalize-space($ctx:responseBody))) or not(boolean(fn:normalize-space($ctx:serviceList)))">
@@ -54,7 +54,7 @@
             <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <property name="messageId" scope="default" type="STRING" value="SVC1000"/>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </then>
         <else/>
     </filter>
