@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.api.credit.resource.apply.validator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <filter xpath="boolean($ctx:msisdn) and boolean($ctx:type) and boolean($ctx:amount) and boolean($ctx:referenceCode) and boolean($ctx:merchantIdentification)">
         <then>
-            <call-template target="mediation.common.msisdnValidator.Template">
+            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdn}"/>
             </call-template>
-            <call-template target="mediation.common.urlValidation.Template">
+            <call-template target="com.wso2telco.dep.common.urlValidation.Template">
                 <with-param name="paramName" value="notifyURL"/>
                 <with-param name="paramValue" value="{$ctx:notifyURL}"/>
             </call-template>
             <switch source="$ctx:type">
                 <case regex="^(money|data|minutes)$">
-                    <call-template target="mediation.common.doubleValidation.Template">
+                    <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
                         <with-param name="paramName" value="amount"/>
                         <with-param name="paramValue" value="{$ctx:amount}"/>
                         <with-param name="validationType" value="GE_ZERO"/>
                     </call-template>
                 </case>
                 <case regex="^sms$">
-                    <call-template target="mediation.common.integerValidation.Template">
+                    <call-template target="com.wso2telco.dep.common.integerValidation.Template">
                         <with-param name="paramName" value="amount"/>
                         <with-param name="paramValue" value="{$ctx:amount}"/>
                         <with-param name="validationType" value="GE_ZERO"/>
                     </call-template>
                 </case>
                 <default>
-                    <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+                    <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
                 </default>
             </switch>
         </then>
@@ -70,7 +70,7 @@
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
             <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </else>
     </filter>
 </sequence>

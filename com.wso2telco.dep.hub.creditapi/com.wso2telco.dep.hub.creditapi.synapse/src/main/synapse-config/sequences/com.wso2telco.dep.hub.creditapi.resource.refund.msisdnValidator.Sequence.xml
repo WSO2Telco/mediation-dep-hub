@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.api.credit.resource.refund.msisdnValidator.Sequence" onError="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     
     <property expression="$ctx:msisdnUrl" group="9" name="msisdnUrlNo" pattern="^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$" scope="default" type="STRING"/>
     <property expression="$ctx:msisdnPayload" group="9" name="msisdnPayloadNo" pattern="^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$" scope="default" type="STRING"/>
@@ -19,7 +19,7 @@
             <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
             <property expression="$ctx:msisdnUrlNo" name="errorVariable" scope="default" type="STRING"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-            <sequence key="mediation.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </else>
     </filter>
 </sequence>
