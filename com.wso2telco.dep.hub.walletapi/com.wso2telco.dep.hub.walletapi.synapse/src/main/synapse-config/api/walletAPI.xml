@@ -6,7 +6,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/transaction/{endUserId}/list">
@@ -15,7 +15,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/transaction/{endUserId}/list/{requestId}">
@@ -24,7 +24,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="POST" protocol="http" uri-template="/transaction/{endUserId}/refund">
@@ -33,7 +33,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/transaction/{endUserId}/refund/{requestId}">
@@ -42,7 +42,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/transaction/{endUserId}/balance">
@@ -51,7 +51,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/transaction/{endUserId}/balance/{requestId}">
@@ -60,7 +60,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
   <resource methods="POST" protocol="http" uri-template="/walletnotification/{notifyURLId}">
@@ -69,7 +69,7 @@
     </inSequence>
     <outSequence/>
     <faultSequence>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </faultSequence>
   </resource>
 </api>

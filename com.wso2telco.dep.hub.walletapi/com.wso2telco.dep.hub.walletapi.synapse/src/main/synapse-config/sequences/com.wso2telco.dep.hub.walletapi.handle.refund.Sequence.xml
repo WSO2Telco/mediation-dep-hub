@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.walletapi.handle.refund.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <sequence key="mediation.common.main.request.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <property expression="json-eval($.refundTransaction.clientCorrelator)"
     name="clientCorrelator" scope="default" type="STRING"/>
@@ -60,12 +60,12 @@
     scope="default" type="STRING"/>
   <filter xpath="boolean($ctx:endUserId) and boolean($ctx:originalReferenceCode) and boolean($ctx:originalServerReferenceCode) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
     <then>
-      <call-template target="mediation.common.doubleValidation.Template">
+      <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
         <with-param name="paramName" value="amount"/>
         <with-param name="paramValue" value="{$ctx:amount}"/>
         <with-param name="validationType" value="GE_ZERO"/>
       </call-template>
-      <call-template target="mediation.common.msisdnValidator.Template">
+      <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
         <with-param name="paramName" value="endUserId"/>
         <with-param name="paramValue" value="{$ctx:endUserId}"/>
       </call-template>
@@ -136,25 +136,25 @@
       <property
         expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
         name="errorVariable" scope="default" type="STRING"/>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </else>
   </filter>
   <!-- validate purchase category code in request -->
-  <sequence key="mediation.common.purchase.category.code.validate.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
   <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
     <then>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </then>
     <else/>
   </filter>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </then>
     <else/>
   </filter>
   <!-- generating request clientCorrelator -->
-  <call-template target="mediation.common.clientCorrelator.generator.Template">
+  <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
   </call-template>
   <!-- retrieve hub url from registry -->
@@ -164,15 +164,15 @@
   <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
-  <sequence key="mediation.common.endpoint.retriever.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
   <!-- retrieve operator's access token -->
-  <sequence key="mediation.common.select.token.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
   <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.refundTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to operator endpoint -->
-  <sequence key="mediation.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <!-- generating response json -->
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
