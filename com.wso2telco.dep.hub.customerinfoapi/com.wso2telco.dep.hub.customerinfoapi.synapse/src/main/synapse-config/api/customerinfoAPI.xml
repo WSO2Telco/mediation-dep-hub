@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/customerinfo" name="customerinfoAPI" xmlns="http://ws.apache.org/ns/synapse">
+  <resource methods="GET" protocol="http" uri-template="/customer/profile">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.customerinfoapi.handle.profile.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+  <resource methods="GET" protocol="http" uri-template="/customer/attribute">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+</api>
