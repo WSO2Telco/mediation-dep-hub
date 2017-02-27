@@ -7,16 +7,16 @@
   <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
   <!-- generating request json -->
   
-  <!-- TODO waiting for payload confirmation -->
   <script language="js">
   	<![CDATA[
   		var payload = mc.getPayloadJSON();
-		payload.makePayment.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-		payload.makePayment.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+		payload.creditApplyResponse.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
+		payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
 		mc.setPayloadJSON(payload);
 	]]>
   </script>
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
+  
   <send/>
 </sequence>

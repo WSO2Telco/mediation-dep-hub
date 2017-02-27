@@ -18,4 +18,13 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+	<resource methods="POST" uri-template="/v1/creditnotification/{notifyURLId}">
+	  <inSequence>
+	    <sequence key="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence"/>
+	  </inSequence>
+	  <outSequence/>
+	  <faultSequence>
+	    <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+	  </faultSequence>
+	</resource>    
 </api>
