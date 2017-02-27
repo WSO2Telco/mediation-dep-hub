@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence
   name="com.wso2telco.dep.hub.customerinfoapi.handle.profile.Sequence"
-  trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+</sequence>
