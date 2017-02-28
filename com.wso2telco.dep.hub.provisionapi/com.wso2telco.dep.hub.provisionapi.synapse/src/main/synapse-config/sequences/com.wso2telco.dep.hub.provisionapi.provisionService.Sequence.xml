@@ -104,7 +104,26 @@
             </filter>
         </else>
     </filter>
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+    <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')" name="notificationURLConfig" scope="default" type="OM"/>
     <property expression="$ctx:notificationURLConfig//provisioning" name="NOTIFICATION_URL" scope="default" type="STRING"/>
     <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+    payload.serviceProvisionRequest.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
+    payload.serviceProvisionRequest.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
+    mc.setPayloadJSON(payload);]]></script>
+    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+	var hubURL = mc.getProperty("HUB_URL");
+	var apiName = mc.getProperty("API_NAME");
+	var apiVersion = mc.getProperty("API_VERSION");
+	var payload = mc.getPayloadJSON();
+	payload.serviceProvisionResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+	var gatewayResourceURL = payload.serviceProvisionResponse.callbackReference.resourceURL;
+	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+	payload.serviceProvisionResponse.callbackReference.resourceURL = hubResourceURL;
+	mc.setPayloadJSON(payload);]]></script>
+    <respond/>
 </sequence>
