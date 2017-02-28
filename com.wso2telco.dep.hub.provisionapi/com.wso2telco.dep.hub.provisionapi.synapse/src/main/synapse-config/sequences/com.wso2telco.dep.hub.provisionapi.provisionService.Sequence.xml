@@ -93,4 +93,7 @@
             </filter>
         </else>
     </filter>
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')" name="notificationURLConfig" scope="default" type="OM"/>
+    <property expression="$ctx:notificationURLConfig//provisioning" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+    <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
 </sequence>
