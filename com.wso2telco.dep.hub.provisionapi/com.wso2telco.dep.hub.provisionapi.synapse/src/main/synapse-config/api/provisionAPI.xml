@@ -15,13 +15,17 @@
         <faultSequence/>
     </resource>
     <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}/remove">
-        <inSequence/>
-        <outSequence/>
-        <faultSequence/>
+	  <inSequence>
+	    <sequence key="com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence"/>
+	  </inSequence>
+	  <outSequence/>
+	  <faultSequence>
+	    <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+	  </faultSequence>
     </resource>
     <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/active">
         <inSequence/>
         <outSequence/>
         <faultSequence/>
-    </resource>
+    </resource>     
 </api>
