@@ -6,10 +6,17 @@
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdn}"/>
             </call-template>
-            <call-template target="com.wso2telco.dep.common.urlValidation.Template">
-                <with-param name="paramName" value="notifyURL"/>
-                <with-param name="paramValue" value="{$ctx:notifyURL}"/>
-            </call-template>
+
+            <filter regex="^true$" source="boolean($ctx:notifyURL)">
+				<then>
+		            <call-template target="com.wso2telco.dep.common.urlValidation.Template">
+		                <with-param name="paramName" value="notifyURL"/>
+		                <with-param name="paramValue" value="{$ctx:notifyURL}"/>
+		            </call-template>
+				</then>
+				<else/>
+            </filter>
+
             <switch source="$ctx:type">
                 <case regex="^(money|data|minutes)$">
                     <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
