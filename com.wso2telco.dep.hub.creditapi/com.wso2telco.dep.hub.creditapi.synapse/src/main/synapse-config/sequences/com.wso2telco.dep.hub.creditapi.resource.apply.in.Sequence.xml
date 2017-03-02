@@ -44,17 +44,22 @@
     
     <sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence"/>
     
-	<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
-	  name="notificationURLConfig" scope="default" type="OM"/>
-	<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
-	<!-- save service provider's notify url and generate new notify url from hub -->
-	<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
-	<filter regex="true" source="get-property('INTERNAL_ERROR')">
-	  <then>
-	    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-	  </then>
-	  <else/>
-	</filter>
+    <filter xpath="boolean($ctx:notifyURL)">
+    	<then>
+			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+			  name="notificationURLConfig" scope="default" type="OM"/>
+			<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+			<!-- save service provider's notify url and generate new notify url from hub -->
+			<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+			<filter regex="true" source="get-property('INTERNAL_ERROR')">
+			  <then>
+			    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+			  </then>
+			  <else/>
+			</filter>    		
+    	</then>
+    	<else/>
+    </filter>
 	
 	<!-- Parameter for endpoint retrieval -->
 	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
@@ -63,16 +68,29 @@
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
-	<!-- generating request clientCorrelator -->	
-	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-	    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
-	</call-template>
+	<filter xpath="boolean($ctx:clientCorrelator)">
+		<then>
+			<!-- generating request clientCorrelator -->
+			<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+			    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+			</call-template>
+		</then>
+	</filter>
             
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
-			payload.creditApplyRequest.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-			payload.creditApplyRequest.receiptRequest.notifyURL = mc.getProperty("generatedNotifyURL");
+			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
+			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+
+			if (uniqueClientCorrelator != null) {
+				payload.creditApplyRequest.clientCorrelator = uniqueClientCorrelator;
+			}
+
+			if (generatedNotifyURL != null) {
+				payload.creditApplyRequest.receiptRequest.notifyURL = generatedNotifyURL;
+			}
+
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
@@ -80,9 +98,19 @@
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	
 	<script language="js">
-		<![CDATA[var payload = mc.getPayloadJSON();
-			payload.creditApplyResponse.clientCorrelator = mc.getProperty("clientCorrelator");
-			payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+		<![CDATA[
+			var payload = mc.getPayloadJSON();
+			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
+			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+						
+			if (uniqueClientCorrelator != null) {
+				payload.creditApplyResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+			} 
+
+			if (generatedNotifyURL != null) {
+				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			}
+
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
