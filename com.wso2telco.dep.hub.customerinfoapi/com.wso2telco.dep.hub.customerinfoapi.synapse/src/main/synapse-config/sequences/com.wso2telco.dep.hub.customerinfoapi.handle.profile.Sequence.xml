@@ -48,7 +48,7 @@
     <else/>
   </filter>
   <!-- validate request identifier length -->
-  <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+  <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
     <with-param name="paramName" value="requestIdentifier"/>
     <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
     <with-param name="paramValidLength" value="6"/>
@@ -142,7 +142,7 @@
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("API_VERSION");
+	var apiVersion = mc.getProperty("VERSION");
 	var payload = mc.getPayloadJSON();
 	payload.customer.requestIdentifier = mc.getProperty("requestIdentifier");
 	var gatewayResourceURL = payload.customer.resourceURL;
