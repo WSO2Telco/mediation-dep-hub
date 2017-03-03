@@ -14,4 +14,18 @@
     <outSequence/>
     <faultSequence/>
   </resource>
+  <resource methods="GET" protocol="http" uri-template="/customer/profile/{requestId}">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.customerinfoapi.handle.profile.recaller.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+  <resource methods="GET" protocol="http" uri-template="/customer/attribute/{requestId}">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.recaller.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
 </api>
