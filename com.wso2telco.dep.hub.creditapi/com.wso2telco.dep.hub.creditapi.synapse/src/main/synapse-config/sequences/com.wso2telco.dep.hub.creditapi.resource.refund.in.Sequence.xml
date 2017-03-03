@@ -6,52 +6,52 @@
     <property expression="$ctx:uri.var.msisdn" name="msisdnUrl" scope="default" type="STRING"/>
     
     <property expression="json-eval($.refundRequest.msisdn)" name="msisdnPayload" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:msisdnPayload)" name="msisdnPayload" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:msisdnPayload)" name="msisdnPayload" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:originalServerReferenceCode)" name="originalServerReferenceCode" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.refundAmount)" name="refundAmount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:refundAmount)" name="refundAmount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:refundAmount)" name="refundAmount" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.reasonForRefund)" name="reasonForRefund" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:reasonForRefund)" name="reasonForRefund" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:reasonForRefund)" name="reasonForRefund" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.amount)" name="amount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.currency)" name="currency" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:currency)" name="currency" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:currency)" name="currency" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingInformation.description)" name="description" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:description)" name="description" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:description)" name="description" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:onBehalfOf)" name="onBehalfOf" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.channel)" name="channel" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:channel)" name="channel" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:channel)" name="channel" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.paymentAmount.chargingMetaData.taxAmount)" name="taxAmount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:taxAmount)" name="taxAmount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:taxAmount)" name="taxAmount" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.refundRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <log level="custom" category="DEBUG">
         <property expression="$ctx:msisdnUrl" name="msisdnUrl"/>
@@ -93,17 +93,31 @@
 	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
-	
-	<!-- generating request clientCorrelator -->	
-	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-	    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
-	</call-template>
-	
+
+	<filter xpath="boolean($ctx:clientCorrelator)">
+		<then>	
+			<!-- generating request clientCorrelator -->	
+			<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+			    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+			</call-template>
+		</then>
+		<else/>
+	</filter>
+		
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
-			payload.refundRequest.clientCorrelator = mc.getProperty("uniqueClientCorrelator");			
-			payload.refundRequest.receiptRequest.notifyURL = mc.getProperty("generatedNotifyURL");
+			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
+			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+
+			if (uniqueClientCorrelator != null) {
+				payload.creditApplyRequest.clientCorrelator = uniqueClientCorrelator;
+			}
+
+			if (generatedNotifyURL != null) {
+				payload.creditApplyRequest.receiptRequest.notifyURL = generatedNotifyURL;
+			}
+			
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
@@ -111,9 +125,19 @@
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	
 	<script language="js">
-		<![CDATA[var payload = mc.getPayloadJSON();
-			payload.refundResponse.clientCorrelator = mc.getProperty("clientCorrelator");
-			payload.refundResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+		<![CDATA[
+			var payload = mc.getPayloadJSON();
+			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
+			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+						
+			if (uniqueClientCorrelator != null) {
+				payload.creditApplyResponse.clientCorrelator = mc.getProperty("clientCorrelator");
+			} 
+
+			if (generatedNotifyURL != null) {
+				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			}
+			
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>

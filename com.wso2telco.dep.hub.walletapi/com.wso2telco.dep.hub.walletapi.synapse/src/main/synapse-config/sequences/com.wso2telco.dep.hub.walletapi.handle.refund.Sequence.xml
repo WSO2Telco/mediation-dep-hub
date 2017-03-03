@@ -177,7 +177,7 @@
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("API_VERSION");
+	var apiVersion = mc.getProperty("VERSION");
 	var payload = mc.getPayloadJSON();
 	payload.refundTransaction.clientCorrelator = mc.getProperty("clientCorrelator");
 	var gatewayResourceURL = payload.refundTransaction.resourceURL;
