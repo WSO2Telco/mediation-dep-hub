@@ -133,9 +133,18 @@
       <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
       <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
       <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-      <property
-        expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
-        name="errorVariable" scope="default" type="STRING"/>
+      <filter regex="^false$" source="boolean(fn:contains($ctx:missingParameters, ','))">
+        <then>
+          <property
+            expression="fn:concat('Missing mandatory parameter: ', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+        </then>
+        <else>
+          <property
+            expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+        </else>
+      </filter>
       <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </else>
   </filter>
