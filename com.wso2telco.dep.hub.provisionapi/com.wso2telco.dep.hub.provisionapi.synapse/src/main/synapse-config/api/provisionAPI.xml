@@ -36,7 +36,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
-    <resource uri-template="v1/provisioningnotification/{notifyURLId}">
+    <resource methods="POST" protocol="http" uri-template="/v1/provisioningnotification/{notifyURLId}">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence"/>
         </inSequence>
