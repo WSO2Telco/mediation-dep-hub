@@ -4,31 +4,31 @@
   	<sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     
     <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"  pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     	
     <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
     <log category="DEBUG" level="custom">
         <property expression="$ctx:msisdn" name="msisdn"/>
