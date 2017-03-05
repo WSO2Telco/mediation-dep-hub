@@ -9,19 +9,19 @@
     <property description="mnc" expression="$ctx:query.param.mnc" name="mnc" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:mnc)" name="mnc" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.serviceCode)" name="serviceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:serviceCode)" name="serviceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:serviceCode)" group="1" name="serviceCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.clientReferenceCode)" name="clientReferenceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:clientReferenceCode)" name="clientReferenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientReferenceCode)" group="1" name="clientReferenceCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:onBehalfOf)" name="onBehalfOf" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:onBehalfOf)" group="1" name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" name="purchaseCategoryCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)" group="1" name="purchaseCategoryCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.callbackReference.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.callbackReference.callbackData)" name="callbackData" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" group="1" name="callbackData" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <filter xpath="boolean($ctx:mnc)">
         <then>
             <filter xpath="not(boolean($ctx:mcc))">
