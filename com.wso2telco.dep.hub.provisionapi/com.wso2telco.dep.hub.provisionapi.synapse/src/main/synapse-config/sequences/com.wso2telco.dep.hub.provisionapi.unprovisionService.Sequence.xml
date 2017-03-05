@@ -92,6 +92,7 @@
         <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
     </call-template>
     <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')" name="notificationURLConfig" scope="default" type="OM"/>

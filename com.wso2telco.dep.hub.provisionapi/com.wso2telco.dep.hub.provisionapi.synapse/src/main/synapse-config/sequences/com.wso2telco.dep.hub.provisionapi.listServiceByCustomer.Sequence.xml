@@ -76,6 +76,7 @@
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
     <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
     <property expression="json-eval($)" name="responseBody" scope="default" type="STRING"/>
     <filter xpath="not(boolean(fn:normalize-space($ctx:responseBody)))">
