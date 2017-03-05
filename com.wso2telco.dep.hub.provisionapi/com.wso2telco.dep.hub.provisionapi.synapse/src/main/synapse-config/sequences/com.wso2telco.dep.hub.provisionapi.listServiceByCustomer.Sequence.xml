@@ -61,6 +61,13 @@
         </then>
         <else/>
     </filter>
+    <!-- validate request identifier length -->
+    <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
+        <with-param name="paramName" value="requestIdentifier"/>
+        <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
+        <with-param name="paramValidLength" value="6"/>
+        <with-param name="paramValidationType" value="LT"/>
+    </call-template>
     <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
         <with-param name="paramName" value="msisdn"/>
         <with-param name="paramValue" value="{$ctx:msisdn}"/>
