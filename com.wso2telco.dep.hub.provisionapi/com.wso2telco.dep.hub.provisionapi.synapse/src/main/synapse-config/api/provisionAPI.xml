@@ -9,6 +9,13 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable/{requestId}*">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.provisionService.Sequence"/>
