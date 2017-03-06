@@ -149,6 +149,10 @@
     </then>
     <else/>
   </filter>
+  <!-- generating requestIdentifier -->
+  <call-template target="com.wso2telco.dep.common.requestIdentifier.generator.Template">
+    <with-param name="requestIdentifier" value="{$ctx:requestIdentifier}"/>
+  </call-template>
   <!-- retrieve hub url from registry -->
   <property
     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
@@ -159,6 +163,16 @@
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+  <!-- replace requestIdentifier in resource path from uniqueRequestIdentifier -->
+  <sequence key="com.wso2telco.dep.common.replace.request.identifier.Sequence"/>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <!-- remove rest url postfix -->
+  <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <!-- generating response json -->
