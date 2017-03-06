@@ -22,12 +22,12 @@
     <property expression="fn:normalize-space($ctx:notifyURL)" group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.serviceRemoveRequest.callbackReference.callbackData)" name="callbackData" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:callbackData)" group="1" name="callbackData" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <filter xpath="boolean($ctx:mnc)">
+    <filter xpath="boolean($ctx:mcc)">
         <then>
-            <filter xpath="not(boolean($ctx:mcc))">
+            <filter xpath="not(boolean($ctx:mnc))">
                 <then>
                     <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
-                    <property expression="fn:concat('mcc',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property expression="fn:concat('mnc',',')" name="missingParameters" scope="default" type="STRING"/>
                 </then>
                 <else/>
             </filter>

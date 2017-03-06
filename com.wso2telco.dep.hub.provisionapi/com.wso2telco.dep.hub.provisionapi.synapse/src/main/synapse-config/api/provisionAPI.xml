@@ -45,6 +45,15 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/remove/{requestId}">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
     <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/active">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence"/>

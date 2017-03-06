@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <property description="msisdn" expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
@@ -58,19 +58,18 @@
 	var apiName = mc.getProperty("API_NAME");
 	var apiVersion = mc.getProperty("VERSION");
 	var payload = mc.getPayloadJSON();
-	var clientCorrelator;
-	var gatewayClientCorrelator = payload.serviceProvisionResponse.clientCorrelator;
+	var gatewayClientCorrelator = payload.serviceRemoveResponse.clientCorrelator;
 	var clientCorrelatorArray = gatewayClientCorrelator.split(":urn:uuid:");
 	if (clientCorrelatorArray.length == 2) {
 		clientCorrelator = clientCorrelatorArray[0];
 	} else {
 		clientCorrelator = "";
 	}
-	payload.serviceProvisionResponse.clientCorrelator = clientCorrelator;
-	var gatewayResourceURL = payload.serviceProvisionResponse.callbackReference.resourceURL;
+	payload.serviceRemoveResponse.clientCorrelator = clientCorrelator;
+	var gatewayResourceURL = payload.serviceRemoveResponse.callbackReference.resourceURL;
 	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
 	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-	payload.serviceProvisionResponse.callbackReference.resourceURL = hubResourceURL;
+	payload.serviceRemoveResponse.callbackReference.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
     <respond/>
 </sequence>
