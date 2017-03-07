@@ -34,7 +34,7 @@
         </then>
         <else/>
     </filter>
-    <filter xpath="boolean($ctx:clientReferenceCode) and boolean($ctx:notifyURL) and boolean($ctx:callbackData) and boolean($ctx:serviceCode)">
+    <filter xpath="boolean($ctx:clientReferenceCode) and boolean($ctx:notifyURL) and boolean($ctx:callbackData) and boolean($ctx:serviceCode) and boolean($ctx:msisdn)">
         <then/>
         <else>
             <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
@@ -59,6 +59,12 @@
             <filter xpath="not(boolean($ctx:serviceCode))">
                 <then>
                     <property expression="fn:concat($ctx:missingParameters, 'serviceCode,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:msisdn))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'msisdn,')" name="missingParameters" scope="default" type="STRING"/>
                 </then>
                 <else/>
             </filter>
