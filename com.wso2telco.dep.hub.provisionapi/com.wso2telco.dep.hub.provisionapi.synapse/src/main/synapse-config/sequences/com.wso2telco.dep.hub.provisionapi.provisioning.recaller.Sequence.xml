@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property description="msisdn" expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING"/>
+    <property description="MSISDN" expression="get-property('msisdn')" name="MSISDN" scope="default" type="STRING"/>
+    <property description="mcc" expression="$ctx:query.param.mcc" name="mcc" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:mcc)" name="mcc" scope="default" type="STRING"/>
+    <property description="mnc" expression="$ctx:query.param.mnc" name="mnc" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:mnc)" name="mnc" scope="default" type="STRING"/>
+    <filter xpath="boolean($ctx:mcc)">
+        <then>
+            <filter xpath="not(boolean($ctx:mnc))">
+                <then>
+                    <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
+                    <property expression="fn:concat('mnc',',')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+        </then>
+        <else/>
+    </filter>
+    <filter xpath="not(boolean($ctx:msisdn))">
+        <then>
+            <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
+            <property expression="fn:concat($ctx:missingParameters, 'msisdn,')" name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+    </filter>
+    <filter regex="true" source="get-property('isMissingMandatoryParam')">
+        <then>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+        <with-param name="paramName" value="msisdn"/>
+        <with-param name="paramValue" value="{$ctx:msisdn}"/>
+    </call-template>
+    <sequence key="com.wso2telco.dep.common.mccMncValidator.Sequence"/>
+    <!-- retrieve hub url from registry -->
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+    <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
+    <!-- retrieve operator's endpoint -->
+    <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+    <!-- retrieve operator's access token -->
+    <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+    <!-- send request to operator endpoint -->
+    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+	var hubURL = mc.getProperty("HUB_URL");
+	var apiName = mc.getProperty("API_NAME");
+	var apiVersion = mc.getProperty("VERSION");
+	var payload = mc.getPayloadJSON();
+	var clientCorrelator;
+	var gatewayClientCorrelator = payload.serviceProvisionResponse.clientCorrelator;
+	var clientCorrelatorArray = gatewayClientCorrelator.split(":urn:uuid:");
+	if (clientCorrelatorArray.length == 2) {
+		clientCorrelator = clientCorrelatorArray[0];
+	} else {
+		clientCorrelator = "";
+	}
+	payload.serviceProvisionResponse.clientCorrelator = clientCorrelator;
+	var gatewayResourceURL = payload.serviceProvisionResponse.callbackReference.resourceURL;
+	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+	payload.serviceProvisionResponse.callbackReference.resourceURL = hubResourceURL;
+	mc.setPayloadJSON(payload);]]></script>
+    <respond/>
+</sequence>

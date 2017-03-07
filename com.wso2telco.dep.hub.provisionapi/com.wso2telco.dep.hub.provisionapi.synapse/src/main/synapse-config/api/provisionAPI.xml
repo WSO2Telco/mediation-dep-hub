@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/provisioning" name="provisionAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable*">
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable?*">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/applicable/{requestId}?*">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence>
@@ -18,9 +27,27 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/{requestId}">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/v1/{msisdn}/remove">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/remove/{requestId}">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence>
@@ -36,9 +63,27 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" protocol="http" uri-template="/v1/{msisdn}/list/active/{requestId}">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/v1/provisioningnotification/{notifyURLId}">
         <inSequence>
             <sequence key="com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" protocol="http" uri-template="/v1/unprovisioningnotification/{notifyURLId}">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence>

@@ -14,13 +14,18 @@
   <name>com.wso2telco.dep.hub.provisionapi.capp</name>
   <description>com.wso2telco.dep.hub.provisionapi.capp</description>
   <properties>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence>
-    <com.wso2telco.dep.hub.api_._provisionAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._provisionAPI>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisionService.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisionService.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisionService.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisionService.Sequence>
+    <com.wso2telco.dep.hub.api_._provisionAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._provisionAPI>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence>
   </properties>
   <dependencies>
     <dependency>
@@ -56,6 +61,36 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence</artifactId>
       <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
