@@ -164,7 +164,7 @@
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- replace requestIdentifier in resource path from uniqueRequestIdentifier -->
-  <sequence key="com.wso2telco.dep.common.replace.request.identifier.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.replace.service.provider.request.identifier.Sequence"/>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
       <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
