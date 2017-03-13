@@ -18,6 +18,8 @@
     <property expression="fn:normalize-space($ctx:offset)" name="offset" scope="default" type="STRING"/>
     <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:limit)" name="limit" scope="default" type="STRING"/>
+    <!-- load mediation configurations from registry -->
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <filter xpath="boolean($ctx:mcc)">
         <then>
             <filter xpath="not(boolean($ctx:mnc))">
@@ -64,7 +66,8 @@
     <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
         <with-param name="paramName" value="requestIdentifier"/>
         <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
-        <with-param name="paramValidLength" value="6"/>
+        <!-- retrieve request identifier length from registry -->
+        <with-param name="paramValidLength" value="{$ctx:mediationConfig//validationConfig/requestIdentifierLength}"/>
         <with-param name="paramValidationType" value="LT"/>
     </call-template>
     <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
@@ -83,8 +86,7 @@
     <call-template target="com.wso2telco.dep.common.requestIdentifier.generator.Template">
         <with-param name="requestIdentifier" value="{$ctx:requestIdentifier}"/>
     </call-template>
-    <!-- retrieve hub url from registry -->
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+    <!-- retrieve hub url from registry -->    
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
     <!-- retrieve operator's endpoint -->
     <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
@@ -102,9 +104,6 @@
     <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
     <!-- send request to operator endpoint -->
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-    
-    
-    
     <!-- extract response resource url -->
     <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
   	var requestIdentifier;
