@@ -37,6 +37,10 @@
     name="requestIdentifier" scope="default" type="STRING"/>
   <property expression="fn:normalize-space($ctx:requestIdentifier)"
     name="requestIdentifier" scope="default" type="STRING"/>
+  <!-- load mediation configurations from registry -->
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+    name="mediationConfig" scope="default" type="OM"/>
   <!-- validate mandatory parameters of the request -->
   <filter xpath="not(boolean($ctx:requestIdentifier))">
     <then>
@@ -51,7 +55,8 @@
   <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
     <with-param name="paramName" value="requestIdentifier"/>
     <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
-    <with-param name="paramValidLength" value="6"/>
+    <!-- retrieve request identifier length from registry -->
+    <with-param name="paramValidLength" value="{$ctx:mediationConfig//validationConfig/requestIdentifierLength}"/>
     <with-param name="paramValidationType" value="LT"/>
   </call-template>
   <filter xpath="boolean($ctx:mcc)">
@@ -140,9 +145,6 @@
     <with-param name="requestIdentifier" value="{$ctx:requestIdentifier}"/>
   </call-template>
   <!-- retrieve hub url from registry -->
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
   <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
