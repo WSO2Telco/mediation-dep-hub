@@ -9,5 +9,5 @@
 	payload.serviceRemoveResponse.callbackReference.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
 	mc.setPayloadJSON(payload);]]></script>
     <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
-    <respond/>
+    <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
