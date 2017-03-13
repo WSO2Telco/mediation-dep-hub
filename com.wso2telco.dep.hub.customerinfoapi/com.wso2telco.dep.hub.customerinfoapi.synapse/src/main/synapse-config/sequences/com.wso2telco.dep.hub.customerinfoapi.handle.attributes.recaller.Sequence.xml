@@ -175,16 +175,29 @@
   <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-  <!-- generating response json -->
+  <!-- extract response resource url -->
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	var hubURL = mc.getProperty("HUB_URL");
+  	var requestIdentifier;
+  	var payload = mc.getPayloadJSON();
+  	var gatewayRequestIdentifier = payload.customer.requestIdentifier;
+  	var requestIdentifierArray = gatewayRequestIdentifier.split(":urn:uuid:");
+  	if (requestIdentifierArray.length == 2) {
+    	requestIdentifier = requestIdentifierArray[0];
+	} 
+	mc.setProperty("requestIdentifier", requestIdentifier);  	
+  	var gatewayResourceURL = payload.customer.resourceURL;
+  	var gatewayResourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+  	mc.setProperty("GATEWAY_RESOURCE_PATH", gatewayResourcePath);]]>
+  </script>
+  <!-- replace requestIdentifier in GATEWAY_RESOURCE_PATH from service provider's requestIdentifier -->
+  <sequence key="com.wso2telco.dep.common.replace.hub.request.identifier.Sequence"/>
+  <!-- generating response json -->
+  <script language="js"><![CDATA[var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
 	var apiVersion = mc.getProperty("VERSION");
 	var payload = mc.getPayloadJSON();
 	payload.customer.requestIdentifier = mc.getProperty("requestIdentifier");
-	var gatewayResourceURL = payload.customer.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(mc.getProperty("GATEWAY_RESOURCE_PATH"));
 	payload.customer.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
