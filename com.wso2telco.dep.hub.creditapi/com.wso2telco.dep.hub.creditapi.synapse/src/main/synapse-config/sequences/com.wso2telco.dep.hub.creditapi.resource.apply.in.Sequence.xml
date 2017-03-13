@@ -115,6 +115,6 @@
 		]]>
 	</script>
 	
-	<respond/>
+	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
   
 </sequence>

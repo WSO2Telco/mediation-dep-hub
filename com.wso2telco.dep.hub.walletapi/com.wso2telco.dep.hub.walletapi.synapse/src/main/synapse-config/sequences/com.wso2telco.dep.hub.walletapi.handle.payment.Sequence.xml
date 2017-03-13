@@ -186,5 +186,5 @@
 	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
 	payload.makePayment.notifyURL = mc.getProperty("notifyURL");
 	mc.setPayloadJSON(payload);]]></script>
-  <respond/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

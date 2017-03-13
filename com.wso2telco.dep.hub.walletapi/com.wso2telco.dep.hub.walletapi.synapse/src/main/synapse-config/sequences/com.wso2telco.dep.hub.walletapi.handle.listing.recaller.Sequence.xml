@@ -35,5 +35,5 @@
 	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
 	payload.paymentTransactionList.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
-  <respond/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
