@@ -99,6 +99,15 @@
     <!-- remove rest url postfix -->
     <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <!-- extract response resource url -->
+	  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+	  	var payload = mc.getPayloadJSON();
+	  	var gatewayResourceURL = payload.serviceList.resourceURL;
+	  	var gatewayResourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+	  	mc.setProperty("GATEWAY_RESOURCE_PATH", gatewayResourcePath);]]>
+	  </script>
+    <!-- replace requestIdentifier in GATEWAY_RESOURCE_PATH from service provider's requestIdentifier -->
+    <sequence key="com.wso2telco.dep.common.replace.hub.request.identifier.Sequence"/>
     <property expression="json-eval($)" name="responseBody" scope="default" type="STRING"/>
     <filter xpath="not(boolean(fn:normalize-space($ctx:responseBody)))">
         <then>
@@ -119,15 +128,12 @@
         </then>
         <else/>
     </filter>
-    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-    var hubURL = mc.getProperty("HUB_URL");
+    <script language="js"><![CDATA[var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
 	var apiVersion = mc.getProperty("VERSION");
 	var payload = mc.getPayloadJSON();
 	payload.serviceList.requestIdentifier = mc.getProperty("requestIdentifier");
-	var gatewayResourceURL = payload.serviceList.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(mc.getProperty("GATEWAY_RESOURCE_PATH"));
 	payload.serviceList.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
