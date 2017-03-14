@@ -105,7 +105,7 @@ If WSO2 Telco Hub is port offset, change the port numbers at the following files
 * TELCO_HUB_HOME/repository/resources/workflow-extensions.xml
 
 If MSISDN blacklist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
-	*<property name="api.check.blacklist" value="true" scope="transport"/>*
+	```<property name="api.check.blacklist" value="true" scope="transport"/>```
 
 If MSISDN whitelist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
         *<property name="api.check.whitelist" value="true" scope="transport"/>*
