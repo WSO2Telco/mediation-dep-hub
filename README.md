@@ -33,6 +33,7 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  com.wso2telco.dep.spend.limit.mediator.jar (repository: WSO2Telco/mediation-dep)
  mediator.jar (repository: WSO2Telco/mediation-dep/mediation-old)
  mysql-connector-java-5.1.36-bin.jar (external: http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar)
+ com.wso2telco.dep.common.mediation jar(repository: WSO2Telco/mediation-dep-common) 
 ```
 
 Add following configuration files:
