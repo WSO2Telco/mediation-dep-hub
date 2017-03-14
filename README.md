@@ -16,6 +16,7 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
 
 *To *ESB_HOME/repository/components/dropins*
 
+```
  dbutils.jar (repository: WSO2Telco/core-util)
  mnc-resolver.jar (repository: WSO2Telco/core-util)
  msisdn-validator.jar (repository: WSO2Telco/core-util)
@@ -23,15 +24,16 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  subscription-validator.jar (repository: WSO2Telco/component-dep)
  javax.persistence_1.0.0.jar (external: http://www.java2s.com/Code/Jar/j/Downloadjavaxpersistence100jar.htm)
  json_3.0.0.wso2v1.jar (external: http://maven.wso2.org/nexus/content/repositories/wso2-public/org/json/wso2/json/3.0.0.wso2v1/json-3.0.0.wso2v1.jar)
-
+```
 
 *To *ESB_HOME/repository/components/lib
 
+```
  oneapi-validation.jar (repository: WSO2Telco/component-dep)
  com.wso2telco.dep.spend.limit.mediator.jar (repository: WSO2Telco/mediation-dep)
  mediator.jar (repository: WSO2Telco/mediation-dep/mediation-old)
  mysql-connector-java-5.1.36-bin.jar (external: http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar)
-
+```
 
 Add following configuration files:
 * *mediator-conf.properties* to *ESB_HOME/repository/conf*
@@ -71,11 +73,6 @@ There will be 10 CApp files (.car files) created in following locations
 
 Start WSO2 ESB and upload CApp files (Refer: *https://docs.wso2.com/display/ESB481/Creating+and+Deploying+a+Carbon+Application*)
 
-If MSISDN blacklist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
-	<property name="api.check.blacklist" value="true" scope="transport"/>
-
-If MSISDN whitelist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
-        <property name="api.check.whitelist" value="true" scope="transport"/>
 
 ## Configuring WSO2 TELCO HUB
 
@@ -105,6 +102,13 @@ If WSO2 Telco Hub is port offset, change the port numbers at the following files
 * TELCO_HUB_HOME/repository/deployment/server/jaggeryapps/manage/site/conf/site.json
 * TELCO_HUB_HOME/repository/conf/workflow.properties
 * TELCO_HUB_HOME/repository/resources/workflow-extensions.xml
+
+If MSISDN blacklist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
+	*<property name="api.check.blacklist" value="true" scope="transport"/>*
+
+If MSISDN whitelist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
+        *<property name="api.check.whitelist" value="true" scope="transport"/>*
+
 
 
 
