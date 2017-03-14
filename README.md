@@ -59,7 +59,7 @@ prodUMdb : *http://docs.wso2telco.com/display/HG/Setup+++User+Manager+database*
 
 Important: Same databases are referred while setting up wso2telcohub
 
-There will be 10 CApp files (.car files) created in following locations
+There will be 10 CApp files (.car files)
 
 * commongw_capp.car
 * locationapigw_capp.car
