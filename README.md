@@ -1,4 +1,4 @@
-WSO2Telco HUB 2.0.0 Release
+##WSO2Telco HUB 2.0.0 Release
 
 
 ##Setting up the Deployment
@@ -14,7 +14,7 @@ Download a fresh WSO2 ESB 5.0.0 pack from website: http://wso2.com/products/ente
 
 Add following .jar files to ESB as described (WSO2.Telco related files are bundled with wso2telco_esb_hub.zip):
 
-*To *ESB_HOME/repository/components/dropins*
+* To *ESB_HOME/repository/components/dropins*
 
 ```
  dbutils.jar (repository: WSO2Telco/core-util)
@@ -26,7 +26,7 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  json_3.0.0.wso2v1.jar (external: http://maven.wso2.org/nexus/content/repositories/wso2-public/org/json/wso2/json/3.0.0.wso2v1/json-3.0.0.wso2v1.jar)
 ```
 
-*To *ESB_HOME/repository/components/lib
+* To *ESB_HOME/repository/components/lib
 
 ```
  oneapi-validation.jar (repository: WSO2Telco/component-dep)
