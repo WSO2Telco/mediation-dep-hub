@@ -26,7 +26,7 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  json_3.0.0.wso2v1.jar (external: http://maven.wso2.org/nexus/content/repositories/wso2-public/org/json/wso2/json/3.0.0.wso2v1/json-3.0.0.wso2v1.jar)
 ```
 
-* To *ESB_HOME/repository/components/lib
+* To  *ESB_HOME/repository/components/lib
 
 ```
  oneapi-validation.jar (repository: WSO2Telco/component-dep)
