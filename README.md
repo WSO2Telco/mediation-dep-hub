@@ -86,7 +86,7 @@ Workflow configurations: *http://docs.wso2telco.com/display/HG/Install+workflows
 
 3. Start WSO2 TELCO HUB and goto Publisher app
 
-4. Create APIs for necessary use-cases and configure endpoint to ESB APIs. API __context__ should be as follows:
+4. Create APIs for necessary use-cases and configure endpoint to ESB APIs. API __context__  and name should be as follows:
 
 *payment
 *ussd
