@@ -6,7 +6,6 @@
 The deployment consists of configuring 2 products:
 
    1 wso2esb
-   
    2 wso2telcohub
 
 ## Configuring WSO2 ESB
