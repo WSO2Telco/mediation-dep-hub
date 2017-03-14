@@ -62,11 +62,11 @@ Important: Same databases are referred while setting up wso2telcohub
 
 There will be 10 CApp files (.car files)
 
-* commongw_capp.car
-* locationapigw_capp.car
-* paymentapigw_capp.car
-* smsapigw_capp.car
-* ussdapigw_capp.car
+* commonhub_capp.car
+* locationapihub_capp.car
+* paymentapihub_capp.car
+* smsapihub_capp.car
+* ussdapihub_capp.car
 * com.wso2telco.dep.hub.creditapi.capp.car
 * com.wso2telco.dep.hub.walletapi.capp.car
 * com.wso2telco.dep.hub.provisionapi.capp.car
