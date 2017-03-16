@@ -3,20 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wso2telco.dep.hub</groupId>
-  <artifactId>mediation-dep-hub</artifactId>
+  <artifactId>com.wso2telco.dep.hub.locationapi</artifactId>
   <version>2.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>mediation-dep-hub</name>
-  <description>mediation-dep-hub</description>
+  <name>com.wso2telco.dep.hub.locationapi</name>
+  <description>com.wso2telco.dep.hub.locationapi</description>
   <modules>
-    <module>com.wso2telco.dep.hub.provisionapi</module>
-    <module>com.wso2telco.dep.hub.customerinfoapi</module>
-    <module>com.wso2telco.dep.hub.smsmessagingapi</module>
-    <module>com.wso2telco.dep.hub.ussdapi</module>
-    <module>com.wso2telco.dep.hub.paymentapi</module>
-    <module>com.wso2telco.dep.hub.walletapi</module>
-    <module>com.wso2telco.dep.hub.creditapi</module>
-    <module>com.wso2telco.dep.hub.locationapi</module>
+    <module>com.wso2telco.dep.hub.locationapi.synapse</module>
   </modules>
   <build>
     <plugins>
