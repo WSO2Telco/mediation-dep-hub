@@ -2,7 +2,7 @@
 <sequence name="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
-  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/> 
   <property expression="json-eval($.makePayment.clientCorrelator)"
     name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="fn:normalize-space($ctx:clientCorrelator)"
@@ -14,16 +14,16 @@
     name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
     scope="default" type="STRING"/>
   <property expression="get-property('endUserId')" name="MSISDN"
-    scope="default" type="STRING"/>
+    scope="default" type="STRING"/>   
   <property expression="json-eval($.makePayment.referenceCode)"
     name="referenceCode" scope="default" type="STRING"/>
-  <property expression="fn:normalize-space($ctx:referenceCode)"
-    name="referenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:referenceCode)" 
+    group="1" name="referenceCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>  
   <property expression="json-eval($.makePayment.notifyURL)"
     name="notifyURL" scope="default" type="STRING"/>
   <property expression="fn:normalize-space($ctx:notifyURL)" group="1"
     name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))"
-    scope="default" type="STRING"/>
+    scope="default" type="STRING"/>  
   <property
     expression="json-eval($.makePayment.paymentAmount.chargingInformation.amount)"
     name="amount" scope="default" type="STRING"/>
@@ -156,17 +156,22 @@
     </then>
     <else/>
   </filter>
-  <!-- validate purchase category code in request -->
-  <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
-  <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+ <!-- validate purchase category code in request -->
+  <filter xpath="(boolean($ctx:purchaseCategoryCode))">
     <then>
-      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-    </then>
-    <else/>
-  </filter>
-  <filter regex="true" source="get-property('INTERNAL_ERROR')">
-    <then>
-      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+	    <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
+	  	<filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+	    	<then>
+	      		<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+	    	</then>
+	    <else/>
+	  	</filter>
+	  	<filter regex="true" source="get-property('INTERNAL_ERROR')">
+	    	<then>
+	      		<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+	    	</then>
+	    	<else/>
+	  	</filter>  
     </then>
     <else/>
   </filter>
