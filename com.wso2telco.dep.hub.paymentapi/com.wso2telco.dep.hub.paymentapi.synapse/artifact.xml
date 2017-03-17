@@ -8,7 +8,7 @@
     <artifact name="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.list.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.list.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.handle.list.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.list.Sequence.xml</file>
     </artifact>
 </artifacts>
