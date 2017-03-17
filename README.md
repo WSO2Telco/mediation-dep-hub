@@ -118,6 +118,9 @@ If MSISDN whitelist feature needs to be enabled for a particular api, then add f
 <property name="api.check.whitelist" value="true" scope="transport"/>
 ```
 
+Note:
+mediation logic compatible with the WSO2.Telco_HubAPI_V1.2 spec 
+
 
 
 
