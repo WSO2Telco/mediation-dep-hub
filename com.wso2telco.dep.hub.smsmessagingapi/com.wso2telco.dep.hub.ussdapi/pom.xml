@@ -6,16 +6,16 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>mediation-dep-hub</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>com.wso2telco.dep.hub.paymentapi</artifactId>
+  <groupId>com.wso2telco.dep.hub</groupId>
+  <artifactId>com.wso2telco.dep.hub.ussdapi</artifactId>
   <version>2.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>com.wso2telco.dep.hub.paymentapi</name>
-  <description>com.wso2telco.dep.hub.paymentapi</description>
+  <name>com.wso2telco.dep.hub.ussdapi</name>
+  <description>com.wso2telco.dep.hub.ussdapi</description>
   <modules>
-    <module>com.wso2telco.dep.hub.paymentapi.synapse</module>
-    <module>com.wso2telco.dep.hub.paymentapi.capp</module>
+    <module>com.wso2telco.dep.hub.ussdapi.synapse</module>
+    <module>com.wso2telco.dep.hub.ussdapi.capp</module>
   </modules>
   <build>
     <plugins>
