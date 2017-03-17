@@ -119,7 +119,7 @@ If MSISDN whitelist feature needs to be enabled for a particular api, then add f
 ```
 
 Note:
-mediation logic compatible with the WSO2.Telco_HubAPI_V1.2 spec 
+API compatible with the WSO2.Telco_HubAPI_V1.2 spec 
 
 
 
