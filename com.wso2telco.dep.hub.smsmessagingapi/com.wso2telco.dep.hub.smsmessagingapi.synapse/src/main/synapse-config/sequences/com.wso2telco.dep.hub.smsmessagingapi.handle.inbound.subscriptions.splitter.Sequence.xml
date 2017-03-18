@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence" onError="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.fault.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <iterate attachPath="//subscription" expression="//destinationAddresses" id="smsmessagingapi.subscribe.notifications.splitter" preservePayload="true">
+        <target>
+            <sequence>
+                <property expression="//destinationAddresses/operatorCode/text()" name="OPERATOR" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR)" group="1" name="OPERATOR" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <enrich>
+                    <source clone="true" xpath="//destinationAddresses/criteria"/>
+                    <target action="child" xpath="//subscription"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//destinationAddresses/destinationAddress"/>
+                    <target action="child" xpath="//subscription"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//destinationAddresses"/>
+                    <target property="original_payload" type="property"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//callbackReference"/>
+                    <target property="original_callbackReference" type="property"/>
+                </enrich>
+                <!-- remove source tag -->
+                <script language="js"><![CDATA[var payload = mc.getPayloadXML();
+                delete payload..*::destinationAddresses;
+                mc.setPayloadXML(payload);]]></script>
+                <!-- retrieve operator's endpoint -->
+                <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+                <!-- retrieve operator's access token -->
+                <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+                <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
+                    <then>
+                        <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                    </then>
+                    <else>
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+                    </else>
+                </filter>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>
