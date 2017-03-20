@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property name="state" value="+++++++++ hitting gather ++++++++"/>
+    </log>
     <filter regex="Not Provisioned|Failed" source="$ctx:messageStatus">
         <then/>
         <else>
@@ -18,18 +21,6 @@
                             <parameter expression="$ctx:subscriptionID" type="VARCHAR"/>
                             <parameter expression="$ctx:resourceURL" type="VARCHAR"/>
                             <parameter expression="$ctx:operatorCode" type="VARCHAR"/>
-                        </statement>
-                    </dbreport>
-                    <!-- activate the subscription -->
-                    <dbreport>
-                        <connection>
-                            <pool>
-                                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
-                            </pool>
-                        </connection>
-                        <statement>
-                            <sql><![CDATA[update subscriptions set is_active=1 where mo_subscription_did=?;]]></sql>
-                            <parameter expression="$ctx:subscriptionID" type="VARCHAR"/>
                         </statement>
                     </dbreport>
                 </then>

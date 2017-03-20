@@ -3,8 +3,11 @@
     <iterate attachPath="//subscription" expression="//destinationAddresses" id="smsmessagingapi.subscribe.notifications.splitter" preservePayload="true">
         <target>
             <sequence>
-                <property expression="//destinationAddresses/operatorCode/text()" name="OPERATOR" scope="default" type="STRING"/>
-                <property expression="fn:normalize-space($ctx:OPERATOR)" group="1" name="OPERATOR" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <log level="custom">
+                    <property name="state" value="+++++++++ hitting iterator ++++++++"/>
+                </log>
+                <property expression="//destinationAddresses/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <enrich>
                     <source clone="true" xpath="//destinationAddresses/criteria"/>
                     <target action="child" xpath="//subscription"/>
@@ -26,7 +29,7 @@
                 delete payload..*::destinationAddresses;
                 mc.setPayloadXML(payload);]]></script>
                 <!-- retrieve operator's endpoint -->
-                <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+                <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
                 <!-- retrieve operator's access token -->
                 <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
