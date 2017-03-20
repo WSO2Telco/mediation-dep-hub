@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+ 
+   <filter xpath="boolean($ctx:msisdn) and boolean($ctx:shortCode) and boolean($ctx:outboundUSSDMessage) and boolean($ctx:clientCorrelator) and boolean($ctx:ussdAction)">
+        <then>
+            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+                <with-param name="paramName" value="msisdn"/>
+                <with-param name="paramValue" value="{$ctx:msisdn}"/>
+            </call-template>
+
+            <filter regex="^true$" source="boolean($ctx:notifyURL)">
+				<then>
+		            <call-template target="com.wso2telco.dep.common.urlValidation.Template">
+		                <with-param name="paramName" value="notifyURL"/>
+		                <with-param name="paramValue" value="{$ctx:notifyURL}"/>
+		            </call-template>
+				</then>
+				<else/>
+            </filter>
+
+        </then>
+        <else>
+            <filter xpath="not(boolean($ctx:msisdn))">
+                <then>
+                    <property expression="fn:concat('msisdn',',')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:shortCode))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'shortCode,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:outboundUSSDMessage))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'outboundUSSDMessage,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:clientCorrelator))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'clientCorrelator,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:ussdAction))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'ussdAction,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+
+			<filter source="boolean(fn:contains($ctx:missingParameters, ','))" regex="^false$">
+				<then>
+					<property expression="fn:concat('Missing mandatory parameter: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>            	
+				</then>
+				<else>
+					<property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>            	
+				</else>
+			</filter>
+
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </else>
+    </filter>
+
+</sequence>
