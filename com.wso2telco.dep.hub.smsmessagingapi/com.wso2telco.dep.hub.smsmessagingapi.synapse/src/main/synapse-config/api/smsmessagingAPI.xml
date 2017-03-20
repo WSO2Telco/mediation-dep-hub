@@ -3,7 +3,7 @@
 	<resource methods="POST" protocol="http" uri-template="/outbound/subscriptions*">
 		<inSequence>
 			<sequence
-				key="com.wso2telco.dep.hub.smsmessagingapi.handle.dn.subscription.Sequence" />
+				key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence" />
 		</inSequence>
 		<outSequence />
 		<faultSequence />
