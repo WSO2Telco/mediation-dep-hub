@@ -49,6 +49,9 @@ Add following configuration files:
 * *oneapi-validation-conf.properties* to *ESB_HOME/repository/conf*
 (repository:https://github.com/WSO2Telco/component-dep/blob/master/features/com.wso2telco.dep.hub.core.feature/src/main/resources/config/oneapi-validation-conf.properties)
 
+Add following property to *ESB_HOME/repository/conf/synapse.properties*
+`synapse.commons.json.output.autoPrimitive=false`
+
 ## Configuring datasources
 
 Add following database references: proddepdb and prodUMdb (with suitable user credentials) at *ESB_HOME/repository/conf/datasources/masterdatasources.xml*
@@ -114,6 +117,9 @@ If MSISDN whitelist feature needs to be enabled for a particular api, then add f
 ```
 <property name="api.check.whitelist" value="true" scope="transport"/>
 ```
+
+Note:
+API compatible with the WSO2.Telco_HubAPI_V1.2 spec 
 
 
 

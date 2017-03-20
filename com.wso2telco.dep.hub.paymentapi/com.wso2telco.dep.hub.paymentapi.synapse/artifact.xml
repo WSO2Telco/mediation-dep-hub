@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="paymentAPI" groupId="com.wso2telco.dep.hub.paymentapi.synapse.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/paymentAPI.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.handle.list.Sequence" groupId="com.wso2telco.dep.hub.paymentapi.synapse.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.list.Sequence.xml</file>
+    </artifact>
+</artifacts>

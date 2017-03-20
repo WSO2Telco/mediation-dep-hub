@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/payment" name="paymentAPI" xmlns="http://ws.apache.org/ns/synapse">
+  <resource methods="POST" protocol="http" uri-template="/{endUserId}/transactions/amount">
+    <inSequence>
+      <sequence  key="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+  <resource methods="GET" protocol="http" uri-template="/{endUserId}/transactions">
+    <inSequence/>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+</api>

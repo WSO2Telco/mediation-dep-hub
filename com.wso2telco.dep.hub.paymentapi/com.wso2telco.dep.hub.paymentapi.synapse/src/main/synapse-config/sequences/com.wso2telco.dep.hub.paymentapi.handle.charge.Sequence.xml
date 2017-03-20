@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"
+          trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property expression="json-eval($.amountTransaction.clientCorrelator)"
+              name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)"
+              group="1" name="clientCorrelator"
+              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.amountTransaction.endUserId)"
+              name="endUserId" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:endUserId)" group="1"
+              name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property expression="json-eval($.amountTransaction.endUserId)"
+              name="MSISDN" scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.amount)"
+            name="amount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:amount)" group="1"
+              name="amount" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.currency)"
+            name="currency" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:currency)" group="1"
+              name="currency" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.code)"
+            name="code" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:code)" group="1"
+              name="code" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.description)"
+            name="description" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:description)" group="1"
+              name="description" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.onBehalfOf)"
+            name="onBehalfOf" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:onBehalfOf)" group="1"
+              name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.purchaseCategoryCode)"
+            name="purchaseCategoryCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
+              group="1" name="purchaseCategoryCode"
+              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.channel)"
+            name="channel" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:channel)" group="1"
+              name="channel" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.taxAmount)"
+            name="taxAmount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:taxAmount)" group="1"
+              name="taxAmount" pattern="((^(?!null).*$)|(^(null).+$))"
+              scope="default" type="STRING"/>
+    <property expression="json-eval($.amountTransaction.referenceCode)"
+              name="referenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:referenceCode)"
+              group="1" name="referenceCode"
+              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.transactionOperationStatus)"
+            name="transactionOperationStatus" scope="default" type="STRING"/>
+    <property
+            expression="fn:normalize-space($ctx:transactionOperationStatus)"
+            group="1" name="transactionOperationStatus"
+            pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property
+            expression="json-eval($.amountTransaction.originalServerReferenceCode)"
+            name="originalServerReferenceCode" scope="default" type="STRING"/>
+    <property
+            expression="fn:normalize-space($ctx:originalServerReferenceCode)"
+            group="1" name="originalServerReferenceCode"
+            pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+
+
+</sequence>
