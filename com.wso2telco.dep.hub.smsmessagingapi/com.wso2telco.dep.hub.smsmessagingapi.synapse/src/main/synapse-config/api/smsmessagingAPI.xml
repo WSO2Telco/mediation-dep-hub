@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/smsmessaging" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET">
-        <inSequence/>
-        <outSequence/>
-        <faultSequence/>
-    </resource>
+	<resource methods="POST" protocol="http" uri-template="/outbound/subscriptions*">
+		<inSequence>
+			<sequence
+				key="com.wso2telco.dep.hub.smsmessagingapi.handle.dn.subscription.Sequence" />
+		</inSequence>
+		<outSequence />
+		<faultSequence />
+	</resource>
 </api>
