@@ -2,4 +2,7 @@
     <artifact name="smsmessagingAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/smsmessagingAPI.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence.xml</file>
+    </artifact>
 </artifacts>
