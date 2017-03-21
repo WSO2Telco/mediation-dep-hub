@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <log level="custom">
-        <property name="state" value="+++++++++ hitting gather ++++++++"/>
-    </log>
     <filter regex="Not Provisioned|Failed" source="$ctx:messageStatus">
         <then/>
         <else>
