@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint" xmlns="http://ws.apache.org/ns/synapse">
+    <default>
+        <timeout>
+            <responseAction>fault</responseAction>
+        </timeout>
+    </default>
+</endpoint>
