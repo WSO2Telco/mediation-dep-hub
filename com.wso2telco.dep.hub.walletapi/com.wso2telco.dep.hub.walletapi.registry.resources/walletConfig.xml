@@ -1,0 +1,3 @@
+<apiConfig>
+	<notificationURL>https://localhost:8280/wallet/v1/walletnotification</notificationURL>
+</apiConfig>

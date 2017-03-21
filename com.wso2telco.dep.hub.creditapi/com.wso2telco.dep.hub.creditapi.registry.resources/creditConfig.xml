@@ -1,0 +1,3 @@
+<apiConfig>
+	<notificationURL>https://localhost:8280/credit/v1/creditnotification</notificationURL>
+</apiConfig>

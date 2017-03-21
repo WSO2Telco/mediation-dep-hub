@@ -44,22 +44,10 @@
     
     <sequence key="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence"/>
     
-    <filter xpath="boolean($ctx:notifyURL)">
-    	<then>
-			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
-			  name="notificationURLConfig" scope="default" type="OM"/>
-			<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
-			<!-- save service provider's notify url and generate new notify url from hub -->
-			<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
-			<filter regex="true" source="get-property('INTERNAL_ERROR')">
-			  <then>
-			    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-			  </then>
-			  <else/>
-			</filter>    		
-    	</then>
-    	<else/>
-    </filter>
+	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+	    <with-param name="apiRefCode" value="ussd"/>
+	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+	</call-template>    
     
 	<!-- Parameter for endpoint retrieval -->
 	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>

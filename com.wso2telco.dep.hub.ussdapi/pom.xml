@@ -15,6 +15,7 @@
   <description>com.wso2telco.dep.hub.ussdapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.ussdapi.synapse</module>
+    <module>com.wso2telco.dep.hub.ussdapi.registry.resources</module>
     <module>com.wso2telco.dep.hub.ussdapi.capp</module>
   </modules>
   <build>

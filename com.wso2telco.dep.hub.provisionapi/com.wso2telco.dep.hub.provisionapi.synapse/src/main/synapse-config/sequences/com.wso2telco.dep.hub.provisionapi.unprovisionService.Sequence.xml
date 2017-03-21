@@ -101,9 +101,10 @@
     <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')" name="notificationURLConfig" scope="default" type="OM"/>
-    <property expression="$ctx:notificationURLConfig//provisioning" name="NOTIFICATION_URL" scope="default" type="STRING"/>
-    <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+	    <with-param name="apiRefCode" value="provisioning"/>
+	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+	</call-template>
     <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
     payload.serviceRemoveRequest.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
     payload.serviceRemoveRequest.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
