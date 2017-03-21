@@ -46,7 +46,9 @@
         <faultSequence/>
     </resource>
     <resource methods="GET" protocol="http" uri-template="/{endUserId}/transactions">
-        <inSequence/>
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.handle.list.Sequence"/>
+        </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
