@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/smsmessaging" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
-	<resource methods="POST" protocol="http" uri-template="/outbound/subscriptions*">
-		<inSequence>
-			<sequence
-				key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence" />
-		</inSequence>
-		<outSequence />
-		<faultSequence />
-	</resource>
+    <resource methods="POST" protocol="http" uri-template="/outbound/subscriptions*">
+        <inSequence>
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/inbound/subscriptions">
         <inSequence>
             <!-- SMS : Subscribe to notifications of messages sent to your application -->

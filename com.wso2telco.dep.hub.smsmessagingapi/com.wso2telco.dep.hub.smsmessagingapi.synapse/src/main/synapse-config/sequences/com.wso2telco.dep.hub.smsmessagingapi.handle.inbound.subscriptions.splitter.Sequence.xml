@@ -30,6 +30,7 @@
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
                     <then>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <!-- dummy endpoint call to step-out from iterate -->
                         <call>
                             <endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint"/>
                         </call>
