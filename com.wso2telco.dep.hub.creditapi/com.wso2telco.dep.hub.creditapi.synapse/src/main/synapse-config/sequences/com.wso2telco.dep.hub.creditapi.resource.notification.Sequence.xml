@@ -17,6 +17,12 @@
   </script>
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
-  
-  <send/>
+  <!-- update notify status to 1 -->
+  <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
