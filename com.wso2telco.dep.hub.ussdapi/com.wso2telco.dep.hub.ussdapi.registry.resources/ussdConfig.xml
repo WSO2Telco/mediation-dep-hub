@@ -1,0 +1,3 @@
+<apiConfig>
+	<notificationURL>https://localhost:8280/ussd/v1/ussdnotification</notificationURL>
+</apiConfig>

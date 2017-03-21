@@ -6,7 +6,6 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>mediation-dep-hub</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
   <packaging>pom</packaging>
@@ -14,6 +13,7 @@
   <description>com.wso2telco.dep.hub.creditapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.creditapi.synapse</module>
+    <module>com.wso2telco.dep.hub.creditapi.registry.resources</module>
     <module>com.wso2telco.dep.hub.creditapi.capp</module>
   </modules>
   <build>

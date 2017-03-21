@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="creditConfig" groupId="com.wso2telco.dep.hub.resource" version="2.0.0-SNAPSHOT" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>creditConfig.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations/api</path>
+            <mediaType>application/xml</mediaType>
+        </item>
+    </artifact>
+</artifacts>
