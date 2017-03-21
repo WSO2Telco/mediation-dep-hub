@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property expression="json-eval($.subscription.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.subscription.notificationFormat)" name="notificationFormat" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notificationFormat)" group="1" name="notificationFormat" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property description="callbackData" expression="json-eval($.subscription.callbackReference.callbackData)" name="callbackData" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" group="1" name="callbackData" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property description="notifyURL" expression="json-eval($.subscription.callbackReference.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <filter xpath="not(boolean($ctx:callbackData))">
+        <then>
+            <property expression="fn:concat('callbackData',',')" name="missingParameters" scope="default" type="STRING"/>
+            <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+        </then>
+        <else/>
+    </filter>
+    <filter xpath="not(boolean($ctx:notifyURL))">
+        <then>
+            <property expression="fn:concat('notifyURL',',')" name="missingParameters" scope="default" type="STRING"/>
+            <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+        </then>
+        <else/>
+    </filter>
+    <!-- validate destination address details -->
+    <foreach expression="//destinationAddresses" xmlns:ns="http://org.apache.synapse/xsd">
+        <sequence>
+            <property expression="//operatorCode/text()" name="OPERATOR" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:OPERATOR)" group="1" name="OPERATOR" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <property expression="//destinationAddress/text()" name="destinationAddress" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:destinationAddress)" group="1" name="destinationAddress" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="not(boolean($ctx:OPERATOR))">
+                <then>
+                    <property expression="fn:concat('operatorCode',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:destinationAddress))">
+                <then>
+                    <property expression="fn:concat('destinationAddress',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+        </sequence>
+    </foreach>
+    <!-- handle if mandatory parameters are missing -->
+    <filter regex="false" source="get-property('MANDATORY_PARAMETER_VALIDATED')">
+        <then>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <filter regex="^false$" source="boolean(fn:contains($ctx:missingParameters, ','))">
+                <then>
+                    <property expression="fn:concat('Missing mandatory parameter: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+                </then>
+                <else>
+                    <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+                </else>
+            </filter>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <!-- generating request clientCorrelator -->
+    <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+        <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+    </call-template>
+    <!-- load notification url from registry -->
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')" name="notificationURLConfig" scope="default" type="OM"/>
+    <property expression="$ctx:notificationURLConfig//smsmessaging" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+    <!-- save service provider's notify url and generate new notify url from hub -->
+    <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+    <filter regex="true" source="get-property('INTERNAL_ERROR')">
+        <then>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <!-- update clientCorrelator and notifyURL with generated values -->
+    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+	payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
+	payload.subscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
+	mc.setPayloadJSON(payload);]]></script>
+    <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence"/>
+    <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence"/>
+</sequence>
