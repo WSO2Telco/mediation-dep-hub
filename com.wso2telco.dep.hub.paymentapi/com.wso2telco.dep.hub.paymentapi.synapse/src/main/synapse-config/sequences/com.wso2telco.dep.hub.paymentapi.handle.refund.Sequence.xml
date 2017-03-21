@@ -1,224 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence"
-          trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-
-    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
-
-    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-    <property expression="json-eval($.amountTransaction.clientCorrelator)"
-              name="clientCorrelator" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:clientCorrelator)"
-              group="1" name="clientCorrelator"
-              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property expression="json-eval($.amountTransaction.endUserId)"
-              name="endUserId" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:endUserId)" group="1"
-              name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property expression="json-eval($.amountTransaction.endUserId)"
-              name="MSISDN" scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.amount)"
-            name="amount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:amount)" group="1"
-              name="amount" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.currency)"
-            name="currency" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:currency)" group="1"
-              name="currency" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.code)"
-            name="code" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:code)" group="1"
-              name="code" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.description)"
-            name="description" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:description)" group="1"
-              name="description" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.onBehalfOf)"
-            name="onBehalfOf" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:onBehalfOf)" group="1"
-              name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.purchaseCategoryCode)"
-            name="purchaseCategoryCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
-              group="1" name="purchaseCategoryCode"
-              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.channel)"
-            name="channel" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:channel)" group="1"
-              name="channel" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.taxAmount)"
-            name="taxAmount" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:taxAmount)" group="1"
-              name="taxAmount" pattern="((^(?!null).*$)|(^(null).+$))"
-              scope="default" type="STRING"/>
-    <property expression="json-eval($.amountTransaction.referenceCode)"
-              name="referenceCode" scope="default" type="STRING"/>
-    <property expression="fn:normalize-space($ctx:referenceCode)"
-              group="1" name="referenceCode"
-              pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.transactionOperationStatus)"
-            name="transactionOperationStatus" scope="default" type="STRING"/>
-    <property
-            expression="fn:normalize-space($ctx:transactionOperationStatus)"
-            group="1" name="transactionOperationStatus"
-            pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property
-            expression="json-eval($.amountTransaction.originalServerReferenceCode)"
-            name="originalServerReferenceCode" scope="default" type="STRING"/>
-    <property
-            expression="fn:normalize-space($ctx:originalServerReferenceCode)"
-            group="1" name="originalServerReferenceCode"
-            pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-
-
-    <filter xpath="boolean($ctx:endUserId) and boolean($ctx:transactionOperationStatus) and boolean($ctx:referenceCode) and boolean($ctx:originalServerReferenceCode) and ((boolean($ctx:amount) and boolean($ctx:currency)) or boolean($ctx:code))">
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <property expression="json-eval($.amountTransaction.clientCorrelator)"
+    name="clientCorrelator" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:clientCorrelator)"
+    group="1" name="clientCorrelator"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property expression="json-eval($.amountTransaction.endUserId)"
+    name="endUserId" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:endUserId)" group="1"
+    name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property expression="json-eval($.amountTransaction.endUserId)"
+    name="MSISDN" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.amount)"
+    name="amount" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:amount)" group="1"
+    name="amount" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.currency)"
+    name="currency" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:currency)" group="1"
+    name="currency" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.code)"
+    name="code" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:code)" group="1"
+    name="code" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.description)"
+    name="description" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:description)" group="1"
+    name="description" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.onBehalfOf)"
+    name="onBehalfOf" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:onBehalfOf)" group="1"
+    name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.purchaseCategoryCode)"
+    name="purchaseCategoryCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
+    group="1" name="purchaseCategoryCode"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.channel)"
+    name="channel" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:channel)" group="1"
+    name="channel" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.paymentAmount.chargingMetaData.taxAmount)"
+    name="taxAmount" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:taxAmount)" group="1"
+    name="taxAmount" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property expression="json-eval($.amountTransaction.referenceCode)"
+    name="referenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:referenceCode)"
+    group="1" name="referenceCode"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.transactionOperationStatus)"
+    name="transactionOperationStatus" scope="default" type="STRING"/>
+  <property
+    expression="fn:normalize-space($ctx:transactionOperationStatus)"
+    group="1" name="transactionOperationStatus"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.amountTransaction.originalServerReferenceCode)"
+    name="originalServerReferenceCode" scope="default" type="STRING"/>
+  <property
+    expression="fn:normalize-space($ctx:originalServerReferenceCode)"
+    group="1" name="originalServerReferenceCode"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <filter xpath="boolean($ctx:endUserId) and boolean($ctx:transactionOperationStatus) and boolean($ctx:referenceCode) and boolean($ctx:originalServerReferenceCode) and ((boolean($ctx:amount) and boolean($ctx:currency)) or boolean($ctx:code))">
+    <then>
+      <filter xpath="boolean($ctx:amount)">
         <then>
-            <filter xpath="boolean($ctx:amount)">
-                <then>
-                    <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
-                        <with-param name="paramName" value="amount"/>
-                        <with-param name="paramValue" value="{$ctx:amount}"/>
-                        <with-param name="validationType" value="GE_ZERO"/>
-                    </call-template>
-                </then>
-                <else/>
-            </filter>
-            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
-                <with-param name="paramName" value="endUserId"/>
-                <with-param name="paramValue" value="{$ctx:endUserId}"/>
-            </call-template>
+          <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
+            <with-param name="paramName" value="amount"/>
+            <with-param name="paramValue" value="{$ctx:amount}"/>
+            <with-param name="validationType" value="GE_ZERO"/>
+          </call-template>
+        </then>
+        <else/>
+      </filter>
+      <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+        <with-param name="paramName" value="endUserId"/>
+        <with-param name="paramValue" value="{$ctx:endUserId}"/>
+      </call-template>
+    </then>
+    <else>
+      <filter xpath="not(boolean($ctx:endUserId))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' endUserId,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:transactionOperationStatus))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' transactionOperationStatus,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:referenceCode))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' referenceCode,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:originalServerReferenceCode))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' originalServerReferenceCode,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:amount)) and boolean($ctx:currency)">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' amount,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:currency)) and boolean($ctx:amount)">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' currency,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:currency)) and not(boolean($ctx:amount)) and not(boolean($ctx:code))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, ' amount/currency or code,')"
+            name="missingParameters" scope="default" type="STRING"/>
+          <property name="messageId" scope="default" type="STRING" value="SVC0007"/>
+          <property name="errorText" scope="default" type="STRING" value="Invalid charging information"/>
         </then>
         <else>
-            <filter xpath="not(boolean($ctx:endUserId))">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' endUserId,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-            <filter xpath="not(boolean($ctx:transactionOperationStatus))">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' transactionOperationStatus,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-            <filter xpath="not(boolean($ctx:referenceCode))">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' referenceCode,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-            <filter xpath="not(boolean($ctx:originalServerReferenceCode))">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' originalServerReferenceCode,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-            <filter xpath="not(boolean($ctx:amount)) and boolean($ctx:currency)">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' amount,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-            <filter xpath="not(boolean($ctx:currency)) and boolean($ctx:amount)">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' currency,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                </then>
-                <else/>
-            </filter>
-           <filter xpath="not(boolean($ctx:currency)) and not(boolean($ctx:amount)) and not(boolean($ctx:code))">
-                <then>
-                    <property
-                            expression="fn:concat($ctx:missingParameters, ' amount/currency or code,')"
-                            name="missingParameters" scope="default" type="STRING"/>
-                    <property name="messageId" scope="default" type="STRING" value="SVC0007"/>
-                    <property name="errorText" scope="default" type="STRING" value="Invalid charging information"/>
-                </then>
-                <else>
-                    <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-                    <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-                </else>
-            </filter>
-            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))"
-                    name="missingParameters" scope="default" type="STRING"/>
-            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
-            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-            <filter regex="^false$" source="boolean(fn:contains($ctx:missingParameters, ','))">
-                <then>
-                    <property
-                            expression="fn:concat('Missing mandatory parameter:', $ctx:missingParameters)"
-                            name="errorVariable" scope="default" type="STRING"/>
-                </then>
-                <else>
-                    <property
-                            expression="fn:concat('Missing mandatory parameters:', $ctx:missingParameters)"
-                            name="errorVariable" scope="default" type="STRING"/>
-                </else>
-            </filter>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+          <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+          <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
         </else>
-    </filter>
-    <!-- validate purchase category code in request -->
-    <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
-    <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+      </filter>
+      <property
+        expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))"
+        name="missingParameters" scope="default" type="STRING"/>
+      <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+      <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+      <filter regex="^false$" source="boolean(fn:contains($ctx:missingParameters, ','))">
         <then>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+          <property
+            expression="fn:concat('Missing mandatory parameter:', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
         </then>
-        <else/>
-    </filter>
-    <filter regex="true" source="get-property('INTERNAL_ERROR')">
-        <then>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-        </then>
-        <else/>
-    </filter>
-    <!-- generating request clientCorrelator -->
-    <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-        <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
-    </call-template>
-    <!-- retrieve hub url from registry -->
-    <property
-            expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-            name="mediationConfig" scope="default" type="OM"/>
-    <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
-              scope="default" type="STRING"/>
-    <!-- retrieve operator's endpoint -->
-    <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
-    <!-- retrieve operator's access token -->
-    <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
-    <!-- generating request json -->
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+        <else>
+          <property
+            expression="fn:concat('Missing mandatory parameters:', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+        </else>
+      </filter>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </else>
+  </filter>
+  <!-- validate purchase category code in request -->
+  <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
+  <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <!-- generating request clientCorrelator -->
+  <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+  </call-template>
+  <!-- retrieve hub url from registry -->
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+    name="mediationConfig" scope="default" type="OM"/>
+  <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
+    scope="default" type="STRING"/>
+  <!-- retrieve operator's endpoint -->
+  <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  <!-- retrieve operator's access token -->
+  <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+  <!-- generating request json -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.amountTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	mc.setPayloadJSON(payload);]]></script>
-    <!-- send request to operator endpoint -->
-    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-    <!-- generating response json -->
-    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+  <!-- send request to operator endpoint -->
+  <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <!-- generating response json -->
+  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
 	var apiVersion = mc.getProperty("VERSION");
@@ -229,5 +226,5 @@
 	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
 	payload.amountTransaction.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
-    <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
