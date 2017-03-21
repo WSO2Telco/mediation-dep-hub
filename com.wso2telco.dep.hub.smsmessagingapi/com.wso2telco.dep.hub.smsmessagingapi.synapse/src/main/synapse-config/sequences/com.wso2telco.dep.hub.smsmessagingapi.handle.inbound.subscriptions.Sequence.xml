@@ -82,7 +82,6 @@
         </then>
         <else/>
     </filter>
-    <!-- generate 'generatedNotifyURL' -->
     <!-- update clientCorrelator and notifyURL with generated values -->
     <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");

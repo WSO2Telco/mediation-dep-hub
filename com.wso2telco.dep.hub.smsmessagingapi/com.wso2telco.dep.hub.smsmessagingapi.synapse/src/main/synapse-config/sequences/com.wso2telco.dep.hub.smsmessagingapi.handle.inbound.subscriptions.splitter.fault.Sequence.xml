@@ -3,6 +3,11 @@
     <log level="custom">
         <property name="state" value="+++++++++ hitting fault ++++++++"/>
     </log>
-    <property name="messageStatus" scope="default" type="STRING" value="Failed"/>
+    <filter regex="Not Provisioned" source="$ctx:messageStatus">
+        <then/>
+        <else>
+            <property name="messageStatus" scope="default" type="STRING" value="Failed"/>
+        </else>
+    </filter>
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence"/>
 </sequence>

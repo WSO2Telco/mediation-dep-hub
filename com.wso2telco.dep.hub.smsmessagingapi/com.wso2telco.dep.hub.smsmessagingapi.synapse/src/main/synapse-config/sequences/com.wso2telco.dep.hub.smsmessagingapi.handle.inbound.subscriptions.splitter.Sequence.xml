@@ -30,13 +30,15 @@
                 mc.setPayloadXML(payload);]]></script>
                 <!-- retrieve operator's endpoint -->
                 <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
-                <!-- retrieve operator's access token -->
-                <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
                     <then>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <call>
+                            <endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint"/>
+                        </call>
                     </then>
                     <else>
+                        <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
                         <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
                     </else>
                 </filter>
