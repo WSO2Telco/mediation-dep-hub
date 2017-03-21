@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/payment" name="paymentAPI" xmlns="http://ws.apache.org/ns/synapse">
-  <resource methods="POST" protocol="http" uri-template="/{endUserId}/transactions/amount">
-    <inSequence>
-      <sequence key="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"/>
-    </inSequence>
-    <outSequence/>
-    <faultSequence/>
-  </resource>
-  <resource methods="GET" protocol="http" uri-template="/{endUserId}/transactions">
-    <inSequence/>
-    <outSequence/>
-    <faultSequence/>
-  </resource>
+    <resource methods="POST" protocol="http" uri-template="/{endUserId}/transactions/amount">
+        <inSequence>
+            <property
+                    expression="json-eval($.amountTransaction.transactionOperationStatus)"
+                    name="transactionOperationStatus" scope="default" type="STRING"/>
+            <property
+                    expression="fn:normalize-space($ctx:transactionOperationStatus)"
+                    group="1" name="transactionOperationStatus"
+                    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <switch source="$ctx:transactionOperationStatus">
+                <case regex="Charged">
+                    <sequence key="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"/>
+                </case>
+                <case regex="Refunded">
+                    <sequence key="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence"/>
+                </case>
+                <default>
+                   <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+
+                    <filter xpath="boolean($ctx:transactionOperationStatus)">
+                        <then>
+                            <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
+                            <property name="messageId" scope="default" type="STRING" value="POL0001"/>
+                            <property name="errorText" scope="default" type="STRING"
+                                      value="A policy error occurred. Error code is %1"/>
+                            <property expression="fn:concat('Invalid transactionOperationStatus: ', $ctx:transactionOperationStatus)"
+                                      name="errorVariable" scope="default" type="STRING"/>
+                        </then>
+                        <else>
+                            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+                            <property name="errorText" scope="default" type="STRING"
+                                      value="Invalid input value for message part %1"/>
+                            <property expression="fn:concat('Missing mandatory parameter: ', 'transactionOperationStatus')"
+                                      name="errorVariable" scope="default" type="STRING"/>
+                        </else>
+                    </filter>
+                    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                </default>
+
+            </switch>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" protocol="http" uri-template="/{endUserId}/transactions">
+        <inSequence/>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
 </api>
