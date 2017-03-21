@@ -178,6 +178,16 @@
     </then>
     <else/>
   </filter>
+  <!-- validate channel in request -->
+  <filter xpath="(boolean($ctx:channel))">
+    <then>
+	    <call-template target="com.wso2telco.dep.common.channelValidation.Template">
+			<with-param name="paramName" value="channel"/>
+			<with-param name="paramValue" value="{$ctx:channel}"/>
+		</call-template> 
+    </then>
+    <else/>
+  </filter>
   <!-- generating request clientCorrelator -->
   <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
