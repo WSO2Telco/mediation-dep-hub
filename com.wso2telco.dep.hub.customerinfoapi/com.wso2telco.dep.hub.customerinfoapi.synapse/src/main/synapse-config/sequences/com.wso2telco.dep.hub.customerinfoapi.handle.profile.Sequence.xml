@@ -83,8 +83,8 @@
 					var mcc = imsi.substring(0, 3);
 					var rem = imsi.substring(3);
 					var mnc = rem.substring(0, 2);
-					mc.getProperty("mcc", mcc);
-					mc.getProperty("mnc", mnc);]]></script>
+					mc.setProperty("mcc", mcc);
+					mc.setProperty("mnc", mnc);]]></script>
         </then>
         <else>
           <property
@@ -122,10 +122,14 @@
     <else/>
   </filter>
   <!-- validate msisdn format -->
-  <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
-    <with-param name="paramName" value="msisdn"/>
-    <with-param name="paramValue" value="{$ctx:msisdn}"/>
-  </call-template>
+  <filter xpath="(boolean($ctx:msisdn))">
+  	<then>
+	  <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+	    <with-param name="paramName" value="msisdn"/>
+	    <with-param name="paramValue" value="{$ctx:msisdn}"/>
+	  </call-template>
+  	</then>
+  </filter>
   <!-- validate purchase category code in request -->
   <filter xpath="(boolean($ctx:purchaseCategoryCode))">
     <then>
