@@ -56,14 +56,10 @@
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
-	<filter xpath="boolean($ctx:clientCorrelator)">
-		<then>
-			<!-- generating request clientCorrelator -->
-			<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-			    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
-			</call-template>
-		</then>
-	</filter>
+	<!-- generating request clientCorrelator -->
+	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+	    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+	</call-template>
 	
 	<script language="js">
 		<![CDATA[
@@ -93,10 +89,13 @@
 			var payload = mc.getPayloadJSON();
 			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
 			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+			var clientCorrelator = mc.getProperty("clientCorrelator");
 						
-			if (uniqueClientCorrelator != null) {
-				payload.outboundUSSDMessageRequest.clientCorrelator = mc.getProperty("clientCorrelator");
-			} 
+			if (clientCorrelator != null && clientCorrelator !="") {
+				payload.outboundUSSDMessageRequest.clientCorrelator = clientCorrelator;
+			} else {
+				delete payload.outboundUSSDMessageRequest.clientCorrelator;
+			}
 
 			if (generatedNotifyURL != null) {
 				payload.outboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty("notifyURL");
