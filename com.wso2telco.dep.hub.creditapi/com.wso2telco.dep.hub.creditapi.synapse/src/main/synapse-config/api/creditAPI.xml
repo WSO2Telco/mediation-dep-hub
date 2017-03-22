@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/apply">
+<api context="/credit/v1" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/credit/{+msisdn}/apply">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence"/>
         </inSequence>
@@ -9,7 +9,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
-    <resource methods="POST" uri-template="/v1/credit/{+msisdn}/refund">
+    <resource methods="POST" uri-template="/credit/{+msisdn}/refund">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence"/>
         </inSequence>
@@ -18,7 +18,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
-	<resource methods="POST" uri-template="/v1/creditnotification/{notifyURLId}">
+	<resource methods="POST" uri-template="/creditnotification/{notifyURLId}">
 	  <inSequence>
 	    <sequence key="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence"/>
 	  </inSequence>
