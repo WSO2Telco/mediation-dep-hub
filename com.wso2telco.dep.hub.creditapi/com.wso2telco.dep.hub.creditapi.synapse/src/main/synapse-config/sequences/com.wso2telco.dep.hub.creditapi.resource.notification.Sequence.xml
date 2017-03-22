@@ -18,5 +18,5 @@
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
   
-  <send/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
