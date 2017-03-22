@@ -17,6 +17,13 @@
 	<property expression="fn:normalize-space($ctx:notifyURL)"
 		group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))"
 		scope="default" type="STRING" />
+		
+	<property
+		expression="json-eval($.deliveryReceiptSubscription.clientCorrelator)"
+		name="clientCorrelator" scope="default" type="STRING" />
+	<property expression="fn:normalize-space($ctx:clientCorrelator)"
+		group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))"
+		scope="default" type="STRING" />
 	<!-- validate mandatory parameters of the request -->
 	<filter xpath="not(boolean($ctx:notifyURL))">
 		<then>
@@ -113,6 +120,20 @@
 		<else />
 	</filter>
 	
-	
+	<!-- generating request clientCorrelator -->
+    <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+      <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+    </call-template>
+	<!-- save service provider's notify url and generate new notify url from hub -->
+	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+      <with-param name="apiRefCode" value="smsmessaging"/>
+      <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
+      <with-param name="notifyURLParamName" value="outboundNotificationURL"/>	    
+    </call-template>
+    <!-- update clientCorrelator and notifyURL with generated values -->
+    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+	payload.deliveryReceiptSubscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
+	payload.deliveryReceiptSubscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
+	mc.setPayloadJSON(payload);]]></script>
 	<sequence key="com.wso2telco.dep.common.main.response.Sequence" />
 </sequence>
