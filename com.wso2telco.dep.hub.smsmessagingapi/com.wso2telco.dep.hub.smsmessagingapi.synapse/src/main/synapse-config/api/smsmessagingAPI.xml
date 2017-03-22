@@ -18,7 +18,7 @@
     <resource methods="DELETE" protocol="http" uri-template="/inbound/subscriptions/{subscriptionID}">
         <inSequence>
             <!-- SMS : Subscribe to notifications of messages sent to your application -->
-            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
         <faultSequence/>

@@ -2,5 +2,47 @@
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-    <property expression="get-property('uri.var.subscriptionID')" name="endUserId" scope="default" type="STRING"/>
+    <property expression="get-property('uri.var.subscriptionID')" name="SUBSCRIPTION_ID" scope="default" type="STRING"/>
+    <property expression="fn:concat('SELECT domainurl, operator FROM operatorsubs WHERE mo_subscription_did = ', $ctx:SUBSCRIPTION_ID)" name="SELECT_QUERY" scope="default" type="STRING"/>
+    <property name="SELECT_QUERY_ENRICH_BODY" scope="default" type="STRING" value="true"/>
+    <sequence key="com.wso2telco.dep.common.execute.select.query.Sequence"/>
+    <iterate attachPath="$body" continueParent="true" expression="//RESULT_ARRAY" id="smsmessagingapi.subscribe.notifications.splitter" preservePayload="true">
+        <target>
+            <sequence>
+                <log level="full"/>
+                <property expression="//RESULT_ARRAY/operator/text()" name="OPERATOR_NAME" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR_NAME)" group="1" name="OPERATOR_NAME" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <property expression="//RESULT_ARRAY/domainurl/text()" name="OPERATOR_ENDPOINT" scope="default" type="STRING"/>
+                <property expression="//RESULT_ARRAY/domainurl/text()" name="API_ENDPOINT" scope="default" type="STRING"/>
+                <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+                <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+                <drop/>
+            </sequence>
+        </target>
+    </iterate>
+    <!-- Delete DB records -->
+    <dbreport>
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[delete from operatorsubs where mo_subscription_did=?;]]></sql>
+            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
+        </statement>
+    </dbreport>
+    <dbreport>
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[delete from subscriptions where mo_subscription_did=?;]]></sql>
+            <parameter expression="$ctx:subscriptionId" type="VARCHAR"/>
+        </statement>
+    </dbreport>
+    <property name="HTTP_SC" scope="axis2" type="STRING" value="204"/>
+    <respond/>
 </sequence>
