@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+	name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence"
+	onError="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence"
+	trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+	<iterate attachPath="//deliveryReceiptSubscription" expression="//senderAddresses"
+		id="smsmessagingapi.outbound.notifications.splitter" preservePayload="true">
+		<target>
+			<sequence>
+				<property expression="//senderAddresses/operatorCode/text()"
+					name="OPERATOR_CODE" scope="default" type="STRING" />
+				<property expression="fn:normalize-space($ctx:OPERATOR_CODE)"
+					group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))"
+					scope="default" type="STRING" />
+				<enrich>
+					<source clone="true" xpath="//senderAddresses/filterCriteria" />
+					<target action="child" xpath="//deliveryReceiptSubscription" />
+				</enrich>
+				<enrich>
+					<source clone="true" xpath="//senderAddresses/senderAddress" />
+					<target action="child" xpath="//deliveryReceiptSubscription" />
+				</enrich>
+				<enrich>
+					<source clone="true" xpath="//senderAddresses" />
+					<target property="original_payload" type="property" />
+				</enrich>
+				<enrich>
+					<source clone="true" xpath="//callbackReference" />
+					<target property="original_callbackReference" type="property" />
+				</enrich>
+				<!-- remove source tag -->
+				<script language="js"><![CDATA[var payload = mc.getPayloadXML();
+                delete payload..*::senderAddresses;
+                mc.setPayloadXML(payload);]]></script>
+				<!-- retrieve operator's endpoint -->
+				<sequence
+					key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence" />
+				<filter regex="true"
+					source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
+					<then>
+						<property name="messageStatus" scope="default" type="STRING"
+							value="Not Provisioned" />
+						<call>
+							<endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint" />
+						</call>
+					</then>
+					<else>
+						<sequence key="com.wso2telco.dep.common.select.token.Sequence" />
+						<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence" />
+					</else>
+				</filter>
+			</sequence>
+		</target>
+	</iterate>
+</sequence>

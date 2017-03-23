@@ -135,5 +135,6 @@
 	payload.deliveryReceiptSubscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	payload.deliveryReceiptSubscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
 	mc.setPayloadJSON(payload);]]></script>
-	<sequence key="com.wso2telco.dep.common.main.response.Sequence" />
+	<sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence"/>
+    <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence"/>
 </sequence>
