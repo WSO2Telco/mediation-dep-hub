@@ -2,6 +2,7 @@
 <api context="/smsmessaging" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" protocol="http" uri-template="/outbound/subscriptions*">
         <inSequence>
+            <!-- SMS : Subscribe to SMS delivery notifications -->
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
