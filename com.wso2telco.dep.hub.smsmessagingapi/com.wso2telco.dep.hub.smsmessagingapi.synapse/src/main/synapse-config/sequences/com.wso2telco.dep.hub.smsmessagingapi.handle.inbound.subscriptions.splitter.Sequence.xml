@@ -17,10 +17,6 @@
                     <source clone="true" xpath="//destinationAddresses"/>
                     <target property="original_payload" type="property"/>
                 </enrich>
-                <enrich>
-                    <source clone="true" xpath="//callbackReference"/>
-                    <target property="original_callbackReference" type="property"/>
-                </enrich>
                 <!-- remove source tag -->
                 <script language="js"><![CDATA[var payload = mc.getPayloadXML();
                 delete payload..*::destinationAddresses;
@@ -30,6 +26,7 @@
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
                     <then>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <!-- dummy endpoint call to step-out from iterate -->
                         <call>
                             <endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint"/>
                         </call>
