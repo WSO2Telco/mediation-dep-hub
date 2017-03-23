@@ -7,11 +7,6 @@
                 <then>
                     <property name="messageStatus" scope="default" type="STRING" value="Created"/>
                     <property expression="json-eval($.subscription.resourceURL)" name="resourceURL" scope="default" type="STRING"/>
-                    <log level="custom">
-                        <property expression="$ctx:notifyURLTableId" name="A1111"/>
-                        <property expression="$ctx:resourceURL" name="A2222"/>
-                        <property expression="$ctx:OPERATOR_CODE" name="A3333"/>
-                    </log>
                     <dbreport>
                         <connection>
                             <pool>
