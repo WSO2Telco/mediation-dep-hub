@@ -45,7 +45,7 @@
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-            <property name="errorVariable" scope="default" type="STRING" value="Empty shortcodes list"/>
+            <property name="errorVariable" scope="default" type="STRING" value="Missing mandatory parameter: shortCodes"/>
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </else>
     </filter>
