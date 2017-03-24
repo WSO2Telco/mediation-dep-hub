@@ -16,9 +16,17 @@
         <outSequence/>
         <faultSequence/>
     </resource>
+    <resource methods="POST" protocol="http" uri-template="/inbound/notification/{subscriptionID}">
+        <inSequence>
+            <!-- SMS : Receipt notification Response (Posted to Notify URL) -->
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
     <resource methods="DELETE" protocol="http" uri-template="/inbound/subscriptions/{subscriptionID}">
         <inSequence>
-            <!-- SMS : Subscribe to notifications of messages sent to your application -->
+            <!-- SMS : Stop the subscription to message notifications -->
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>

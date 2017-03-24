@@ -28,6 +28,9 @@
     </artifact>
     <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence.xml</file>
+    </artifact>	
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence.xml</file>
     </artifact>
     <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence.xml</file>

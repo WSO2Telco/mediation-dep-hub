@@ -76,8 +76,8 @@
     <sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence"/>
     
 	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-	    <with-param name="apiRefCode" value="credit"/>
-	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	  
+	    <with-param name="apiResourceSuffix" value="/creditnotification"/>    
 	</call-template> 
 	
 	<!-- Parameter for endpoint retrieval -->
