@@ -19,7 +19,6 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>
-    <com.wso2telco.dep.hub.resource_._creditConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.resource_._creditConfig>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>
     <com.wso2telco.dep.hub.api_._creditAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._creditAPI>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>
@@ -66,12 +65,6 @@
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.notification.Sequence</artifactId>
       <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>com.wso2telco.dep.hub.resource</groupId>
-      <artifactId>creditConfig</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
-      <type>zip</type>
     </dependency>
   </dependencies>
   <repositories>

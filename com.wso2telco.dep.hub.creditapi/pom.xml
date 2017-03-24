@@ -13,7 +13,6 @@
   <description>com.wso2telco.dep.hub.creditapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.creditapi.synapse</module>
-    <module>com.wso2telco.dep.hub.creditapi.registry.resources</module>
     <module>com.wso2telco.dep.hub.creditapi.capp</module>
   </modules>
   <build>
