@@ -45,8 +45,8 @@
     <sequence key="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence"/>
     
 	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-	    <with-param name="apiRefCode" value="ussd"/>
-	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	 
+	    <with-param name="apiResourceSuffix" value="/ussdnotification"/>     
 	</call-template>    
     
 	<!-- Parameter for endpoint retrieval -->
