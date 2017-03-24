@@ -1,4 +1,0 @@
-<apiConfig>
-	<outboundNotificationURL>https://localhost:8280/smsmessaging/v1/outbound/notification</outboundNotificationURL>
-	<inboundNotificationURL>https://localhost:8280/smsmessaging/v1/inbound/notification</inboundNotificationURL>
-</apiConfig>
