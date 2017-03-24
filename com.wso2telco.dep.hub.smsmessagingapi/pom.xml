@@ -15,7 +15,6 @@
   <description>com.wso2telco.dep.hub.smsmessagingapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.smsmessagingapi.synapse</module>
-    <module>com.wso2telco.dep.hub.smsmessagingapi.registry.resources</module>
     <module>com.wso2telco.dep.hub.smsmessagingapi.capp</module>
   </modules>
   <build>
