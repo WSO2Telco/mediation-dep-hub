@@ -1,5 +1,7 @@
 ## WSO2Telco HUB 2.0.0 Release
 
+Build Status : [![Build Status](http://ci.wso2telco.com/job/mediation-dep-hub/badge/icon)](http://ci.wso2telco.com/job/mediation-dep-hub)
+
 ## Setting up the Deployment
 
 The deployment consists of configuring 2 products:
