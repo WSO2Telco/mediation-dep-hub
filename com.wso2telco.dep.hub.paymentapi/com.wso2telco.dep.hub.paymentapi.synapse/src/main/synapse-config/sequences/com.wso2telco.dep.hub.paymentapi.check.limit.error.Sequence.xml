@@ -3,4 +3,5 @@
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
 
     <!--set fault details here and call common error seq-->
+    <!--implement according to faults set in class mediator-->
 </sequence>

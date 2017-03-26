@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence
-  name="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.Sequence"
-  trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+<sequence name="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.Sequence" onError="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.error.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+    <property expression="get-property('registry','conf:/repository/wso2telco/configurations/PaymentAPI/userInfoConfig.xml')"
+            name="userInfoConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="fn:concat($ctx:userInfoConfig//config[@operatorName=get-property('operatorName')]/tokenEndpoint,'/', $ctx:userInfoConfig//config[@operatorName=get-property('operatorName')]/infoapi//serviceProvider)"
+            name="uri.var.httpendpointurl" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <log category="DEBUG" level="custom">
+        <property expression="get-property('uri.var.httpendpointurl')"
+                  name="full.url" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+
+    <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+        <with-param name="direction" value="REQUESTOUT"/>
+    </call-template>
+
+    <call>
+        <endpoint key="com.wso2telco.dep.hub.paymentapi.token.pool.Endpoint"/>
+    </call>
+
+    <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+        <with-param name="direction" value="RESPONSEIN"/>
+    </call-template>
+
+    <property name="ContentType" scope="axis2" type="STRING" value="text/plain"/>
+    <property expression="$body/m0:text" name="access.token"
+              scope="default" type="STRING"
+              xmlns:m0="http://ws.apache.org/commons/ns/payload" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <log level="custom">
+        <property expression="get-property('access.token')"
+                  name="access.token.log" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+    <sequence key="com.wso2telco.dep.hub.paymentapi.user.info.call.Sequence"/>
+
+    <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+        <with-param name="direction" value="RESPONSEOUT"/>
+    </call-template>
+
+    <respond/>
+</sequence>

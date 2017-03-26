@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.paymentapi.cache.update.Sequence"
-  trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <class name="com.wso2telco.dep.spend.limit.mediation.mediator.PackageTypeCacheMediator"/>
+    <drop/>
+</sequence>
