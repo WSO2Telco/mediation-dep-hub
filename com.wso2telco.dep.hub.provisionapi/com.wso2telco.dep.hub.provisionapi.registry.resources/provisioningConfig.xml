@@ -1,3 +1,0 @@
-<apiConfig>
-	<notificationURL>https://localhost:8280/provisioning/v1/provisioningnotification</notificationURL>
-</apiConfig>
