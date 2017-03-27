@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence
-  name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence"
-  trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+	name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence"
+	trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+	<sequence key="com.wso2telco.dep.common.main.request.Sequence" />
+	<!-- extract subscription_id from url -->
+	<property expression="get-property('uri.var.subscriptionID')"
+		name="NOTIFY_URL_ID" scope="default" type="STRING" />
+	<!-- retrieve notification endpoint -->
+	<sequence
+		key="com.wso2telco.dep.common.notification.url.retriever.Sequence" />
+	<!-- validate MSISDN -->
+	<property expression="json-eval($.deliveryInfoNotification.deliveryInfo.address)"
+		name="MSISDN" scope="default" type="STRING" />
+	<call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+		<with-param name="paramName" value="address" />
+		<with-param name="paramValue" value="{$ctx:MSISDN}" />
+	</call-template>
+	<!-- send notification to notification endpoint -->
+	<sequence
+		key="com.wso2telco.dep.common.call.notification.endpoint.Sequence" />
+	<sequence key="com.wso2telco.dep.common.main.response.Sequence" />
+</sequence>

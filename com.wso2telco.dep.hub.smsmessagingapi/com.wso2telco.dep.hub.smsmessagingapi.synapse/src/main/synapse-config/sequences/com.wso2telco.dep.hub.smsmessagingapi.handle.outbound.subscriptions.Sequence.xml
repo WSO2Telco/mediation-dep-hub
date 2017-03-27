@@ -125,10 +125,9 @@
       <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
     </call-template>
 	<!-- save service provider's notify url and generate new notify url from hub -->
-	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-      <with-param name="apiRefCode" value="smsmessaging"/>
-      <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
-      <with-param name="notifyURLParamName" value="outboundNotificationURL"/>	    
+    <call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+        <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
+        <with-param name="apiResourceSuffix" value="/outbound/notification"/>
     </call-template>
     <!-- update clientCorrelator and notifyURL with generated values -->
     <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
