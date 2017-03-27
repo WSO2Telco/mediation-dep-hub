@@ -2,21 +2,9 @@
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <!-- extract subscription_id from url -->
-    <property expression="get-property('uri.var.subscriptionID')" name="SUBSCRIPTION_ID" scope="default" type="STRING"/>
-    <!-- remove rest url postfix -->
-    <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
-    <dblookup>
-        <connection>
-            <pool>
-                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
-            </pool>
-        </connection>
-        <statement>
-            <sql><![CDATA[select notifyurl from deptnotificationurls where notifyurldid =?]]></sql>
-            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
-            <result column="notifyurl" name="notifyURL"/>
-        </statement>
-    </dblookup>
+    <property expression="get-property('uri.var.subscriptionID')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
+    <!-- retrieve notification endpoint -->
+    <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
     <!-- validate MSISDN -->
     <property expression="json-eval($.inboundSMSMessageNotification.inboundSMSMessage.senderAddress)" name="MSISDN" scope="default" type="STRING"/>
     <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
@@ -29,8 +17,7 @@
     			var date_time = mc.getProperty("DATE_TIME").replace(" ", "T"); 
                 payload.inboundSMSMessageNotification.inboundSMSMessage.dateTime = date_time;
                 mc.setPayloadJSON(payload);]]></script>
-    <!-- update API_ENDPOINT  -->
-    <property expression="$ctx:notifyURL" name="API_ENDPOINT" scope="default" type="STRING"/>
-    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <!-- send notification to notification endpoint -->
+    <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
