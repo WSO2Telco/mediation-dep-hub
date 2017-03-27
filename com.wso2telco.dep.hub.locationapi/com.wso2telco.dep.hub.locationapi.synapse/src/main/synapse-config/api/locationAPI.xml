@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/location" name="locationAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET">
-        <inSequence/>
-        <outSequence/>
-        <faultSequence/>
-    </resource>
+  <resource methods="GET" protocol="http">
+    <inSequence>
+      <sequence key="com.wso2telco.dep.hub.locationapi.handle.query.location.Sequence"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+    </faultSequence>
+  </resource>
 </api>
