@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property expression="json-eval($.subscription.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.subscription.callbackReference.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.subscription.shortCodes)" name="shortCodes" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:shortCodes)" group="1" name="shortCodes" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <!-- REQUEST PARAMETER VALIDATION -->
+    <filter xpath="boolean($ctx:clientCorrelator) and boolean($ctx:notifyURL)">
+        <then/>
+        <else>
+            <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
+            <filter xpath="not(boolean($ctx:clientCorrelator))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'clientCorrelator,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+            <filter xpath="not(boolean($ctx:notifyURL))">
+                <then>
+                    <property expression="fn:concat($ctx:missingParameters, 'notifyURL,')" name="missingParameters" scope="default" type="STRING"/>
+                </then>
+                <else/>
+            </filter>
+        </else>
+    </filter>
+    <filter regex="true" source="get-property('isMissingMandatoryParam')">
+        <then>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <filter xpath="boolean($ctx:shortCodes)">
+        <then/>
+        <else>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property name="errorVariable" scope="default" type="STRING" value="Missing mandatory parameter: shortCodes"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </else>
+    </filter>
+    <foreach expression="//shortCodes" id="shortCodesID">
+        <sequence>
+            <property expression="//shortCodes/shortCode/text()" name="shortCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:shortCode)" group="1" name="shortCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <property expression="//shortCodes/operatorCode/text()" name="operatorCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:operatorCode)" group="1" name="operatorCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="boolean($ctx:shortCode) and boolean($ctx:operatorCode)">
+                <then/>
+                <else>
+                    <property name="isMissingMandatoryParam" scope="default" type="STRING" value="true"/>
+                    <filter xpath="not(boolean($ctx:shortCode))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'shortCode', $ctx:shortCodesID_FOREACH_COUNTER, ',')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                    <filter xpath="not(boolean($ctx:operatorCode))">
+                        <then>
+                            <property expression="fn:concat($ctx:missingParameters, 'operatorCode', $ctx:shortCodesID_FOREACH_COUNTER, ',')" name="missingParameters" scope="default" type="STRING"/>
+                        </then>
+                        <else/>
+                    </filter>
+                </else>
+            </filter>
+        </sequence>
+    </foreach>
+    <filter regex="0" source="$ctx:shortCodesID_FOREACH_COUNTER">
+        <then>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property name="errorVariable" scope="default" type="STRING" value="Empty shortcodes list"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <filter regex="true" source="get-property('isMissingMandatoryParam')">
+        <then>
+            <property expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))" name="missingParameters" scope="default" type="STRING"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+            <property expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)" name="errorVariable" scope="default" type="STRING"/>
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+    </filter>
+    <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+</sequence>

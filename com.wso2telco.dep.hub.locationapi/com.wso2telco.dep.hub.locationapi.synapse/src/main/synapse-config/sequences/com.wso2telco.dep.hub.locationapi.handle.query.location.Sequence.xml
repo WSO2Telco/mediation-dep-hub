@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.locationapi.handle.query.location.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <property expression="$ctx:query.param.address" name="endUserId"
+    scope="default" type="STRING"/>
+  <property expression="$ctx:query.param.requestedAccuracy"
+    name="requestedAccuracy" scope="default" type="STRING"/>
+  <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+    <with-param name="paramName" value="address"/>
+    <with-param name="paramValue" value="{$ctx:endUserId}"/>
+  </call-template>
+  <call-template target="com.wso2telco.dep.common.integerValidation.Template">
+    <with-param name="paramName" value="requestedAccuracy"/>
+    <with-param name="paramValue" value="{$ctx:requestedAccuracy}"/>
+    <with-param name="validationType" value="GE_ZERO"/>
+  </call-template>
+  <property expression="get-property('endUserId')" name="MSISDN"
+    scope="default" type="STRING"/>
+  <!-- retrieve operator's endpoint -->
+  <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  <!-- retrieve operator's access token -->
+  <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+  <!-- send request to operator endpoint -->
+  <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+</sequence>
