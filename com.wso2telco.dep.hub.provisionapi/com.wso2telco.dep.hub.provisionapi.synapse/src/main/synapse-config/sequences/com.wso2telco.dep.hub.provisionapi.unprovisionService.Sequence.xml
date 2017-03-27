@@ -102,8 +102,8 @@
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
 	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-	    <with-param name="apiRefCode" value="provisioning"/>
-	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+   		<with-param name="notifyURL" value="{$ctx:notifyURL}"/>	
+   		<with-param name="apiResourceSuffix" value="/unprovisioningnotification"/>   
 	</call-template>
     <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
     payload.serviceRemoveRequest.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
