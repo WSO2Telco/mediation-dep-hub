@@ -46,7 +46,7 @@
     
 	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
 	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	 
-	    <with-param name="apiResourceSuffix" value="/ussdnotification"/>     
+	    <with-param name="apiResourceSuffix" value="/inbound"/>
 	</call-template>    
     
 	<!-- Parameter for endpoint retrieval -->
