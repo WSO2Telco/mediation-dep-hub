@@ -59,7 +59,6 @@
   <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
     <with-param name="paramName" value="requestIdentifier"/>
     <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
-    <!-- retrieve request identifier length from registry -->
     <with-param name="paramValidLength" value="{$ctx:mediationConfig//validationConfig/requestIdentifierLength}"/>
     <with-param name="paramValidationType" value="LT"/>
   </call-template>
@@ -177,6 +176,7 @@
   <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
   <!-- extract response resource url -->
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
   	var requestIdentifier;
@@ -189,8 +189,7 @@
 	mc.setProperty("requestIdentifier", requestIdentifier);  	
   	var gatewayResourceURL = payload.customer.resourceURL;
   	var gatewayResourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-  	mc.setProperty("GATEWAY_RESOURCE_PATH", gatewayResourcePath);]]>
-  </script>
+  	mc.setProperty("GATEWAY_RESOURCE_PATH", gatewayResourcePath);]]></script>
   <!-- replace requestIdentifier in GATEWAY_RESOURCE_PATH from service provider's requestIdentifier -->
   <sequence key="com.wso2telco.dep.common.replace.hub.request.identifier.Sequence"/>
   <!-- generating response json -->

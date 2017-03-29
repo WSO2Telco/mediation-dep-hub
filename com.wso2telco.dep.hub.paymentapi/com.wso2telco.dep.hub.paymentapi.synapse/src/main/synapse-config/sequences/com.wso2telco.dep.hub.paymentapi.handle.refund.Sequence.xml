@@ -214,6 +214,7 @@
 	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
   <!-- generating response json -->
   <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");

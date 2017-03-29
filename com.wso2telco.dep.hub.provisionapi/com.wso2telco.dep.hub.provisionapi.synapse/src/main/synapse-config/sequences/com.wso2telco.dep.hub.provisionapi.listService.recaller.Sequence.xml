@@ -105,6 +105,7 @@
     <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
     <!-- send request to operator endpoint -->
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
     <!-- extract response resource url -->
     <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
   	var requestIdentifier;

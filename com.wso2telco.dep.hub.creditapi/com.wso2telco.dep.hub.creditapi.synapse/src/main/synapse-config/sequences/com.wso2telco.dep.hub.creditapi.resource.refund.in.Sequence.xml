@@ -111,6 +111,7 @@
 	</script>
 	
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
 	
 	<script language="js">
 		<![CDATA[
