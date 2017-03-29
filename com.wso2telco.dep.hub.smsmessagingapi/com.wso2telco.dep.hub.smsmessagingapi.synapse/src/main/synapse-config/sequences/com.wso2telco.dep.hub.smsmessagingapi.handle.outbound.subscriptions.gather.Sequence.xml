@@ -9,7 +9,7 @@
 				<then>
 					<property name="messageStatus" scope="default" type="STRING"
 						value="Created" />
-					<property expression="json-eval($.subscription.resourceURL)"
+					<property expression="json-eval($.deliveryReceiptSubscription.resourceURL)"
 						name="resourceURL" scope="default" type="STRING" />
 					<dbreport>
 						<connection>
@@ -40,16 +40,16 @@
 		<source clone="true" type="inline">
 			<status xmlns="">TEST</status>
 		</source>
-		<target action="child" xpath="//destinationAddresses" />
+		<target action="child" xpath="//senderAddresses" />
 	</enrich>
 	<enrich>
 		<source clone="true" property="messageStatus" type="property" />
-		<target xpath="//destinationAddresses/status/text()" />
+		<target xpath="//senderAddresses/status/text()" />
 	</enrich>
 	<property name="collection" scope="default">
 		<deliveryReceiptSubscription xmlns="" />
 	</property>
-	<aggregate id="smsmessagingapi.outbound.notifications.gather">
+	<aggregate id="smsmessagingapi.outbound.notifications.splitter">
 		<completeCondition>
 			<messageCount max="-1" min="-1" />
 		</completeCondition>
@@ -71,8 +71,8 @@
 							<notifyURL>$2</notifyURL>
 						</callbackReference><?xml-multiple senderAddresses?>
 						$3
-						<clientCorrelator>$5</clientCorrelator>
-						<resourceURL>$6</resourceURL>
+						<clientCorrelator>$4</clientCorrelator>
+						<resourceURL>$5</resourceURL>
 					</deliveryReceiptSubscription>
 				</format>
 				<args>
