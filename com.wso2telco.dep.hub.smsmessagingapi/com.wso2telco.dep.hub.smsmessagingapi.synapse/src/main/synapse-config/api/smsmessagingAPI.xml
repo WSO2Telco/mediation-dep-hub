@@ -8,6 +8,22 @@
         <outSequence/>
         <faultSequence/>
     </resource>
+    <resource methods="POST" protocol="http" uri-template="/outbound/notification/{subscriptionID}">
+        <inSequence>
+            <!-- SMS : Delivery receipt notification (Posted to Notify URL) -->
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="DELETE" protocol="http" uri-template="/outbound/subscriptions/{subscriptionID}">
+        <inSequence>
+            <!-- SMS : Stop the subscription to delivery notifications -->
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/inbound/subscriptions">
         <inSequence>
             <!-- SMS : Subscribe to notifications of messages sent to your application -->
