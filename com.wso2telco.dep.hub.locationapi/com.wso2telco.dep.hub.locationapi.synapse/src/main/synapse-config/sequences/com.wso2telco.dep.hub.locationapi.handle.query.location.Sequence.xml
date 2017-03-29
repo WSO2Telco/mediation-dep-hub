@@ -4,26 +4,19 @@
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-  <property expression="$ctx:query.param.address" name="endUserId"
-    scope="default" type="STRING"/>
-  <property expression="$ctx:query.param.requestedAccuracy"
-    name="requestedAccuracy" scope="default" type="STRING"/>
-  <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
-    <with-param name="paramName" value="address"/>
-    <with-param name="paramValue" value="{$ctx:endUserId}"/>
-  </call-template>
-  <call-template target="com.wso2telco.dep.common.integerValidation.Template">
-    <with-param name="paramName" value="requestedAccuracy"/>
-    <with-param name="paramValue" value="{$ctx:requestedAccuracy}"/>
-    <with-param name="validationType" value="GE_ZERO"/>
-  </call-template>
-  <property expression="get-property('endUserId')" name="MSISDN"
-    scope="default" type="STRING"/>
-  <!-- retrieve operator's endpoint -->
+  <property expression="fn:normalize-space($ctx:query.param.address)"
+    group="1" name="address" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property
+    expression="fn:normalize-space($ctx:query.param.requestedAccuracy)"
+    group="1" name="requestedAccuracy"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default"
+    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <sequence key="com.wso2telco.dep.hub.locationapi.handle.query.location.validator.Sequence"/>
+  <property expression="get-property('address')" name="MSISDN"
+    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
-  <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
-  <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

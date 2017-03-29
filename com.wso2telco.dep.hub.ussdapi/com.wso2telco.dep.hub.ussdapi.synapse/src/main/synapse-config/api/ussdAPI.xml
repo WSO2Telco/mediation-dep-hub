@@ -18,4 +18,13 @@
 	    	<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="POST" uri-template="/inbound/{notifyURLId}">
+        <inSequence>
+        	<sequence key="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+	    	<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>    
 </api>

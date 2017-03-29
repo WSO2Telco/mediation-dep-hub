@@ -144,8 +144,8 @@
   </call-template>
 
   <call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-      <with-param name="apiRefCode" value="wallet"/>
-      <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	    
+      <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	  
+	  <with-param name="apiResourceSuffix" value="/walletnotification"/>        
   </call-template>   
 
   <!-- validate purchase category code in request -->

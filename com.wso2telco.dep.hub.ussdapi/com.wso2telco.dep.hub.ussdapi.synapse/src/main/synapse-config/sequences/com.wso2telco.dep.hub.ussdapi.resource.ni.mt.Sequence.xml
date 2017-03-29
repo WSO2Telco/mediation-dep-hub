@@ -30,7 +30,7 @@
     <property expression="json-eval($.outboundUSSDMessageRequest.responseRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
     
-    <log category="INFO" level="custom">
+    <log category="DEBUG" level="custom">
         <property expression="$ctx:msisdn" name="msisdn"/>
         <property expression="$ctx:address" name="address"/>
         <property expression="$ctx:shortCode" name="shortCode"/>
@@ -46,7 +46,7 @@
     
 	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
 	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	 
-	    <with-param name="apiResourceSuffix" value="/ussdnotification"/>     
+	    <with-param name="apiResourceSuffix" value="/inbound"/>
 	</call-template>    
     
 	<!-- Parameter for endpoint retrieval -->
