@@ -149,6 +149,7 @@
     payload.serviceProvisionRequest.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
     mc.setPayloadJSON(payload);]]></script>
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
     <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");

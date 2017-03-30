@@ -18,5 +18,6 @@
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
