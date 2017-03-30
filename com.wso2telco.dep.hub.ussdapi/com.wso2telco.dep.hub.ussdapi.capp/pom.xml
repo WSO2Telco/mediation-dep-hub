@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>com.wso2telco.dep.hub.ussdapi</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
   </parent>
   <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.ussdapi.capp</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.dep.hub.ussdapi.capp</name>
   <description>com.wso2telco.dep.hub.ussdapi.capp</description>
@@ -26,31 +26,31 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.api</groupId>
       <artifactId>ussdAPI</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
   </dependencies>

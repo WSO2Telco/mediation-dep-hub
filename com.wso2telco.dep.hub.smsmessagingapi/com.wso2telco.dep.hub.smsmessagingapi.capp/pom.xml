@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>com.wso2telco.dep.hub.smsmessagingapi</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
   </parent>
   <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.smsmessagingapi.capp</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.dep.hub.smsmessagingapi.capp</name>
   <description>com.wso2telco.dep.hub.smsmessagingapi.capp</description>
@@ -34,85 +34,85 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.api</groupId>
       <artifactId>smsmessagingAPI</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.endpoint</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.fault.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
   </dependencies>

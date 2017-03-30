@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>com.wso2telco.dep.hub.creditapi</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
   </parent>
   <groupId>com.wso2telco.dep.hub</groupId>
   <artifactId>com.wso2telco.dep.hub.creditapi.capp</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>carbon/application</packaging>
   <name>com.wso2telco.dep.hub.creditapi.capp</name>
   <description>com.wso2telco.dep.hub.creditapi.capp</description>
@@ -27,43 +27,43 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.api</groupId>
       <artifactId>creditAPI</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.notification.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
   </dependencies>

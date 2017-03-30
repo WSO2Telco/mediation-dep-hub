@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="ussdAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="ussdAPI" groupId="com.wso2telco.dep.hub.api" version="3.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/ussdAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence.xml</file>
     </artifact>
 </artifacts>
