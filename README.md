@@ -1,4 +1,4 @@
-## WSO2Telco HUB 2.0.0 Release
+## WSO2Telco HUB 3.0.0 SNAPSHOT
 
 Build Status : [![Build Status](http://ci.wso2telco.com/job/mediation-dep-hub/badge/icon)](http://ci.wso2telco.com/job/mediation-dep-hub)
 
@@ -66,16 +66,14 @@ Important: Same databases are referred while setting up wso2telcohub
 
 There will be 10 CApp files (.car files)
 
-* commonhub_capp.car
-* locationapihub_capp.car
-* paymentapihub_capp.car
-* smsapihub_capp.car
-* ussdapihub_capp.car
-* com.wso2telco.dep.hub.creditapi.capp.car
-* com.wso2telco.dep.hub.walletapi.capp.car
-* com.wso2telco.dep.hub.provisionapi.capp.car
-* com.wso2telco.dep.common.capp.car
-* com.wso2telco.dep.hub.customerinfoapi.capp.car
+* com.wso2telco.dep.common.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.creditapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.customerinfoapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.locationapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.paymentapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.provisionapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.ussdapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.walletapi.capp_3.0.0-SNAPSHOT.car
 
 Start WSO2 ESB and upload CApp files (Refer: *https://docs.wso2.com/display/ESB481/Creating+and+Deploying+a+Carbon+Application*)
 
