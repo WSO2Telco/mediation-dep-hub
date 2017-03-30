@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="locationAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="locationAPI" groupId="com.wso2telco.dep.hub.api" version="3.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/locationAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.locationapi.handle.query.location.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.locationapi.handle.query.location.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.locationapi.handle.query.location.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.locationapi.handle.query.location.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.locationapi.handle.query.location.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.locationapi.handle.query.location.validator.Sequence.xml</file>
     </artifact>
 </artifacts>

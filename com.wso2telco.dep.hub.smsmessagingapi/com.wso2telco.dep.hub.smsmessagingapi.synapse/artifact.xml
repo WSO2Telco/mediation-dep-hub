@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="smsmessagingAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="smsmessagingAPI" groupId="com.wso2telco.dep.hub.api" version="3.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/smsmessagingAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.fault.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.fault.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.fault.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint" groupId="com.wso2telco.dep.hub.endpoint" version="2.0.0-SNAPSHOT" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint" groupId="com.wso2telco.dep.hub.endpoint" version="3.0.0-SNAPSHOT" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/endpoints/com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.fault.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence.xml</file>
     </artifact>
 </artifacts>
