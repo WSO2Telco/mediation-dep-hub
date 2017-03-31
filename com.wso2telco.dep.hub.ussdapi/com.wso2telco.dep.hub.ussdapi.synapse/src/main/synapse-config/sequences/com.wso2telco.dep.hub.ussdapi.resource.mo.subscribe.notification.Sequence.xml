@@ -108,6 +108,7 @@
     </call-template>
     <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
     payload.subscription.callbackReference.notifyURL = mc.getProperty("NOTIFICATION_URL");
+    payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
     mc.setPayloadJSON(payload);]]></script>
     <log level="full"/>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
