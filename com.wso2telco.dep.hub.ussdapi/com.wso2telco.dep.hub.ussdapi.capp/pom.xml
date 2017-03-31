@@ -19,8 +19,9 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>
     <com.wso2telco.dep.hub.template_._com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.template_._com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>
-    <com.wso2telco.dep.hub.resource_._ussdConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.resource_._ussdConfig>
+    <com.wso2telco.dep.hub.endpoint_._com.wso2telco.dep.hub.ussdapi.dummy.Endpoint>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.endpoint_._com.wso2telco.dep.hub.ussdapi.dummy.Endpoint>
     <com.wso2telco.dep.hub.api_._ussdAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._ussdAPI>
+    <com.wso2telco.dep.hub.resource_._ussdConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.resource_._ussdConfig>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>
   </properties>
@@ -64,6 +65,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.endpoint</groupId>
+      <artifactId>com.wso2telco.dep.hub.ussdapi.dummy.Endpoint</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
