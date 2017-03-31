@@ -31,6 +31,9 @@
                     <then>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
                         <!-- dummy endpoint call to step-out from iterate -->
+                        <call>
+                            <endpoint key="com.wso2telco.dep.hub.ussdapi.dummy.Endpoint"/>
+                        </call>
                     </then>
                     <else>
                         <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
