@@ -14,14 +14,15 @@
   <name>com.wso2telco.dep.hub.ussdapi.capp</name>
   <description>com.wso2telco.dep.hub.ussdapi.capp</description>
   <properties>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>
-    <com.wso2telco.dep.hub.api_._ussdAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._ussdAPI>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>
-    <com.wso2telco.dep.hub.resource_._ussdConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.resource_._ussdConfig>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence>
     <com.wso2telco.dep.hub.template_._com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.template_._com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.Sequence>
+    <com.wso2telco.dep.hub.resource_._ussdConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.resource_._ussdConfig>
+    <com.wso2telco.dep.hub.api_._ussdAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._ussdAPI>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>
   </properties>
   <dependencies>
     <dependency>
@@ -57,6 +58,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.template</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
