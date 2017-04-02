@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <filter regex="Not Provisioned|failed" source="$ctx:status">
+    <filter regex="Not Provisioned|Failed" source="$ctx:messageStatus">
         <then/>
         <else>
             <filter xpath="$body//subscription">
                 <then>
-                    <property name="status" scope="default" type="STRING" value="Created"/>
+                    <property name="messageStatus" scope="default" type="STRING" value="Created"/>
                     <property expression="json-eval($.subscription.resourceURL)" name="resourceURL" scope="default" type="STRING"/>
                 </then>
                 <else>
-                    <property name="status" scope="default" type="STRING" value="Not Created"/>
+                    <property name="messageStatus" scope="default" type="STRING" value="Not Created"/>
                 </else>
             </filter>
             <dbreport>
@@ -38,7 +38,7 @@
         <target action="child" xpath="//shortCodes"/>
     </enrich>
     <enrich>
-        <source clone="true" property="status" type="property"/>
+        <source clone="true" property="messageStatus" type="property"/>
         <target xpath="//shortCodes/status/text()"/>
     </enrich>
     <property name="collection" scope="default">
@@ -67,7 +67,7 @@
                 <args>
                     <arg evaluator="xml" expression="$ctx:original_callbackReference"/>
                     <arg evaluator="xml" expression="//shortCodes"/>
-                    <arg evaluator="xml" expression="$ctx:original_clientCorrelator"/>
+                    <arg evaluator="xml" expression="$ctx:clientCorrelator"/>
                     <arg evaluator="xml" expression="$ctx:responseResourceURL"/>
                 </args>
             </payloadFactory>
