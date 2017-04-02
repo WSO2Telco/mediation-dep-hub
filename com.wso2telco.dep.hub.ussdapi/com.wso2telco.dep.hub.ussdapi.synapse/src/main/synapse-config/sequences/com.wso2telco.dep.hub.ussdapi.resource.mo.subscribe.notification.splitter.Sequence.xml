@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence" onError="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.fault.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <iterate attachPath="//subscription" expression="//shortCodes" id="ussd.subscribe.notifications.splitter" preservePayload="true">
         <target>
             <sequence>
+                <property name="AGGEGATION_REQUIRED" scope="default" type="STRING" value="true"/>
                 <property expression="//shortCodes/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
                 <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <enrich>
@@ -20,6 +21,10 @@
                 <enrich>
                     <source clone="true" xpath="//clientCorrelator"/>
                     <target property="original_clientCorrelator" type="property"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" property="NOTIFICATION_URL" type="property"/>
+                    <target xpath="//notifyURL/text()"/>
                 </enrich>
                 <script language="js"><![CDATA[var payload = mc.getPayloadXML();
                 delete payload..*::operatorCode;
