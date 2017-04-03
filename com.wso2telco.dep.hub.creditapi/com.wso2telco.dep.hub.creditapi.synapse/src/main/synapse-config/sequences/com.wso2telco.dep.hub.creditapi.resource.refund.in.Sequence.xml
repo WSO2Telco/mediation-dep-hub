@@ -119,6 +119,10 @@
 	
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	
+	<!-- retrieve hub url from registry -->
+  	<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+  	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>	
+	
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
@@ -133,6 +137,22 @@
 
 			if (generatedNotifyURL != null) {
 				payload.refundResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			}
+			
+			var resourceURL = payload.refundResponse.resourceURL;
+			
+			if (resourceURL != null && resourceURL !="") {
+				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+				var hubURL = mc.getProperty("hubUrl");
+				var apiName = mc.getProperty("API_NAME");
+				var apiVersion = mc.getProperty("VERSION");
+				
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
+					.concat(apiName).concat("/").concat(apiVersion));
+			
+				payload.refundResponse.resourceURL = hubResourceURL;				
+			} else {
+				delete payload.refundResponse.resourceURL;
 			}
 			
 			mc.setPayloadJSON(payload);
