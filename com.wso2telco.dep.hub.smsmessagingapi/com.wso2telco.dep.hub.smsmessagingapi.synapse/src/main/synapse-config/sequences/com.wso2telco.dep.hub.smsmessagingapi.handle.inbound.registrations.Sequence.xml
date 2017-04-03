@@ -1,4 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <log/>
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property expression="json-eval($.inboundSMSMessages.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.inboundSMSMessages.maxBatchSize)" name="MAX_BATCH_SIZE" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:MAX_BATCH_SIZE)" group="1" name="MAX_BATCH_SIZE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.inboundSMSMessages.registrations.length)" name="REGISTRATIONS_COUNT" scope="default" type="INTEGER"/>
+    <!-- validate registration details -->
+    <foreach expression="//registrations" xmlns:ns="http://org.apache.synapse/xsd">
+        <sequence>
+            <property expression="//registrationID/text()" name="registrationID" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:registrationID)" group="1" name="registrationID" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="not(boolean($ctx:registrationID))">
+                <then>
+                    <property expression="fn:concat('registrationID',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+            <property expression="//operatorCode/text()" name="operatorCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:operatorCode)" group="1" name="operatorCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="not(boolean($ctx:operatorCode))">
+                <then>
+                    <property expression="fn:concat('operatorCode',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+        </sequence>
+    </foreach>
+    <filter xpath="(boolean($ctx:MAX_BATCH_SIZE))">
+        <then>
+            <property name="OPERATOR_BATCH_SIZE" scope="default" type="INTEGER" value="0"/>
+            <script language="js"><![CDATA[var max_batch_size = mc.getProperty('MAX_BATCH_SIZE');
+            	 	var registrations_count = mc.getProperty('REGISTRATIONS_COUNT');
+            	 	
+            	 	var operator_batch_size = parseInt(max_batch_size) / registrations_count;
+            	 	
+            	 	mc.setProperty('OPERATOR_BATCH_SIZE', operator_batch_size);
+            	 	mc.setProperty('REMAINING_BATCH_SIZE', 0);]]></script>
+        </then>
+        <else/>
+    </filter>
+    <iterate attachPath="//inboundSMSMessages" expression="//registrations" id="smsmessagingapi.inbound.registrations.splitter" preservePayload="true" sequential="true">
+        <target>
+            <sequence>
+                <script language="js"><![CDATA[var operator_batch_size = mc.getProperty('OPERATOR_BATCH_SIZE');
+	            	 	var remaining_batch_size = mc.getProperty('REMAINING_BATCH_SIZE');
+
+	            	 	mc.setProperty('CURRENT_OPERATOR_BATCH_SIZE', parseInt(operator_batch_size) + parseInt(remaining_batch_size));]]></script>
+                <property expression="//registrations/registrationID/text()" name="REGISTRATION_ID" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:REGISTRATION_ID)" group="1" name="REGISTRATION_ID" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <property expression="//registrations/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <!-- retrieve operator's endpoint -->
+                <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
+                <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
+                    <then>
+                        <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <!-- dummy endpoint call to step-out from iterate -->
+                        <call>
+                            <endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint"/>
+                        </call>
+                    </then>
+                    <else>
+                        <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+                        <property expression="fn:concat($ctx:API_ENDPOINT, '/inbound/registrations/', $ctx:REGISTRATION_ID, '/messages')" name="API_ENDPOINT" scope="default" type="STRING"/>
+                        <filter xpath="(boolean($ctx:MAX_BATCH_SIZE))">
+                            <then>
+                                <property expression="fn:concat($ctx:API_ENDPOINT,'?maxBatchSize=', $ctx:CURRENT_OPERATOR_BATCH_SIZE)" name="API_ENDPOINT" scope="default" type="STRING"/>
+                            </then>
+                            <else/>
+                        </filter>
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+                        <script language="js"><![CDATA[var current_operator_batch_size = mc.getProperty('CURRENT_OPERATOR_BATCH_SIZE');
+			            	 	var resultant_batch_size = mc.getPayloadJSON().inboundSMSMessageList.inboundSMSMessage.length();
+		
+			            	 	mc.setProperty('REMAINING_BATCH_SIZE', parseInt(current_operator_batch_size) - parseInt(resultant_batch_size));]]></script>
+                    </else>
+                </filter>
+            </sequence>
+        </target>
+    </iterate>
 </sequence>
