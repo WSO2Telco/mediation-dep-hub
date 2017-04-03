@@ -13,4 +13,11 @@
             <mediaType>application/xml</mediaType>
         </item>
     </artifact>
+    <artifact name="spendLimit" groupId="com.wso2telco.dep.hub.resource" version="1.0.0" type="registry/resource" serverRole="GovernanceRegistry">
+        <item>
+            <file>spendLimit.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations/paymentAPI</path>
+            <mediaType>application/xml</mediaType>
+        </item>
+    </artifact>
 </artifacts>

@@ -3,6 +3,8 @@
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property expression="$trp:x-jwt-assertion" name="jwt-header"
+              scope="default" type="STRING"/>
   <property expression="json-eval($.amountTransaction.clientCorrelator)"
     name="clientCorrelator" scope="default" type="STRING"/>
   <property expression="fn:normalize-space($ctx:clientCorrelator)"
@@ -179,6 +181,7 @@
     </then>
     <else/>
   </filter>
+
   <!-- generating request clientCorrelator -->
   <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
@@ -191,6 +194,21 @@
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+
+  <!-- read spendlimit config-->
+  <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
+            name="spendLimitConfig" scope="default" type="OM"/>
+
+    <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.UserInfoMediator"/>
+    <filter regex="true" source="$ctx:userInfoEnabled">
+        <then>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"/>
+        </then>
+        <else>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.check.limit.Sequence"/>
+        </else>
+  </filter>
+
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <!-- generating request json -->
