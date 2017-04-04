@@ -1,211 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence"
-	trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-	<sequence key="com.wso2telco.dep.common.main.request.Sequence" />
-	<property name="messageType" scope="axis2" type="STRING"
-		value="application/json" />
-	<property expression="json-eval($.makePayment.clientCorrelator)"
-		name="clientCorrelator" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:clientCorrelator)"
-		group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property expression="json-eval($.makePayment.endUserId)"
-		name="endUserId" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:endUserId)"
-		group="1" name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property expression="get-property('endUserId')" name="MSISDN"
-		scope="default" type="STRING" />
-	<property expression="json-eval($.makePayment.referenceCode)"
-		name="referenceCode" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:referenceCode)"
-		group="1" name="referenceCode" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property expression="json-eval($.makePayment.notifyURL)"
-		name="notifyURL" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:notifyURL)"
-		group="1" name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingInformation.amount)"
-		name="amount" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:amount)" group="1"
-		name="amount" pattern="((^(?!null).*$)|(^(null).+$))" scope="default"
-		type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingInformation.currency)"
-		name="currency" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:currency)"
-		group="1" name="currency" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingInformation.description)"
-		name="description" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:description)"
-		group="1" name="description" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingMetaData.onBehalfOf)"
-		name="onBehalfOf" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:onBehalfOf)"
-		group="1" name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingMetaData.purchaseCategoryCode)"
-		name="purchaseCategoryCode" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
-		group="1" name="purchaseCategoryCode" pattern="((^(?!null).*$)|(^(null).+$))"
-		scope="default" type="STRING" />
-	<property
-		expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
-		name="channel" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:channel)" group="1"
-		name="channel" pattern="((^(?!null).*$)|(^(null).+$))" scope="default"
-		type="STRING" />
-	<filter
-		xpath="boolean($ctx:endUserId) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
-		<then>
-			<call-template target="com.wso2telco.dep.common.urlValidation.Template">
-				<with-param name="paramName" value="notifyURL" />
-				<with-param name="paramValue" value="{$ctx:notifyURL}" />
-			</call-template>
-			<call-template target="com.wso2telco.dep.common.doubleValidation.Template">
-				<with-param name="paramName" value="amount" />
-				<with-param name="paramValue" value="{$ctx:amount}" />
-				<with-param name="validationType" value="GE_ZERO" />
-			</call-template>
-			<call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
-				<with-param name="paramName" value="endUserId" />
-				<with-param name="paramValue" value="{$ctx:endUserId}" />
-			</call-template>
-		</then>
-		<else>
-			<filter xpath="not(boolean($ctx:endUserId))">
-				<then>
-					<property expression="fn:concat('endUserId',',')" name="missingParameters"
-						scope="default" type="STRING" />
-				</then>
-				<else />
-			</filter>
-			<filter xpath="not(boolean($ctx:referenceCode))">
-				<then>
-					<property expression="fn:concat($ctx:missingParameters, 'referenceCode,')"
-						name="missingParameters" scope="default" type="STRING" />
-				</then>
-				<else />
-			</filter>
-			<filter xpath="not(boolean($ctx:description))">
-				<then>
-					<property expression="fn:concat($ctx:missingParameters, 'description,')"
-						name="missingParameters" scope="default" type="STRING" />
-				</then>
-				<else />
-			</filter>
-			<filter xpath="not(boolean($ctx:currency))">
-				<then>
-					<property expression="fn:concat($ctx:missingParameters, 'currency,')"
-						name="missingParameters" scope="default" type="STRING" />
-				</then>
-				<else />
-			</filter>
-			<filter xpath="not(boolean($ctx:amount))">
-				<then>
-					<property expression="fn:concat($ctx:missingParameters, 'amount,')"
-						name="missingParameters" scope="default" type="STRING" />
-				</then>
-				<else />
-			</filter>
-			<property
-				expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))"
-				name="missingParameters" scope="default" type="STRING" />
-			<property name="httpStatusCode" scope="default" type="STRING"
-				value="400" />
-			<property name="exceptionType" scope="default" type="STRING"
-				value="SERVICE_EXCEPTION" />
-			<property name="messageId" scope="default" type="STRING"
-				value="SVC0002" />
-			<property name="errorText" scope="default" type="STRING"
-				value="Invalid input value for message part %1" />
-			<filter regex="^false$"
-				source="boolean(fn:contains($ctx:missingParameters, ','))">
-				<then>
-					<property
-						expression="fn:concat('Missing mandatory parameter: ', $ctx:missingParameters)"
-						name="errorVariable" scope="default" type="STRING" />
-				</then>
-				<else>
-					<property
-						expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
-						name="errorVariable" scope="default" type="STRING" />
-				</else>
-			</filter>
-			<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
-		</else>
-	</filter>
-	<!-- generating request clientCorrelator -->
-	<call-template
-		target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-		<with-param name="clientCorrelator" value="{$ctx:clientCorrelator}" />
-	</call-template>
-	<!-- validate purchase category code in request -->
-	<filter xpath="(boolean($ctx:purchaseCategoryCode))">
-		<then>
-			<sequence
-				key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence" />
-			<filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
-				<then>
-					<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
-				</then>
-				<else />
-			</filter>
-			<filter regex="true" source="get-property('INTERNAL_ERROR')">
-				<then>
-					<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
-				</then>
-				<else />
-			</filter>
-		</then>
-		<else />
-	</filter>
-	<!-- validate channel in request -->
-	<filter xpath="(boolean($ctx:channel))">
-		<then>
-			<call-template target="com.wso2telco.dep.common.channelValidation.Template">
-				<with-param name="paramName" value="channel" />
-				<with-param name="paramValue" value="{$ctx:channel}" />
-			</call-template>
-		</then>
-		<else />
-	</filter>
-	<!-- retrieve operator's endpoint -->
-	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence" />
-	<!-- save service provider's notify url and generate new notify url from 
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/> 
+  <property expression="json-eval($.makePayment.clientCorrelator)"
+    name="clientCorrelator" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:clientCorrelator)"
+    group="1" name="clientCorrelator"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property expression="json-eval($.makePayment.endUserId)"
+    name="endUserId" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:endUserId)" group="1"
+    name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property expression="get-property('endUserId')" name="MSISDN"
+    scope="default" type="STRING"/>   
+  <property expression="json-eval($.makePayment.referenceCode)"
+    name="referenceCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:referenceCode)" 
+    group="1" name="referenceCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>  
+  <property expression="json-eval($.makePayment.notifyURL)"
+    name="notifyURL" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:notifyURL)" group="1"
+    name="notifyURL" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>  
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingInformation.amount)"
+    name="amount" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:amount)" group="1"
+    name="amount" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingInformation.currency)"
+    name="currency" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:currency)" group="1"
+    name="currency" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingInformation.description)"
+    name="description" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:description)" group="1"
+    name="description" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingMetaData.onBehalfOf)"
+    name="onBehalfOf" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:onBehalfOf)" group="1"
+    name="onBehalfOf" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingMetaData.purchaseCategoryCode)"
+    name="purchaseCategoryCode" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:purchaseCategoryCode)"
+    group="1" name="purchaseCategoryCode"
+    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+  <property
+    expression="json-eval($.makePayment.paymentAmount.chargingMetaData.channel)"
+    name="channel" scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:channel)" group="1"
+    name="channel" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING"/>
+  <filter xpath="boolean($ctx:endUserId) and boolean($ctx:referenceCode) and boolean($ctx:description) and boolean($ctx:currency) and boolean($ctx:amount)">
+    <then>
+      <call-template target="com.wso2telco.dep.common.urlValidation.Template">
+        <with-param name="paramName" value="notifyURL"/>
+        <with-param name="paramValue" value="{$ctx:notifyURL}"/>
+      </call-template>
+      <call-template target="com.wso2telco.dep.common.doubleValidation.Template">
+        <with-param name="paramName" value="amount"/>
+        <with-param name="paramValue" value="{$ctx:amount}"/>
+        <with-param name="validationType" value="GE_ZERO"/>
+      </call-template>
+      <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+        <with-param name="paramName" value="endUserId"/>
+        <with-param name="paramValue" value="{$ctx:endUserId}"/>
+      </call-template>
+    </then>
+    <else>
+      <filter xpath="not(boolean($ctx:endUserId))">
+        <then>
+          <property expression="fn:concat('endUserId',',')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:referenceCode))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, 'referenceCode,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:description))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, 'description,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:currency))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, 'currency,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <filter xpath="not(boolean($ctx:amount))">
+        <then>
+          <property
+            expression="fn:concat($ctx:missingParameters, 'amount,')"
+            name="missingParameters" scope="default" type="STRING"/>
+        </then>
+        <else/>
+      </filter>
+      <property
+        expression="fn:substring($ctx:missingParameters, 0, fn:string-length($ctx:missingParameters))"
+        name="missingParameters" scope="default" type="STRING"/>
+      <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+      <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+      <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+      <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+      <filter regex="^false$" source="boolean(fn:contains($ctx:missingParameters, ','))">
+        <then>
+          <property
+            expression="fn:concat('Missing mandatory parameter: ', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+        </then>
+        <else>
+          <property
+            expression="fn:concat('Missing mandatory parameters: ', $ctx:missingParameters)"
+            name="errorVariable" scope="default" type="STRING"/>
+        </else>
+      </filter>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </else>
+  </filter>
+  <!-- generating request clientCorrelator -->
+  <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+  </call-template>
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+    name="notificationURLConfig" scope="default" type="OM"/>
+  <property expression="$ctx:notificationURLConfig//wallet"
+    name="NOTIFICATION_URL" scope="default" type="STRING"/>
+  <!-- save service provider's notify url and generate new notify url from 
 		hub -->
-	<property
-		expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
-		name="notificationURLConfig" scope="default" type="OM" />
-	<property expression="$ctx:notificationURLConfig//wallet"
-		name="NOTIFICATION_URL" scope="default" type="STRING" />
-	<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence" />
-	<filter regex="true" source="get-property('INTERNAL_ERROR')">
-		<then>
-			<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
-		</then>
-		<else />
-	</filter> 
-	<!-- retrieve operator's access token -->
-	<sequence key="com.wso2telco.dep.common.select.token.Sequence" />
-	<!-- generating request json -->
-	<script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+  <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+ <!-- validate purchase category code in request -->
+  <filter xpath="(boolean($ctx:purchaseCategoryCode))">
+    <then>
+	    <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
+	  	<filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+	    	<then>
+	      		<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+	    	</then>
+	    <else/>
+	  	</filter>
+	  	<filter regex="true" source="get-property('INTERNAL_ERROR')">
+	    	<then>
+	      		<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+	    	</then>
+	    	<else/>
+	  	</filter>  
+    </then>
+    <else/>
+  </filter>
+  <!-- validate channel in request -->
+  <filter xpath="(boolean($ctx:channel))">
+    <then>
+	    <call-template target="com.wso2telco.dep.common.channelValidation.Template">
+			<with-param name="paramName" value="channel"/>
+			<with-param name="paramValue" value="{$ctx:channel}"/>
+		</call-template> 
+    </then>
+    <else/>
+  </filter>
+  <!-- retrieve operator's endpoint -->
+  <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  <!-- retrieve operator's access token -->
+  <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+  <!-- generating request json -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.makePayment.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	payload.makePayment.notifyURL = mc.getProperty("generatedNotifyURL");
 	mc.setPayloadJSON(payload);]]></script>
-	<!-- send request to the gateway -->
-	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence" />
-	<!-- generating response json -->
-	<script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+  <!-- send request to the gateway -->
+  <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <!-- generating response json -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
 	payload.makePayment.notifyURL = mc.getProperty("notifyURL");
 	mc.setPayloadJSON(payload);]]></script>
-	<sequence key="com.wso2telco.dep.common.main.response.Sequence" />
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
