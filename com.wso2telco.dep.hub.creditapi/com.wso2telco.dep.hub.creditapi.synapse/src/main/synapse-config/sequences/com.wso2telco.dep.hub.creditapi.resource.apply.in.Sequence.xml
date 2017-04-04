@@ -1,113 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence"
-	onError="com.wso2telco.dep.common.response.unexpectedError.Sequence"
-	trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
 
-	<sequence key="com.wso2telco.dep.common.main.request.Sequence" />
-
-	<property expression="$ctx:uri.var.msisdn" name="msisdn"
-		scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:msisdn)" name="msisdn"
-		scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))"
-		group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.type)"
-		name="type" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:type)" name="type"
-		scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))"
-		group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.amount)"
-		name="amount" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:amount)" name="amount"
-		scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))"
-		group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.clientCorrelator)"
-		name="clientCorrelator" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:clientCorrelator)"
-		name="clientCorrelator" scope="default" type="STRING"
-		pattern="((^(?!null).*$)|(^(null).+$))" group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.referenceCode)"
-		name="referenceCode" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:referenceCode)"
-		name="referenceCode" scope="default" type="STRING"
-		pattern="((^(?!null).*$)|(^(null).+$))" group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.reasonForCredit)"
-		name="reasonForCredit" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:reasonForCredit)"
-		name="reasonForCredit" scope="default" type="STRING"
-		pattern="((^(?!null).*$)|(^(null).+$))" group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.merchantIdentification)"
-		name="merchantIdentification" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:merchantIdentification)"
-		name="merchantIdentification" scope="default" type="STRING"
-		pattern="((^(?!null).*$)|(^(null).+$))" group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)"
-		name="notifyURL" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:notifyURL)"
-		name="notifyURL" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))"
-		group="1" />
-
-	<property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)"
-		name="callbackData" scope="default" type="STRING" />
-	<property expression="fn:normalize-space($ctx:callbackData)"
-		name="callbackData" scope="default" type="STRING"
-		pattern="((^(?!null).*$)|(^(null).+$))" group="1" />
-
-	<log category="DEBUG" level="custom">
-		<property expression="$ctx:msisdn" name="msisdn" />
-		<property expression="$ctx:type" name="type" />
-		<property expression="$ctx:amount" name="amount" />
-		<property expression="$ctx:clientCorrelator" name="clientCorrelator" />
-		<property expression="$ctx:referenceCode" name="referenceCode" />
-		<property expression="$ctx:reasonForCredit" name="reasonForCredit" />
-		<property expression="$ctx:merchantIdentification" name="merchantIdentification" />
-		<property expression="$ctx:notifyURL" name="notifyURL" />
-		<property expression="$ctx:callbackData" name="callbackData" />
-	</log>
-
-	<sequence
-		key="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence" />
-
-	<!-- Parameter for endpoint retrieval -->
-	<property expression="$ctx:msisdn" name="MSISDN" scope="default"
-		type="STRING" />
-	<!-- retrieve operator's endpoint -->
-	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence" />
-	<!-- save service provider's notify url and generate new notify url from 
-		hub -->
-	<filter xpath="boolean($ctx:notifyURL)">
-		<then>
-			<property
-				expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
-				name="notificationURLConfig" scope="default" type="OM" />
-			<property expression="$ctx:notificationURLConfig//credit"
-				name="NOTIFICATION_URL" scope="default" type="STRING" />
-			<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence" />
+  	<sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    
+    <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.type)" name="type" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:type)" name="type" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.amount)" name="amount" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:amount)" name="amount" scope="default" type="STRING"  pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.referenceCode)" name="referenceCode" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:referenceCode)" name="referenceCode" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.reasonForCredit)" name="reasonForCredit" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:reasonForCredit)" name="reasonForCredit" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.merchantIdentification)" name="merchantIdentification" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:merchantIdentification)" name="merchantIdentification" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <property expression="json-eval($.creditApplyRequest.receiptRequest.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    	
+    <property expression="json-eval($.creditApplyRequest.receiptRequest.callbackData)" name="callbackData" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+    
+    <log category="DEBUG" level="custom">
+        <property expression="$ctx:msisdn" name="msisdn"/>
+        <property expression="$ctx:type" name="type"/>
+        <property expression="$ctx:amount" name="amount"/>
+        <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+        <property expression="$ctx:referenceCode" name="referenceCode"/>
+        <property expression="$ctx:reasonForCredit" name="reasonForCredit"/>
+        <property expression="$ctx:merchantIdentification" name="merchantIdentification"/>
+        <property expression="$ctx:notifyURL" name="notifyURL"/>
+        <property expression="$ctx:callbackData" name="callbackData"/>
+    </log>
+    
+    <sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence"/>
+    
+    <filter xpath="boolean($ctx:notifyURL)">
+    	<then>
+			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+			  name="notificationURLConfig" scope="default" type="OM"/>
+			<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+			<!-- save service provider's notify url and generate new notify url from hub -->
+			<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
 			<filter regex="true" source="get-property('INTERNAL_ERROR')">
-				<then>
-					<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
-				</then>
-				<else />
-			</filter>
-		</then>
-		<else />
-	</filter>
+			  <then>
+			    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+			  </then>
+			  <else/>
+			</filter>    		
+    	</then>
+    	<else/>
+    </filter>
+	
+	<!-- Parameter for endpoint retrieval -->
+	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
+	<!-- retrieve operator's endpoint -->
+	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
 	<!-- retrieve operator's access token -->
-	<sequence key="com.wso2telco.dep.common.select.token.Sequence" />
+	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
 	<!-- generating request clientCorrelator -->
-	<call-template
-		target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
-		<with-param name="clientCorrelator" value="{$ctx:clientCorrelator}" />
+	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+	    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
 	</call-template>
 
-
+            
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
@@ -125,9 +91,9 @@
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
-
-	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence" />
-
+	
+	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+	
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
@@ -148,7 +114,7 @@
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>
-
-	<sequence key="com.wso2telco.dep.common.main.response.Sequence" />
-
+	
+	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+  
 </sequence>
