@@ -42,7 +42,7 @@
 			var payload = mc.getPayloadJSON();
 			var clientCorrelator = payload.refundResponse.clientCorrelator;
 			var notifyURLId = mc.getProperty("NOTIFY_URL_ID");
-			var resourceURL = payload.refundResponse.receiptResponse.resourceURL;						
+			var resourceURL = payload.refundResponse.resourceURL;						
 			         								
 			if (clientCorrelator != null && clientCorrelator != "") {			    
 				var clientCorrelatorArray = clientCorrelator.split(":urn:uuid:");
@@ -68,9 +68,9 @@
 				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
 					.concat(apiName).concat("/").concat(apiVersion));
 			
-				payload.refundResponse.receiptResponse.resourceURL = hubResourceURL;				
+				payload.refundResponse.resourceURL = hubResourceURL;				
 			} else {
-				delete payload.refundResponse.receiptResponse.resourceURL;
+				delete payload.refundResponse.resourceURL;
 			}
 
 			mc.setPayloadJSON(payload);
