@@ -142,20 +142,6 @@
   <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
   </call-template>
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
-    name="notificationURLConfig" scope="default" type="OM"/>
-  <property expression="$ctx:notificationURLConfig//wallet"
-    name="NOTIFICATION_URL" scope="default" type="STRING"/>
-  <!-- save service provider's notify url and generate new notify url from 
-		hub -->
-  <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
-  <filter regex="true" source="get-property('INTERNAL_ERROR')">
-    <then>
-      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-    </then>
-    <else/>
-  </filter>
  <!-- validate purchase category code in request -->
   <filter xpath="(boolean($ctx:purchaseCategoryCode))">
     <then>
@@ -187,6 +173,20 @@
   </filter>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  <!-- save service provider's notify url and generate new notify url from 
+		hub -->
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+    name="notificationURLConfig" scope="default" type="OM"/>
+  <property expression="$ctx:notificationURLConfig//wallet"
+    name="NOTIFICATION_URL" scope="default" type="STRING"/>
+  <sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
