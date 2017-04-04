@@ -43,7 +43,12 @@
     </log>
     
     <sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence"/>
-    
+    	
+	<!-- Parameter for endpoint retrieval -->
+	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
+	<!-- retrieve operator's endpoint -->
+	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+	
     <filter xpath="boolean($ctx:notifyURL)">
     	<then>
 			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
@@ -59,12 +64,8 @@
 			</filter>    		
     	</then>
     	<else/>
-    </filter>
+    </filter>	
 	
-	<!-- Parameter for endpoint retrieval -->
-	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
-	<!-- retrieve operator's endpoint -->
-	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
