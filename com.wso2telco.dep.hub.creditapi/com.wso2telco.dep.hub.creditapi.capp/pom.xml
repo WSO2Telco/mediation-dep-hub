@@ -14,14 +14,16 @@
   <name>com.wso2telco.dep.hub.creditapi.capp</name>
   <description>com.wso2telco.dep.hub.creditapi.capp</description>
   <properties>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>
-    <com.wso2telco.dep.hub.api_._creditAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._creditAPI>
     <artifact.types>synapse/priority-executor=xml,jaggery/app=zip,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,service/meta=xml,event/stream=json,synapse/proxy-service=xml,synapse/sequence=xml,bpel/workflow=zip,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,synapse/local-entry=xml,synapse/task=xml,event/publisher=xml,synapse/configuration=xml,webapp/jaxws=war,registry/resource=zip,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.notification.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence>
+    <com.wso2telco.dep.hub.api_._creditAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._creditAPI>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence>
   </properties>
   <dependencies>
     <dependency>
@@ -63,6 +65,18 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.creditapi.resource.notification.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence</artifactId>
       <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

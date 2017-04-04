@@ -43,7 +43,12 @@
     </log>
     
     <sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence"/>
-    
+    	
+	<!-- Parameter for endpoint retrieval -->
+	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
+	<!-- retrieve operator's endpoint -->
+	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+	
     <filter xpath="boolean($ctx:notifyURL)">
     	<then>
 			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
@@ -59,12 +64,8 @@
 			</filter>    		
     	</then>
     	<else/>
-    </filter>
+    </filter>	
 	
-	<!-- Parameter for endpoint retrieval -->
-	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
-	<!-- retrieve operator's endpoint -->
-	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
@@ -94,6 +95,10 @@
 	
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	
+	<!-- retrieve hub url from registry -->
+  	<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+  	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>
+	
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
@@ -109,6 +114,22 @@
 
 			if (generatedNotifyURL != null) {
 				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+			}
+			
+			var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;
+			
+			if (resourceURL != null && resourceURL !="") {
+				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+				var hubURL = mc.getProperty("hubUrl");
+				var apiName = mc.getProperty("API_NAME");
+				var apiVersion = mc.getProperty("VERSION");
+				
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
+					.concat(apiName).concat("/").concat(apiVersion));
+			
+				payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;				
+			} else {
+				delete payload.creditApplyResponse.receiptResponse.resourceURL;
 			}
 
 			mc.setPayloadJSON(payload);

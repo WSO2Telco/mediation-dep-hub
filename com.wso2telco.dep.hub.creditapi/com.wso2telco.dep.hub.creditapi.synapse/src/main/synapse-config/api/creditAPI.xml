@@ -9,6 +9,15 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" uri-template="/credit/{+msisdn}/apply/{requestId}">
+        <inSequence>
+			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>    
     <resource methods="POST" uri-template="/credit/{+msisdn}/refund">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence"/>
@@ -18,6 +27,15 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
+    <resource methods="GET" uri-template="/credit/{+msisdn}/refund/{requestId}">
+        <inSequence>
+			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>    
 	<resource methods="POST" uri-template="/creditnotification/{notifyURLId}">
 	  <inSequence>
 	    <sequence key="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence"/>
