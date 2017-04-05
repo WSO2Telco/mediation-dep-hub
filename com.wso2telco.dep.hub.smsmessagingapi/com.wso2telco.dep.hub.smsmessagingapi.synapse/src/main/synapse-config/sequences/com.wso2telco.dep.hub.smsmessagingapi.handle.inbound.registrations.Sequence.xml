@@ -5,7 +5,19 @@
     <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.inboundSMSMessages.maxBatchSize)" name="MAX_BATCH_SIZE" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:MAX_BATCH_SIZE)" group="1" name="MAX_BATCH_SIZE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <property expression="json-eval($.inboundSMSMessages.registrations.length)" name="REGISTRATIONS_COUNT" scope="default" type="INTEGER"/>
+
+    <script language="js">
+        <![CDATA[
+            var payload = mc.getPayloadJSON();
+            var registration_count = payload.inboundSMSMessages.registrations.length;
+            mc.setProperty('REGISTRATIONS_COUNT', registration_count);
+        ]]>
+    </script>
+
+    <log level="custom">
+        <property name="status" value="++++++++++ passing stage 1 ++++++++"/>
+    </log>
+
     <!-- validate registration details -->
     <foreach expression="//registrations" xmlns:ns="http://org.apache.synapse/xsd">
         <sequence>
@@ -32,26 +44,49 @@
     <filter xpath="(boolean($ctx:MAX_BATCH_SIZE))">
         <then>
             <property name="OPERATOR_BATCH_SIZE" scope="default" type="INTEGER" value="0"/>
-            <script language="js"><![CDATA[var max_batch_size = mc.getProperty('MAX_BATCH_SIZE');
+            <script language="js">
+                <![CDATA[
+                    var max_batch_size = mc.getProperty('MAX_BATCH_SIZE');
             	 	var registrations_count = mc.getProperty('REGISTRATIONS_COUNT');
             	 	
             	 	var operator_batch_size = parseInt(max_batch_size) / registrations_count;
             	 	
             	 	mc.setProperty('OPERATOR_BATCH_SIZE', operator_batch_size);
-            	 	mc.setProperty('REMAINING_BATCH_SIZE', 0);
-            	 	
-            	 	mc.setProperty('TOTAL_RESPONSE_COUNT', 0);
-            	 	mc.setProperty('TOTAL_PENDING_COUNT', 0);]]></script>
+                ]]>
+            </script>
+
+            <property name="REMAINING_BATCH_SIZE" scope="operation" value="0" type="INTEGER"/>
+            <property name="TOTAL_RESPONSE_COUNT" scope="operation" value="0" type="INTEGER"/>
+            <property name="TOTAL_PENDING_COUNT" scope="operation" value="0" type="INTEGER"/>
         </then>
         <else/>
     </filter>
+
+    <log level="full"/>
+    <log level="custom">
+        <property name="status" value="++++++++++ passing stage 2 ++++++++"/>
+    </log>
+
     <iterate attachPath="//inboundSMSMessages" expression="//registrations" id="smsmessagingapi.inbound.registrations.splitter" preservePayload="true" sequential="true">
         <target>
             <sequence>
-                <script language="js"><![CDATA[var operator_batch_size = mc.getProperty('OPERATOR_BATCH_SIZE');
+
+                <log level="custom">
+                    <property name="status" value="++++++++++ iteration starts ++++++++"/>
+                    <property name="TOTAL_RESPONSE_COUNT" expression="$ctx:TOTAL_RESPONSE_COUNT"/>
+                    <property name="TOTAL_PENDING_COUNT" expression="$ctx:TOTAL_PENDING_COUNT"/>
+                </log>
+
+                <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')" scope="default" type="INTEGER"/>
+
+                <script language="js">
+                    <![CDATA[
+                        var operator_batch_size = mc.getProperty('OPERATOR_BATCH_SIZE');
 	            	 	var remaining_batch_size = mc.getProperty('REMAINING_BATCH_SIZE');
 
-	            	 	mc.setProperty('CURRENT_OPERATOR_BATCH_SIZE', parseInt(operator_batch_size) + parseInt(remaining_batch_size));]]></script>
+	            	 	mc.setProperty('CURRENT_OPERATOR_BATCH_SIZE', parseInt(operator_batch_size) + parseInt(remaining_batch_size));
+                    ]]>
+                </script>
                 <property expression="//registrations/registrationID/text()" name="REGISTRATION_ID" scope="default" type="STRING"/>
                 <property expression="fn:normalize-space($ctx:REGISTRATION_ID)" group="1" name="REGISTRATION_ID" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <property expression="//registrations/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
@@ -75,7 +110,19 @@
                             </then>
                             <else/>
                         </filter>
+
+                        <log level="custom">
+                            <property name="status" value="++++++++++ passing stage 3 ++++++++"/>
+                            <property name="url" expression="$ctx:API_ENDPOINT"/>
+                        </log>
+
+                        <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
                         <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+
+                        <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')" scope="default" type="INTEGER"/>
+                        <property name="TOTAL_RESPONSE_COUNT" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')" scope="default" type="INTEGER"/>
+                        <property name="TOTAL_PENDING_COUNT" expression="get-property('operation', 'TOTAL_PENDING_COUNT')" scope="default" type="INTEGER"/>
+
                         <script language="js"><![CDATA[var current_operator_batch_size = mc.getProperty('CURRENT_OPERATOR_BATCH_SIZE');
                         		                        		
 			            	 	var resultant_batch_size = mc.getPayloadJSON().inboundSMSMessageList.numberOfMessagesInThisBatch;
@@ -88,6 +135,11 @@
 			            	 	
 			            	 	mc.setProperty('TOTAL_RESPONSE_COUNT', current_total_response_count);
             	 				mc.setProperty('TOTAL_PENDING_COUNT', current_total_pending_count);]]></script>
+
+                        <property name="REMAINING_BATCH_SIZE" expression="get-property('default', 'REMAINING_BATCH_SIZE')" scope="operation" type="INTEGER"/>
+                        <property name="TOTAL_RESPONSE_COUNT" expression="get-property('default', 'TOTAL_RESPONSE_COUNT')" scope="operation" type="INTEGER"/>
+                        <property name="TOTAL_PENDING_COUNT" expression="get-property('default', 'TOTAL_PENDING_COUNT')" scope="operation" type="INTEGER"/>
+
                     </else>
                 </filter>
             </sequence>
