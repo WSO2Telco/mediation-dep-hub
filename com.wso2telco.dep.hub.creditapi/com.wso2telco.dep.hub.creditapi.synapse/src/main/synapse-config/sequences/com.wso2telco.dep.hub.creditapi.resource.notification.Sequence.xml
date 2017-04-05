@@ -1,28 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
-  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-  <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
-  <!-- retrieve notification endpoint -->
-  <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
-  <!-- generating request json -->
-  
-  <script language="js">
-  	<![CDATA[
-  		var payload = mc.getPayloadJSON();
-		payload.creditApplyResponse.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-		payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
-		mc.setPayloadJSON(payload);
-	]]>
-  </script>
-  <!-- send notification to notification endpoint -->
-  <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
-  <!-- update notify status to 1 -->
-  <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
-    <then>
-      <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
-    </then>
-    <else/>
-  </filter>
-  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+  	<sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+  	
+  	<property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  	<property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
+  	
+  	<!-- retrieve notification endpoint -->
+  	<sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
+  	<!-- generating request json -->
+
+  	<property name="OPERATOR_CODE" action="set" scope="default" expression="$ctx:NOTIFY_INFO_OPERATOR_NAME" type="STRING"/>  	
+  	<sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
+  	
+  	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>   	
+  	  
+  	<script language="js">
+  		<![CDATA[
+  			var payload = mc.getPayloadJSON();
+  			
+	  		var clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
+	  		var notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+	  		
+			var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+			var hubURL = mc.getProperty("hubUrl");
+			var apiName = mc.getProperty("API_NAME");
+			var apiVersion = mc.getProperty("VERSION"); 
+			
+	  		if (payload.creditApplyResponse != null && payload.creditApplyResponse != "") {
+	  			
+	  			var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;
+	  			
+	  			if (resourceURL != null && resourceURL != "") {
+					var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
+						.concat(apiName).concat("/").concat(apiVersion));
+					payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;	  
+	  			} else {
+	  				delete payload.creditApplyResponse.receiptResponse.resourceURL;
+	  			}    			
+	  		
+	  			if (clientCorrelator != null && clientCorrelator !="") {
+	  				payload.creditApplyResponse.clientCorrelator = clientCorrelator;
+	  			} else {
+	  				delete payload.creditApplyResponse.clientCorrelator;
+	  			}
+	  			
+	  			payload.creditApplyResponse.receiptResponse.notifyURL = notifyURL;
+	  			   			
+	  		} else if (payload.refundResponse != null) {
+	  		
+	  			var resourceURL = payload.refundResponse.resourceURL;
+	  			
+	  			if (resourceURL != null && resourceURL != "") {
+					var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
+						.concat(apiName).concat("/").concat(apiVersion));
+					payload.refundResponse.resourceURL = hubResourceURL;	  
+	  			} else {
+	  				delete payload.refundResponse.resourceURL;
+	  			}   			
+	  		
+	  			if (clientCorrelator != null && clientCorrelator !="") {
+	  				payload.refundResponse.clientCorrelator = clientCorrelator;
+	  			} else {
+	  				delete payload.refundResponse.clientCorrelator;
+	  			} 
+	  			
+	  			payload.refundResponse.receiptResponse.notifyURL = notifyURL;   		  		
+	  		}
+  		
+			mc.setPayloadJSON(payload);
+		]]>
+  	</script>
+  	
+  	<!-- send notification to notification endpoint -->
+  	<sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
+  	<!-- update notify status to 1 -->
+	<filter regex="200" source="get-property('axis2', 'HTTP_SC')">
+	  <then>
+	    <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
+	  </then>
+	  <else/>
+	</filter>
+	
+  	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

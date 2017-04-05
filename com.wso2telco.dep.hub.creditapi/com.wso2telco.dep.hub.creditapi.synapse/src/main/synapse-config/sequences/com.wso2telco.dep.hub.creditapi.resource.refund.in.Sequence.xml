@@ -75,17 +75,17 @@
     
     <sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence"/>
     
-	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	  
-	    <with-param name="apiResourceSuffix" value="/creditnotification"/>    
-	</call-template> 
-	
 	<!-- Parameter for endpoint retrieval -->
 	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
 	<!-- retrieve operator's endpoint -->
 	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+
+	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	  
+	    <with-param name="apiResourceSuffix" value="/creditnotification"/>    
+	</call-template>
 
 	<!-- generating request clientCorrelator -->	
 	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
@@ -113,6 +113,8 @@
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
 	
+	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>
+	
 	<script language="js">
 		<![CDATA[
 			var payload = mc.getPayloadJSON();
@@ -128,7 +130,23 @@
 			if (generatedNotifyURL != null) {
 				payload.refundResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
 			}
+
+			var resourceURL = payload.refundResponse.resourceURL;
 			
+			if (resourceURL != null && resourceURL !="") {
+				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+				var hubURL = mc.getProperty("hubUrl");
+				var apiName = mc.getProperty("API_NAME");
+				var apiVersion = mc.getProperty("VERSION");
+				
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
+					.concat(apiName).concat("/").concat(apiVersion));
+			
+				payload.refundResponse.resourceURL = hubResourceURL;				
+			} else {
+				delete payload.refundResponse.resourceURL;
+			}
+						
 			mc.setPayloadJSON(payload);
 		]]>
 	</script>

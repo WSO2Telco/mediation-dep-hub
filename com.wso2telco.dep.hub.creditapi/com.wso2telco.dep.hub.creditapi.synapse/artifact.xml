@@ -20,4 +20,10 @@
     <artifact name="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.notification.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence.xml</file>
+    </artifact>
 </artifacts>
