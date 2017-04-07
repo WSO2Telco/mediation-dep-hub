@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="customerinfoAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="customerinfoAPI" groupId="com.wso2telco.dep.hub.api" version="2.0.0-rc3" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/customerinfoAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.profile.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.profile.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.customerinfoapi.handle.profile.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.customerinfoapi.handle.attributes.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.attributes.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.customerinfoapi.handle.attributes.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.profile.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.customerinfoapi.handle.profile.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.0.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.customerinfoapi.handle.profile.recaller.Sequence.xml</file>
     </artifact>
 </artifacts>
