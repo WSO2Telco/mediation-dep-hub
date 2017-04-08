@@ -13,6 +13,7 @@
     <module>com.wso2telco.dep.hub.creditapi</module>
     <module>com.wso2telco.dep.hub.provisionapi</module>
     <module>com.wso2telco.dep.hub.customerinfoapi</module>
+    <module>distribution</module>
   </modules>
   <build>
     <plugins>
