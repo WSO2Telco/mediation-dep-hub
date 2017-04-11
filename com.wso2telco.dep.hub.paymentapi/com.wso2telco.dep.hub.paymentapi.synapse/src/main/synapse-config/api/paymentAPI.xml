@@ -43,13 +43,17 @@
       </switch>
     </inSequence>
     <outSequence/>
-    <faultSequence/>
+    <faultSequence>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+    </faultSequence>
   </resource>
   <resource methods="GET" protocol="http" uri-template="/{endUserId}/transactions">
     <inSequence>
       <sequence key="com.wso2telco.dep.hub.paymentapi.handle.list.Sequence"/>
     </inSequence>
     <outSequence/>
-    <faultSequence/>
+    <faultSequence>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+    </faultSequence>
   </resource>
 </api>
