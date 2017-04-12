@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
 
+    <foreach expression="//inboundSMSMessage">
+        <sequence>
+            <script language="js">
+                <![CDATA[
+                    var payload = mc.getPayloadXML();
+
+                    var operator_code_value = mc.getProperty('OPERATOR_CODE');
+                    var criteria_value = '';
+                    if (mc.getProperty('CRITERIA')) {
+                        criteria_value = mc.getProperty('CRITERIA');
+                    }
+
+                    var operator_code_tag = new XML(<operatorCode>{operator_code_value}</operatorCode>);
+                    var criteria_tag = new XML(<criteria>{criteria_value}</criteria>);
+
+                    payload.inboundSMSMessage = operator_code_tag;
+                    payload.inboundSMSMessage = criteria_tag;
+
+                    mc.setPayloadXML(payload);
+                ]]>
+            </script>
+        </sequence>
+    </foreach>
+
     <property name="collection" scope="default">
         <collection xmlns=""/>
     </property>

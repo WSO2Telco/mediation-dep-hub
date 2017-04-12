@@ -12,6 +12,8 @@
 	            	 	mc.setProperty('CURRENT_OPERATOR_BATCH_SIZE', parseFloat(operator_batch_size) + parseFloat(remaining_batch_size));
                     ]]>
                 </script>
+                <property expression="//registrations/criteria/text()" name="CRITERIA" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:CRITERIA)" group="1" name="CRITERIA" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <property expression="//registrations/registrationID/text()" name="REGISTRATION_ID" scope="default" type="STRING"/>
                 <property expression="fn:normalize-space($ctx:REGISTRATION_ID)" group="1" name="REGISTRATION_ID" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <property expression="//registrations/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
