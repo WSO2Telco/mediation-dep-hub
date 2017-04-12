@@ -2,20 +2,9 @@
 <sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.splitter.fault.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
 
     <log level="custom">
-        <property name="status" value="++++++++++ fault sequence starts ++++++++"/>
+        <property name="status" value="++++++++++ fault sequence of inbound-registration ++++++++"/>
     </log>
 
-    <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')" scope="default" type="INTEGER"/>
-
-    <script language="js">
-        <![CDATA[
-            var current_operator_batch_size = mc.getProperty('CURRENT_OPERATOR_BATCH_SIZE');
-
-            mc.setProperty('REMAINING_BATCH_SIZE', parseInt(current_operator_batch_size));
-
-        ]]>
-    </script>
-
-    <property name="REMAINING_BATCH_SIZE" expression="get-property('default', 'REMAINING_BATCH_SIZE')" scope="operation" type="INTEGER"/>
+    <drop/>
 
 </sequence>

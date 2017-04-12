@@ -48,7 +48,7 @@
             	 	
             	 	var operator_batch_size = parseInt(max_batch_size) / registrations_count;
             	 	
-            	 	mc.setProperty('OPERATOR_BATCH_SIZE', operator_batch_size);
+            	 	mc.setProperty('OPERATOR_BATCH_SIZE', parseInt(operator_batch_size));
                 ]]>
             </script>
 
@@ -61,15 +61,4 @@
 
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.splitter.Sequence"/>
 
-
-    <property name="collection" scope="default">
-        <collection xmlns=""/>
-    </property>
-    <enrich>
-        <source clone="true" xpath="//inboundSMSMessage/node()"/>
-        <target action="child" xpath="$ctx:collection"/>
-    </enrich>
-    <log level="custom">
-        <property expression="$ctx:collection" name="foo"/>
-    </log>
 </sequence>

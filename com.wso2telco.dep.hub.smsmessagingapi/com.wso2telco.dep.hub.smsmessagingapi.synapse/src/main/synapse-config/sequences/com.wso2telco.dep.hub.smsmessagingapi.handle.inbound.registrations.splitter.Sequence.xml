@@ -3,16 +3,7 @@
     <iterate attachPath="//inboundSMSMessages" expression="//registrations" id="smsmessagingapi.inbound.registrations.splitter" preservePayload="true" sequential="true">
         <target>
             <sequence>
-
-                <log level="custom">
-                    <property name="status" value="++++++++++ iteration starts ++++++++"/>
-                    <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')"/>
-                    <property name="TOTAL_RESPONSE_COUNT" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')"/>
-                    <property name="TOTAL_PENDING_COUNT" expression="get-property('operation', 'TOTAL_PENDING_COUNT')"/>
-                </log>
-
                 <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')" scope="default" type="FLOAT"/>
-
                 <script language="js">
                     <![CDATA[
                         var operator_batch_size = mc.getProperty('OPERATOR_BATCH_SIZE');
@@ -45,34 +36,28 @@
                             <else/>
                         </filter>
 
-                        <log level="custom">
-                            <property name="status" expression="$ctx:API_ENDPOINT"/>
-                        </log>
-
                         <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
                         <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
-                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-
-                        <log level="custom">
-                            <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')"/>
-                            <property name="TOTAL_RESPONSE_COUNT" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')"/>
-                            <property name="TOTAL_PENDING_COUNT" expression="get-property('operation', 'TOTAL_PENDING_COUNT')"/>
-                        </log>
-
+                        <sequence key="com.wso2telco.dep.common.call.blocking.endpoint.Sequence"/>
 
                         <property name="REMAINING_BATCH_SIZE" expression="get-property('operation', 'REMAINING_BATCH_SIZE')" scope="default" type="FLOAT"/>
                         <property name="TOTAL_RESPONSE_COUNT" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')" scope="default" type="FLOAT"/>
                         <property name="TOTAL_PENDING_COUNT" expression="get-property('operation', 'TOTAL_PENDING_COUNT')" scope="default" type="FLOAT"/>
 
-                        <script language="js"><![CDATA[var current_operator_batch_size = mc.getProperty('CURRENT_OPERATOR_BATCH_SIZE');
+                        <script language="js"><![CDATA[
+
+                                var current_operator_batch_size = mc.getProperty('CURRENT_OPERATOR_BATCH_SIZE');
 
 			            	 	var resultant_batch_size = mc.getPayloadJSON().inboundSMSMessageList.numberOfMessagesInThisBatch;
 			            	 	var resultant_pending_count = mc.getPayloadJSON().inboundSMSMessageList.totalNumberOfPendingMessages;
 
 			            	 	mc.setProperty('REMAINING_BATCH_SIZE', parseFloat(current_operator_batch_size) - parseFloat(resultant_batch_size));
 
-			            	 	var current_total_response_count = mc.getProperty('TOTAL_RESPONSE_COUNT') + parseFloat(resultant_batch_size);
-			            	 	var current_total_pending_count = mc.getProperty('TOTAL_PENDING_COUNT') + parseFloat(resultant_pending_count);
+                                var existing_total_response_count = parseFloat(mc.getProperty('TOTAL_RESPONSE_COUNT'));
+			            	 	var current_total_response_count = existing_total_response_count + parseFloat(resultant_batch_size);
+
+                                var existing_total_pending_count = parseFloat(mc.getProperty('TOTAL_PENDING_COUNT'));
+			            	 	var current_total_pending_count = existing_total_pending_count + parseFloat(resultant_pending_count);
 
 			            	 	mc.setProperty('TOTAL_RESPONSE_COUNT', current_total_response_count);
             	 				mc.setProperty('TOTAL_PENDING_COUNT', current_total_pending_count);]]></script>
@@ -80,9 +65,10 @@
                         <property name="REMAINING_BATCH_SIZE" expression="get-property('default', 'REMAINING_BATCH_SIZE')" scope="operation" type="FLOAT"/>
                         <property name="TOTAL_RESPONSE_COUNT" expression="get-property('default', 'TOTAL_RESPONSE_COUNT')" scope="operation" type="FLOAT"/>
                         <property name="TOTAL_PENDING_COUNT" expression="get-property('default', 'TOTAL_PENDING_COUNT')" scope="operation" type="FLOAT"/>
-
                     </else>
                 </filter>
+                <!-- call gather sequence from here as blocking call will not step-out -->
+                <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.gather.Sequence"/>
             </sequence>
         </target>
     </iterate>
