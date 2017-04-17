@@ -34,6 +34,27 @@
             <messageCount max="-1" min="-1"/>
         </completeCondition>
         <onComplete enclosingElementProperty="collection" expression="//inboundSMSMessage">
+
+            <!-- load mediation configurations from registry -->
+            <property
+                    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+                    name="mediationConfig" scope="default" type="OM"/>
+
+            <!-- retrieve hub url from registry -->
+            <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
+                      scope="default" type="STRING"/>
+
+            <!-- generating response json -->
+            <script language="js">
+                <![CDATA[
+                    var hubURL = mc.getProperty("HUB_URL");
+                    var apiName = mc.getProperty("API_NAME");
+                    var apiVersion = mc.getProperty("VERSION");
+                    var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat("/inbound/registrations/messages");
+                    mc.setProperty("hubResourceURL", hubResourceURL);
+                ]]>
+            </script>
+
             <payloadFactory media-type="xml">
                 <format>
                     <inboundSMSMessageList>
@@ -49,7 +70,7 @@
                     <arg evaluator="xml" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')" xmlns:ns="http://org.apache.synapse/xsd"/>
                     <arg evaluator="xml" expression="get-property('operation', 'TOTAL_PENDING_COUNT')" xmlns:ns="http://org.apache.synapse/xsd"/>
                     <arg evaluator="xml" expression="$ctx:clientCorrelator" xmlns:ns="http://org.apache.synapse/xsd"/>
-                    <arg evaluator="xml" expression="$ctx:resourceURL" xmlns:ns="http://org.apache.synapse/xsd"/>
+                    <arg evaluator="xml" expression="$ctx:hubResourceURL" xmlns:ns="http://org.apache.synapse/xsd"/>
                 </args>
             </payloadFactory>
 
