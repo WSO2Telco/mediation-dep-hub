@@ -30,11 +30,12 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
 * To  *ESB_HOME/repository/components/lib*
 
 ```
+ redis-client-wso2telco.jar (repository: WSO2Telco/core-util)
  oneapi-validation.jar (repository: WSO2Telco/component-dep)
  com.wso2telco.dep.spend.limit.mediator.jar (repository: WSO2Telco/mediation-dep)
  mediator.jar (repository: WSO2Telco/mediation-dep/mediation-old)
- mysql-connector-java-5.1.36-bin.jar (external: http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar)
  com.wso2telco.dep.common.mediation.jar(repository: WSO2Telco/mediation-dep-common) 
+ mysql-connector-java-5.1.36-bin.jar (external: http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar)
 ```
 
 Add following configuration files:
@@ -62,11 +63,11 @@ Important: Same databases are referred while setting up wso2telcohub
 
 There will be 10 CApp files (.car files)
 
-* commongw_capp.car
-* locationapigw_capp.car
-* paymentapigw_capp.car
-* smsapigw_capp.car
-* ussdapigw_capp.car
+* commonhub_capp.car
+* locationapihub_capp.car
+* paymentapihub_capp.car
+* smsapihub_capp.car
+* ussdapihub_capp.car
 * com.wso2telco.dep.hub.creditapi.capp.car
 * com.wso2telco.dep.hub.walletapi.capp.car
 * com.wso2telco.dep.hub.provisionapi.capp.car
@@ -78,16 +79,23 @@ Start WSO2 ESB and upload CApp files (Refer: *https://docs.wso2.com/display/ESB4
 
 ## Configuring WSO2 TELCO HUB
 
-1. Download WSO2 TELCO HUB (for Gateway) from website: http://wso2telco.com/hub
+1. Download WSO2 TELCO HUB (for Hub) from website: http://wso2telco.com/hub
 2. Configure databases and workflow. (If database has already created, you only need to add relevant configurations).
 
 Database configurations: *http://docs.wso2telco.com/pages/viewpage.action?pageId=1507746*
 
 Workflow configurations: *http://docs.wso2telco.com/display/HG/Install+workflows*
 
-3. Start WSO2 TELCO HUB and goto Publisher app
+3. Configure WSO2 TELCO HUB
 
-4. Create APIs for necessary use-cases and configure endpoint to ESB APIs. API __context__  and __name__ should be as follows:
+wso2server.sh or wso2server.bat file change `-DDEPLOYMENT_TYPE=hub`
+
+Add following property to *ESB_HOME/repository/conf/synapse.properties*
+`synapse.commons.json.output.autoPrimitive=false`
+
+4. Start WSO2 TELCO HUB and goto Publisher app
+
+5. Create APIs for necessary use-cases and configure endpoint to ESB APIs. API __context__  and __name__ should be as follows:
 
 * payment
 * ussd
@@ -115,11 +123,3 @@ If MSISDN whitelist feature needs to be enabled for a particular api, then add f
 ```
 <property name="api.check.whitelist" value="true" scope="transport"/>
 ```
-
-
-
-
-
-
-
-
