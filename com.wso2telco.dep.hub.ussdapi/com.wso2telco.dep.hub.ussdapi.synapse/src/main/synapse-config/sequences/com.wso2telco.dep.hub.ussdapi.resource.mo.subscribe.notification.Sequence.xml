@@ -98,5 +98,17 @@
         </then>
         <else/>
     </filter>
-    <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+    <call-template target="com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template">
+        <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
+        <with-param name="apiResourceSuffix" value="/inbound"/>
+    </call-template>
+    <!-- generating request clientCorrelator -->
+    <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
+        <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
+    </call-template>
+    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+    payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
+    mc.setPayloadJSON(payload);]]></script>
+    <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence"/>
+    <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence"/>
 </sequence>

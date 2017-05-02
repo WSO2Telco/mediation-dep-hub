@@ -15,7 +15,7 @@
         </inSequence>
         <outSequence/>
         <faultSequence>
-	    	<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+	    	<sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.fault.Sequence"/>
         </faultSequence>
     </resource>
     <resource methods="POST" uri-template="/inbound/{notifyURLId}">
