@@ -6,7 +6,9 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
     <resource methods="POST" protocol="http" uri-template="/outbound/notification/{subscriptionID}">
         <inSequence>
@@ -14,7 +16,9 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.notification.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
     <resource methods="DELETE" protocol="http" uri-template="/outbound/subscriptions/{subscriptionID}">
         <inSequence>
@@ -22,7 +26,9 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.outbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
     <resource methods="POST" protocol="http" uri-template="/inbound/subscriptions">
         <inSequence>
@@ -30,7 +36,9 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
     <resource methods="POST" protocol="http" uri-template="/inbound/notification/{subscriptionID}">
         <inSequence>
@@ -38,7 +46,9 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.notification.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
     <resource methods="DELETE" protocol="http" uri-template="/inbound/subscriptions/{subscriptionID}">
         <inSequence>
@@ -46,6 +56,8 @@
             <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.stop.inbound.subscriptions.Sequence"/>
         </inSequence>
         <outSequence/>
-        <faultSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
     </resource>
 </api>

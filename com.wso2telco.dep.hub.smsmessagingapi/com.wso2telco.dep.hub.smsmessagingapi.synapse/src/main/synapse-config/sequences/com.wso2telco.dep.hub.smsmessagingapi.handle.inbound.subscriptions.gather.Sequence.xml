@@ -45,7 +45,7 @@
         <subscription xmlns=""/>
     </property>
     <aggregate id="smsmessagingapi.subscribe.notifications.splitter">
-        <completeCondition>
+        <completeCondition timeout="60">
             <messageCount max="-1" min="-1"/>
         </completeCondition>
         <onComplete enclosingElementProperty="collection" expression="//destinationAddresses">
