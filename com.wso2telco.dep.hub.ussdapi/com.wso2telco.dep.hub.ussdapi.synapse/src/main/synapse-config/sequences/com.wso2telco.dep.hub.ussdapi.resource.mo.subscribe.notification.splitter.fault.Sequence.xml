@@ -6,12 +6,5 @@
             <property name="messageStatus" scope="default" type="STRING" value="Failed"/>
         </else>
     </filter>
-    <filter regex="true" source="$ctx:AGGEGATION_REQUIRED">
-        <then>
-            <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence"/>
-        </then>
-        <else>
-            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
-        </else>
-    </filter>
+	<sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence"/>
 </sequence>

@@ -3,7 +3,6 @@
     <iterate attachPath="//subscription" expression="//shortCodes" id="ussd.subscribe.notifications.splitter" preservePayload="true">
         <target>
             <sequence>
-                <property name="AGGEGATION_REQUIRED" scope="default" type="STRING" value="true"/>
                 <property expression="//shortCodes/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
                 <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
                 <enrich>
