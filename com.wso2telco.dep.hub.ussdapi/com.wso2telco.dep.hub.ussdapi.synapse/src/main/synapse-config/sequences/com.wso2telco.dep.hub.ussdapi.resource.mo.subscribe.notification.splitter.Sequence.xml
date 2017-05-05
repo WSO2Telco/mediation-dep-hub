@@ -33,6 +33,9 @@
                 <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
                     <then>
+                    	<log level="custom" category="ERROR">
+							<property name="ERROR" value="Operator endpoint not provisioned"/>
+						</log>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
                         <!-- dummy endpoint call to step-out from iterate -->
                         <call>
