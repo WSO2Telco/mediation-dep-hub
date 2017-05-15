@@ -98,10 +98,10 @@
         </then>
         <else/>
     </filter>
-    <call-template target="com.wso2telco.dep.hub.ussdapi.notification.url.generating.Template">
-        <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
-        <with-param name="apiResourceSuffix" value="/inbound"/>
-    </call-template>
+    <call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+		<with-param name="notifyURL" value="{$ctx:notifyURL}"/>
+		<with-param name="apiResourceSuffix" value="/inbound"/>
+	</call-template>
     <!-- generating request clientCorrelator -->
     <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
         <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
