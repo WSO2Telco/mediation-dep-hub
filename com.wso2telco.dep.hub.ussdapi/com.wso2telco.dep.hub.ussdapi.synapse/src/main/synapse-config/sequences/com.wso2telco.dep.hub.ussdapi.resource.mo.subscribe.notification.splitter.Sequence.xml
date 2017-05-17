@@ -34,7 +34,7 @@
                 <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
                     <then>
                     	<log level="custom" category="ERROR">
-							<property name="ERROR" value="Operator endpoint not provisioned"/>
+							<property name="ERROR" expression="fn:concat('Operator endpoint not provisioned. Operator: ', $ctx:OPERATOR_CODE)"/>
 						</log>
                         <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
                         <!-- dummy endpoint call to step-out from iterate -->

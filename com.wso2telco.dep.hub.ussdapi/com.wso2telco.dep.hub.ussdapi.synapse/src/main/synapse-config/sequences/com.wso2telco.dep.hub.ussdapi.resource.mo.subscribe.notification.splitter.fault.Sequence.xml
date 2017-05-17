@@ -3,7 +3,7 @@
     <filter regex="Not Provisioned" source="$ctx:messageStatus">
 		<then>
 			<log level="custom" category="ERROR">
-				<property name="ERROR" value="Operator not provisioned"/>
+				<property name="ERROR" expression="fn:concat('Operator not provisioned. Operator: ', $ctx:OPERATOR_CODE)"/>
 			</log>
 		</then>
         <else>
