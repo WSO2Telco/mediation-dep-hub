@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="Not Provisioned|Failed" source="$ctx:messageStatus">
+        <then/>
+        <else>
+            <filter xpath="$body//subscription">
+                <then>
+                    <property name="messageStatus" scope="default" type="STRING" value="Created"/>
+                    <property expression="json-eval($.subscription.resourceURL)" name="resourceURL" scope="default" type="STRING"/>
+                </then>
+                <else>
+                    <property name="messageStatus" scope="default" type="STRING" value="Not Created"/>
+                </else>
+            </filter>
+            <dbreport>
+                <connection>
+                    <pool>
+                        <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+                    </pool>
+                </connection>
+                <statement>
+                    <sql><![CDATA[insert into mo_ussd_subscription(ussd_request_did, domainurl, operator) values(?, ?, ?);]]></sql>
+                    <parameter expression="$ctx:GENERATED_ID" type="VARCHAR"/>
+                    <parameter expression="$ctx:resourceURL" type="VARCHAR"/>
+                    <parameter expression="$ctx:OPERATOR_CODE" type="VARCHAR"/>
+                </statement>
+            </dbreport>
+        </else>
+    </filter>
+    <enrich>
+        <source clone="true" property="original_payload" type="property"/>
+        <target type="body"/>
+    </enrich>
+    <enrich>
+        <source clone="true" type="inline">
+            <status xmlns="">TEST</status>
+        </source>
+        <target action="child" xpath="//shortCodes"/>
+    </enrich>
+    <enrich>
+        <source clone="true" property="messageStatus" type="property"/>
+        <target xpath="//shortCodes/status/text()"/>
+    </enrich>
+    <property name="collection" scope="default">
+        <subscription xmlns=""/>
+    </property>
+    <aggregate id="ussd.subscribe.notifications.splitter">
+        <completeCondition timeout="60">
+            <messageCount max="-1" min="-1"/>
+        </completeCondition>
+        <onComplete enclosingElementProperty="collection" expression="//shortCodes">
+            <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+            <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
+            <property expression="fn:concat($ctx:HUB_URL, $ctx:REST_FULL_REQUEST_PATH, '/', $ctx:GENERATED_ID)" name="responseResourceURL" scope="default" type="STRING"/>
+            <payloadFactory media-type="xml">
+                <format>
+                    <subscription>
+		    $1
+		    
+		    <?xml-multiple shortCodes?>
+		    $2
+		    
+		    <clientCorrelator>$3</clientCorrelator>
+                        <resourceURL>$4</resourceURL>
+                    </subscription>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:original_callbackReference"/>
+                    <arg evaluator="xml" expression="//shortCodes"/>
+                    <arg evaluator="xml" expression="$ctx:clientCorrelator"/>
+                    <arg evaluator="xml" expression="$ctx:responseResourceURL"/>
+                </args>
+            </payloadFactory>
+            <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+        </onComplete>
+    </aggregate>
+</sequence>

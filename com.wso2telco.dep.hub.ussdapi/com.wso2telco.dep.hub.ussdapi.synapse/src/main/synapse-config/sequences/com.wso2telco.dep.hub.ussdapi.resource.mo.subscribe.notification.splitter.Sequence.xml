@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence" onError="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.fault.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <iterate attachPath="//subscription" expression="//shortCodes" id="ussd.subscribe.notifications.splitter" preservePayload="true">
+        <target>
+            <sequence>
+                <property expression="//shortCodes/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <enrich>
+                    <source clone="true" xpath="//shortCodes/node()"/>
+                    <target action="child" xpath="//subscription"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//shortCodes"/>
+                    <target property="original_payload" type="property"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//callbackReference"/>
+                    <target property="original_callbackReference" type="property"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" xpath="//clientCorrelator"/>
+                    <target property="original_clientCorrelator" type="property"/>
+                </enrich>
+                <enrich>
+                    <source clone="true" property="NOTIFICATION_URL" type="property"/>
+                    <target xpath="//notifyURL/text()"/>
+                </enrich>
+                <script language="js"><![CDATA[var payload = mc.getPayloadXML();
+                delete payload..*::operatorCode;
+                delete payload..*::shortCodes;
+                mc.setPayloadXML(payload);]]></script>
+                <!-- retrieve operator's endpoint -->
+                <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
+                <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
+                    <then>
+                    	<log level="custom" category="ERROR">
+							<property name="ERROR" expression="fn:concat('Operator endpoint not provisioned. Operator: ', $ctx:OPERATOR_CODE)"/>
+						</log>
+                        <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <!-- dummy endpoint call to step-out from iterate -->
+                        <call>
+                            <endpoint key="com.wso2telco.dep.hub.ussdapi.dummy.Endpoint"/>
+                        </call>
+                    </then>
+                    <else>
+                        <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+                    </else>
+                </filter>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>
