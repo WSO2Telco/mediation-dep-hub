@@ -22,7 +22,7 @@
                     <target property="original_clientCorrelator" type="property"/>
                 </enrich>
                 <enrich>
-                    <source clone="true" property="NOTIFICATION_URL" type="property"/>
+                    <source clone="true" property="generatedNotifyURL" type="property"/>
                     <target xpath="//notifyURL/text()"/>
                 </enrich>
                 <script language="js"><![CDATA[var payload = mc.getPayloadXML();

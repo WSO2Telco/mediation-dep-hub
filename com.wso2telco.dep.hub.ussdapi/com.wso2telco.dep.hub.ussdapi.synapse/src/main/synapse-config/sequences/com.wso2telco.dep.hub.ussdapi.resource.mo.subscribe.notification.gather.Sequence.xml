@@ -20,7 +20,7 @@
                 </connection>
                 <statement>
                     <sql><![CDATA[insert into mo_ussd_subscription(ussd_request_did, domainurl, operator) values(?, ?, ?);]]></sql>
-                    <parameter expression="$ctx:GENERATED_ID" type="VARCHAR"/>
+                    <parameter expression="$ctx:notifyURLTableId" type="VARCHAR"/>
                     <parameter expression="$ctx:resourceURL" type="VARCHAR"/>
                     <parameter expression="$ctx:OPERATOR_CODE" type="VARCHAR"/>
                 </statement>
@@ -51,7 +51,7 @@
         <onComplete enclosingElementProperty="collection" expression="//shortCodes">
             <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
             <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
-            <property expression="fn:concat($ctx:HUB_URL, $ctx:REST_FULL_REQUEST_PATH, '/', $ctx:GENERATED_ID)" name="responseResourceURL" scope="default" type="STRING"/>
+            <property expression="fn:concat($ctx:HUB_URL, $ctx:REST_FULL_REQUEST_PATH, '/', $ctx:notifyURLTableId)" name="responseResourceURL" scope="default" type="STRING"/>
             <payloadFactory media-type="xml">
                 <format>
                     <subscription>
