@@ -35,6 +35,22 @@
         </completeCondition>
         <onComplete enclosingElementProperty="collection" expression="//inboundSMSMessage">
 
+            <!-- remove jsonObject creates when using with a single operator -->
+            <filter xpath="//collection/jsonObject">
+                <enrich>
+                    <source type="custom" xpath="//collection/jsonObject/inboundSMSMessageList/inboundSMSMessage" clone="false"/>
+                    <target type="custom" action="child" xpath="//collection"/>
+                </enrich>
+
+                <script language="js">
+                    <![CDATA[
+                        var payload = mc.getPayloadXML();
+                        delete payload..*::jsonObject;
+                        mc.setPayloadXML(payload);
+                    ]]>
+                </script>
+            </filter>
+
             <!-- load mediation configurations from registry -->
             <property
                     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
