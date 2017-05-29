@@ -53,16 +53,17 @@
       <property name="MANDATORY_PARAMETER_VALIDATED" scope="default"
         type="STRING" value="false"/>
     </then>
-    <else/>
+    <else>
+      <!-- validate request identifier length -->
+      <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
+        <with-param name="paramName" value="requestIdentifier"/>
+        <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
+        <!-- retrieve request identifier length from registry -->
+        <with-param name="paramValidLength" value="{$ctx:mediationConfig//validationConfig/requestIdentifierLength}"/>
+        <with-param name="paramValidationType" value="LT"/>
+      </call-template>
+    </else>
   </filter>
-  <!-- validate request identifier length -->
-  <call-template target="com.wso2telco.dep.common.lengthValidator.Template">
-    <with-param name="paramName" value="requestIdentifier"/>
-    <with-param name="paramValue" value="{$ctx:requestIdentifier}"/>
-    <!-- retrieve request identifier length from registry -->
-    <with-param name="paramValidLength" value="{$ctx:mediationConfig//validationConfig/requestIdentifierLength}"/>
-    <with-param name="paramValidationType" value="LT"/>
-  </call-template>
   <filter xpath="not(boolean($ctx:schema))">
     <then>
       <property
