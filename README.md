@@ -1,4 +1,4 @@
-# WSO2Telco HUB 2.0.0 Release
+# WSO2Telco HUB 2.1.0 Release
 
 
 ## Setting up the Deployment
