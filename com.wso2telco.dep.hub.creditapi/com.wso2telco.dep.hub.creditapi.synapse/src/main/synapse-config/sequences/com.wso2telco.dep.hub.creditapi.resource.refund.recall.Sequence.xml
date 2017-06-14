@@ -37,15 +37,15 @@
   		<else/>
   	</filter> 
 
-	<script language="js">
-		<![CDATA[
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
 			var payload = mc.getPayloadJSON();
 			var clientCorrelator = payload.refundResponse.clientCorrelator;
-			var notifyURLId = mc.getProperty("NOTIFY_URL_ID");
+			var notifyURLId = mc.getProperty('NOTIFY_URL_ID');
 			var resourceURL = payload.refundResponse.resourceURL;						
 			         								
-			if (clientCorrelator != null && clientCorrelator != "") {			    
-				var clientCorrelatorArray = clientCorrelator.split(":urn:uuid:");
+			if (clientCorrelator != null &amp;&amp; clientCorrelator != '') {
+				var clientCorrelatorArray = clientCorrelator.split(':urn:uuid:');
 				if (clientCorrelatorArray.length == 2) {
 			    	payload.refundResponse.clientCorrelator = clientCorrelatorArray[0];
 				} else {
@@ -55,20 +55,20 @@
 				delete payload.refundResponse.clientCorrelator;
 			}
 
-			if (notifyURLId != null && notifyURLId != "") {
-				payload.refundResponse.receiptResponse.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+			if (notifyURLId != null &amp;&amp; notifyURLId != '') {
+				payload.refundResponse.receiptResponse.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
 			} else {
 				delete payload.refundResponse.receiptResponse.notifyURL;
 			}
 			
-			if (resourceURL != null && resourceURL !="") {
-				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-				var hubURL = mc.getProperty("hubUrl");
-				var apiName = mc.getProperty("API_NAME");
-				var apiVersion = mc.getProperty("VERSION");
+			if (resourceURL != null &amp;&amp; resourceURL !='') {
+				var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+				var hubURL = mc.getProperty('hubUrl');
+				var apiName = mc.getProperty('API_NAME');
+				var apiVersion = mc.getProperty('VERSION');
 				
-				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
-					.concat(apiName).concat("/").concat(apiVersion));
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat('/')
+					.concat(apiName).concat('/').concat(apiVersion));
 			
 				payload.refundResponse.resourceURL = hubResourceURL;				
 			} else {
@@ -76,8 +76,8 @@
 			}
 
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>
+		"/>
+	</class>
 
   	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
