@@ -4,10 +4,14 @@
     <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
     <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
     <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.serviceProvisionResponse.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-	payload.serviceProvisionResponse.callbackReference.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
-	mc.setPayloadJSON(payload);]]></script>
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+			var payload = mc.getPayloadJSON();
+			payload.serviceProvisionResponse.clientCorrelator = mc.getProperty('NOTIFY_INFO_CLIENT_CORRELATOR');
+			payload.serviceProvisionResponse.callbackReference.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
+			mc.setPayloadJSON(payload);
+		"/>
+	</class>
     <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
