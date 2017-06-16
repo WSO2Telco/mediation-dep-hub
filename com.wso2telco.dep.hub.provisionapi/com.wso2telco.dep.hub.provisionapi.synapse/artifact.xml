@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="provisionAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-rc3" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="provisionAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/provisionAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.queryApplicable.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.provisionService.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.provisionService.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.provisionService.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.unprovisionService.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.listServiceByCustomer.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.provisioning.notification.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.unPovisioning.notification.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.queryApplicable.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.provisioning.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.unprovision.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.provisionapi.listService.recaller.Sequence.xml</file>
     </artifact>
 </artifacts>

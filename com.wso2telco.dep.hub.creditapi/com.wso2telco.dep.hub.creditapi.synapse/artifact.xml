@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="creditAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-rc3" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="creditAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/creditAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.apply.validator.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.refund.validator.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.notification.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence.xml</file>
     </artifact>
 </artifacts>

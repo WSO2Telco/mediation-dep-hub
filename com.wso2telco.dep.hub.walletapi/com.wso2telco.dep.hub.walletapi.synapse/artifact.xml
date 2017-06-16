@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="walletAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-rc3" type="synapse/api" serverRole="EnterpriseServiceBus">
+    <artifact name="walletAPI" groupId="com.wso2telco.dep.hub.api" version="2.1.0-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/walletAPI.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.payment.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.listing.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.listing.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.listing.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.refund.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.refund.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.refund.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.balance.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.balance.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.balance.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.balance.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.listing.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.listing.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.listing.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.refund.recaller.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-rc3" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="2.1.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.walletapi.handle.wallet.notification.Sequence.xml</file>
     </artifact>
 </artifacts>
