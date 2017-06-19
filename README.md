@@ -23,6 +23,7 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  msisdn-validator.jar (repository: WSO2Telco/core-util)
  operator-service.jar (repository: WSO2Telco/component-dep)
  subscription-validator.jar (repository: WSO2Telco/component-dep)
+ nashorn-mediator.jar (repository: WSO2Telco/component-dep)
  javax.persistence_1.0.0.jar (external: http://www.java2s.com/Code/Jar/j/Downloadjavaxpersistence100jar.htm)
  json_3.0.0.wso2v1.jar (external: http://maven.wso2.org/nexus/content/repositories/wso2-public/org/json/wso2/json/3.0.0.wso2v1/json-3.0.0.wso2v1.jar)
 ```
