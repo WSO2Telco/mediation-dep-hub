@@ -25,6 +25,7 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.ni.mt.validation.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence>
   </properties>
   <dependencies>
     <dependency>
@@ -78,6 +79,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.fault.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

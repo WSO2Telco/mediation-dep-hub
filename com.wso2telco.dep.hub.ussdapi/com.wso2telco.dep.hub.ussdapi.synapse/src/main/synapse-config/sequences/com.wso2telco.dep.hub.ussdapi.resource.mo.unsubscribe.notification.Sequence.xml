@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property expression="get-property('uri.var.subscriptionID')" name="SUBSCRIPTION_ID" scope="default" type="STRING"/>
+	<log level="custom">
+		<property name="TEST" value="STARTED unsubscribe"></property>
+		<property name="subscriptionID" expression="$ctx:SUBSCRIPTION_ID"></property>
+	</log>
+    <!-- Delete DB records -->
+    <dbreport>
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[delete from mo_ussd_subscription where ussd_request_did=?;]]></sql>
+            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
+        </statement>
+    </dbreport>
+    <dbreport>
+        <connection>
+            <pool>
+                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[delete from deptnotificationurls where notifyurldid=?;]]></sql>
+            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
+        </statement>
+    </dbreport>
+	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+    <property name="HTTP_SC" scope="axis2" type="STRING" value="204"/>
+    <respond/>
+</sequence>
