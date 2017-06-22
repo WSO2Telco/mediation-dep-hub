@@ -5,20 +5,20 @@
     <property expression="$ctx:mediationConfig//msisdn_regex" name="msisdnRegex" scope="default" type="STRING"/>
     <property expression="$ctx:mediationConfig//msisdn_regex_num_grp" name="msisdnRegexGr" scope="default" type="INTEGER"/>
     
-	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-		<property name="script" value="
-    		var msisdnUrlNo = mc.getProperty('msisdnUrl');
-    		var msisdnPayloadNo = mc.getProperty('msisdnPayload');
-			var regExp = new RegExp(mc.getProperty('msisdnRegex'));
-			var msisdnRegexGr = mc.getProperty('msisdnRegexGr');
+    <script language="js">
+    	<![CDATA[
+    		var msisdnUrlNo = mc.getProperty("msisdnUrl");
+    		var msisdnPayloadNo = mc.getProperty("msisdnPayload");
+			var regExp = new RegExp(mc.getProperty("msisdnRegex"));
+			var msisdnRegexGr = mc.getProperty("msisdnRegexGr");
 			
 			var match = regExp.exec(msisdnUrlNo);
-			mc.setProperty('msisdnUrlNo', match[msisdnRegexGr]);
+			mc.setProperty("msisdnUrlNo", match[msisdnRegexGr]);
 			
 			var match = regExp.exec(msisdnPayloadNo);
-			mc.setProperty('msisdnPayloadNo', match[msisdnRegexGr]);
-		"/>
-	</class>
+			mc.setProperty("msisdnPayloadNo", match[msisdnRegexGr]);			
+  		]]>  
+    </script>
       
     <log category="DEBUG" level="custom">
         <property expression="$ctx:msisdnUrlNo" name="msisdnUrlNo"/>
