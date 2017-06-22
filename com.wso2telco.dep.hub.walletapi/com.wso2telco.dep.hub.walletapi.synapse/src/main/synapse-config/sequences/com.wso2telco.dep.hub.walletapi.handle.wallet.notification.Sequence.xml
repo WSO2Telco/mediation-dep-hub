@@ -9,14 +9,10 @@
   <!-- retrieve notification endpoint -->
   <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
   <!-- generating request json -->
-	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-		<property name="script" value="
-			var payload = mc.getPayloadJSON();
-			payload.makePayment.clientCorrelator = mc.getProperty('NOTIFY_INFO_CLIENT_CORRELATOR');
-			payload.makePayment.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
-			mc.setPayloadJSON(payload);
-		"/>
-	</class>
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+	payload.makePayment.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
+	payload.makePayment.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+	mc.setPayloadJSON(payload);]]></script>
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
