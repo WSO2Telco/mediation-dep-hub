@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="com.wso2telco.dep.hub.paymentapi.token.pool.Endpoint" xmlns="http://ws.apache.org/ns/synapse">
+  <http method="get" trace="disable" uri-template="{uri.var.httpendpointurl}"/>
+</endpoint>

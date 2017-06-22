@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property expression="get-property('operator')" name="operatorName"
+    scope="default" type="STRING"/>
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/operatorConfig.xml')"
+    name="operatorConfig" scope="default" type="OM"/>
+  <property
+    expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/operatorId"
+    name="operatorId" scope="default" type="STRING"/>
+  <property
+    expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/defaultPackageType"
+    name="defaultPackageType" scope="default" type="STRING"/>
+  <property
+    expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/authType"
+    name="authType" scope="default" type="STRING"/>
+  <property
+    expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/ttl"
+    name="ttl" scope="default" type="STRING"/>
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/userInfoConfig.xml')"
+    name="userInfoConfig" scope="default" type="OM"/>
+  <property
+    expression="$ctx:userInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/tokenPoolEnabled"
+    name="isTokenPoolEnabled" scope="default" type="STRING"/>
+  <filter regex="true" source="get-property('isTokenPoolEnabled')">
+    <then>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.Sequence"/>
+    </then>
+    <else>
+      <property
+        expression="$ctx:userInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/accessToken"
+        name="access.token" scope="default" type="STRING"/>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.user.info.call.Sequence"/>
+    </else>
+  </filter>
+</sequence>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.paymentapi.filter.check.limit.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="Postpaid|postpaid" source="get-property('userpackagetype')">
+        <then>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.check.limit.Sequence"/>
+        </then>
+        <else>
+            <!--since the checklimit is called from the charge handler, on success from here it should return to that sequence-->
+            <!--<sequence key="chargeRequestSeq"/>-->
+        </else>
+    </filter>
+</sequence>
