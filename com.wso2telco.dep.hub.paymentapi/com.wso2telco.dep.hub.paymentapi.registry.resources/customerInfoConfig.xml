@@ -1,0 +1,51 @@
+<customerInfoConfig>
+	
+	<config operatorName="">
+		<tokenPoolEnabled>true</tokenPoolEnabled>
+		<accessToken></accessToken>
+		<infoapi>
+			<serviceProvider>admin</serviceProvider>
+			<applicationName></applicationName>
+			<apiEndpoint>http://localhost:8280/customerinfo/v1</apiEndpoint>
+		</infoapi>
+		<tokenEndpoint>http://localhost:8181/tokenservice</tokenEndpoint>
+	</config>
+	
+	
+ <!--delete below before deployment. for testing purpose only! -->
+	
+	<config operatorName="OPERATOR13">
+		<tokenPoolEnabled>false</tokenPoolEnabled>
+		<accessToken>a5aa035b-e7c8-3bbb-8bb3-40eba9479958</accessToken>
+		<infoapi>
+			<serviceProvider>hubsp2</serviceProvider>
+			<applicationName>testapp</applicationName>
+			<apiEndpoint>http://localhost:8280/customerinfo/v1</apiEndpoint>
+		</infoapi>
+		<tokenEndpoint>http://localhost:8181/tokenservice</tokenEndpoint>
+	</config>
+	
+  <config operatorName="OPERATOR1">
+		<tokenPoolEnabled>false</tokenPoolEnabled>
+		<accessToken>a5aa035b-e7c8-3bbb-8bb3-40eba9479959</accessToken>
+		<infoapi>
+			<serviceProvider>hubsp</serviceProvider>
+			<applicationName>testapp</applicationName>
+			<apiEndpoint>http://laocalhost:8280/customerinfo/v1</apiEndpoint>
+		</infoapi>
+		<tokenEndpoint>http://localhost:8181/tokenservice</tokenEndpoint>
+	</config>
+	
+		<config operatorName="Dialog">
+		<tokenPoolEnabled>false</tokenPoolEnabled>
+		<accessToken>a5aa035b-e7c8-3bbb-8bb3-40eba9479957</accessToken>
+		<infoapi>
+			<serviceProvider>hubsp3</serviceProvider>
+			<applicationName>testapp</applicationName>
+			<apiEndpoint>http://localhost:8280/customerinfo/v1</apiEndpoint>
+		</infoapi>
+		<tokenEndpoint>http://localhost:8181/tokenservice</tokenEndpoint>
+	</config>
+		
+</customerInfoConfig>
+

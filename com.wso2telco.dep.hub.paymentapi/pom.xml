@@ -6,7 +6,6 @@
     <groupId>com.wso2telco.dep.hub</groupId>
     <artifactId>mediation-dep-hub</artifactId>
     <version>3.0.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>com.wso2telco.dep.hub.paymentapi</artifactId>
   <version>3.0.0-SNAPSHOT</version>
@@ -15,6 +14,7 @@
   <description>com.wso2telco.dep.hub.paymentapi</description>
   <modules>
     <module>com.wso2telco.dep.hub.paymentapi.synapse</module>
+    <module>com.wso2telco.dep.hub.paymentapi.registry.resources</module>
     <module>com.wso2telco.dep.hub.paymentapi.capp</module>
   </modules>
   <build>

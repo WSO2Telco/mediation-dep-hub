@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="customerInfoConfig" groupId="com.wso2telco.dep.hub.paymentapi.registry.resources.resource" version="1.0.0" type="registry/resource" serverRole="GovernanceRegistry">
+        <item>
+            <file>customerInfoConfig.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations/PaymentAPI</path>
+            <mediaType>application/vnd.wso2.sequence</mediaType>
+        </item>
+    </artifact>
+    <artifact name="operatorConfig" groupId="com.wso2telco.dep.hub.paymentapi.registry.resources.resource" version="1.0.0" type="registry/resource" serverRole="GovernanceRegistry">
+        <item>
+            <file>operatorConfig.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations/PaymentAPI</path>
+            <mediaType>application/vnd.wso2.sequence</mediaType>
+        </item>
+    </artifact>
+    <artifact name="spendLimit" groupId="com.wso2telco.dep.hub.paymentapi.registry.resources.resource" version="1.0.0" type="registry/resource" serverRole="GovernanceRegistry">
+        <item>
+            <file>spendLimit.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations/PaymentAPI</path>
+            <mediaType>application/vnd.wso2.sequence</mediaType>
+        </item>
+    </artifact>
+</artifacts>

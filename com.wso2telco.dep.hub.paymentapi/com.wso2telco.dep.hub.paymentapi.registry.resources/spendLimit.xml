@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--delete below before deployment. for testing purpose only! -->
+<GroupList>
+	
+	<Group>
+		<GroupName>G1112</GroupName>
+		<Operator>OPERATOR1</Operator>
+		<Prepaid>
+			<DayAmount>1000</DayAmount>
+			<MonthAmount>1500</MonthAmount>
+		</Prepaid>
+		<Postpaid>
+			<DayAmount>2000</DayAmount>
+			<MonthAmount>2500</MonthAmount>
+		</Postpaid>
+		<IsCustomerInfoEnabled>true</IsCustomerInfoEnabled>
+		<ServiceProvider>
+			<SPName>hubsp</SPName>
+			<Application>
+				<ApplicationName>testapp</ApplicationName>
+				<ConsumerKey>7dHiX61o4I0fV03tHBJFQMFGj4ga</ConsumerKey>
+			</Application>
+		</ServiceProvider>
+	</Group>
+   
+   	<Group>
+		<GroupName>G1113</GroupName>
+		<Operator>Dialog</Operator>
+		<Prepaid>
+			<DayAmount>1000</DayAmount>
+			<MonthAmount>1500</MonthAmount>
+		</Prepaid>
+		<Postpaid>
+			<DayAmount>2000</DayAmount>
+			<MonthAmount>2500</MonthAmount>
+		</Postpaid>
+		<IsCustomerInfoEnabled>true</IsCustomerInfoEnabled>
+		<ServiceProvider>
+			<SPName>hubsp1</SPName>
+			<Application>
+				<ApplicationName>testapp1</ApplicationName>
+				<ConsumerKey>7dHiX61o4I0fV03tHBJFQMFGj4ga</ConsumerKey>
+			</Application>
+		</ServiceProvider>
+	</Group>	
+
+</GroupList>
+

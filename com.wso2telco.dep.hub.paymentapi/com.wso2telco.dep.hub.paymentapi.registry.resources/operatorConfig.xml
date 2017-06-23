@@ -1,0 +1,49 @@
+<operators>
+	<operator name="">
+		<operatorId></operatorId>
+		<defaultPackageType>postpaid</defaultPackageType>
+		<ttl>3600</ttl>
+		<hitCount>10</hitCount>
+		<maxValue>200</maxValue>
+		<fraudTtl>40000</fraudTtl>
+	</operator>
+
+	<!--duplicate and fill as needed for each operator-->
+
+	<!-- <operator name="">
+		<operatorId></operatorId>
+		<defaultPackageType></defaultPackageType>
+		<authType></authType>
+		<ttl></ttl>
+	</operator> -->
+
+	<!--delete below before deployment. for testing purpose only! -->
+	<operator name="OPERATOR13">
+		<operatorId>1</operatorId>
+		<defaultPackageType>postpaid</defaultPackageType>
+		<ttl>90</ttl>
+		<hitCount>10</hitCount>
+		<maxValue>200</maxValue>
+		<fraudTtl>40000</fraudTtl>
+	</operator>
+	
+	
+	<operator name="OPERATOR1">
+		<operatorId>1</operatorId>
+		<defaultPackageType>postpaid</defaultPackageType>
+		<ttl>90</ttl>
+		<hitCount>10</hitCount>
+		<maxValue>200</maxValue>
+		<fraudTtl>40000</fraudTtl>
+	</operator>
+	
+	<operator name="Dialog">
+		<operatorId>1</operatorId>
+		<defaultPackageType>postpaid</defaultPackageType>
+		<ttl>90</ttl>
+		<hitCount>10</hitCount>
+		<maxValue>200</maxValue>
+		<fraudTtl>40000</fraudTtl>
+	</operator>
+	
+</operators>

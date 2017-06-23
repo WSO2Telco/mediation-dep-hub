@@ -22,7 +22,10 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
     <com.wso2telco.dep.hub.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._paymentAPI>
     <com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>
+    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>
+    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>
   </properties>
   <dependencies>
     <dependency>
@@ -48,6 +51,24 @@
       <artifactId>com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.paymentapi.registry.resources.resource</groupId>
+      <artifactId>customerInfoConfig</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.paymentapi.registry.resources.resource</groupId>
+      <artifactId>operatorConfig</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.paymentapi.registry.resources.resource</groupId>
+      <artifactId>spendLimit</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
     </dependency>
   </dependencies>
   <repositories>
