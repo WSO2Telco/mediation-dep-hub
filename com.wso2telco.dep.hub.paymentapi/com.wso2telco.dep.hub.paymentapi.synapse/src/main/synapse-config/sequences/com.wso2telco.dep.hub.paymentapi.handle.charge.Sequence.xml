@@ -168,29 +168,38 @@
   <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
   </call-template>
+  <!-- read mediationConfig -->
+  <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+        name="mediationConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
   <!-- retrieve hub url from registry -->
   <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
-  
-  
-  <!--   Operator config Reader Sequence -->
-  <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
-     
-  <!-- Checking for customerInfo -->   
-    <property expression="$ctx:GroupList//Group/IsCustomerInfoEnabled"
-        name="customerInfoEnabled" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>        
-    <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
-    <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
+
+  <filter regex="true" source="$ctx:mediationConfig//spend_limit_enabled">
+    <then>
+      <!-- read SpendLimit config file -->
+      <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
+                name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <!--   Operator config Reader Sequence -->
+      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
+
+      <!-- Checking for customerInfo -->
+      <property expression="$ctx:GroupList//Group/IsCustomerInfoEnabled"
+                name="customerInfoEnabled" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
+      <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
-            <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
+          <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
         </then>
         <else>
-            <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
+          <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
         </else>
-    </filter>
-    
+      </filter>
+    </then>
+  </filter>
+
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <!-- generating request json -->
