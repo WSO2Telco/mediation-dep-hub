@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property expression="get-property('defaultPackageType')"
+    name="userpackagetype" scope="default" type="STRING"/>
+  <filter regex="Postpaid|Prepaid" source="get-property('userpackagetype')">
+    <then>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+</sequence>
+

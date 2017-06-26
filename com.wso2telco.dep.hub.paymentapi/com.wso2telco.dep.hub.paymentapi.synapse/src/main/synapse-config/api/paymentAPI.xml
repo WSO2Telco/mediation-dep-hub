@@ -2,7 +2,6 @@
 <api context="/payment" name="paymentAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/transactions/amount">
     <inSequence>
-       <sequence key="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"/>
       <property
         expression="json-eval($.amountTransaction.transactionOperationStatus)"
         name="transactionOperationStatus" scope="default" type="STRING"/>
@@ -12,9 +11,11 @@
         pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
       <switch source="$ctx:transactionOperationStatus">
         <case regex="Charged">
+          <sequence key="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"/>
           <sequence key="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"/>
         </case>
         <case regex="Refunded">
+          <sequence key="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"/>
           <sequence key="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence"/>
         </case>
         <default>
