@@ -188,6 +188,24 @@
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  
+  
+  <!--   Operator config Reader Sequence -->
+  <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
+     
+  <!-- Checking for customerInfo -->   
+    <property expression="$ctx:GroupList//Group/IsCustomerInfoEnabled"
+        name="customerInfoEnabled" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>        
+    <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
+    <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
+        <then>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
+        </then>
+        <else>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
+        </else>
+    </filter>
+    
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <!-- generating request json -->
