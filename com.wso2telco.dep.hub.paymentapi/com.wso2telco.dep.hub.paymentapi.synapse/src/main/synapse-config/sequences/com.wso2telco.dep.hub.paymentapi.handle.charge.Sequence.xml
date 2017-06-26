@@ -179,21 +179,21 @@
 
   <filter regex="true" source="$ctx:mediationConfig//spend_limit_enabled">
     <then>
+      <!-- operator config Reader Sequence -->
+      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
       <!-- read SpendLimit config file -->
       <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
-                name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <!--   Operator config Reader Sequence -->
-      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
-
-      <!-- Checking for customerInfo -->
-      <property expression="$ctx:GroupList//Group/IsCustomerInfoEnabled"
-                name="customerInfoEnabled" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+      name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <!-- checking for customerInfo call is enabled -->
       <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
+
       <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
           <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
         </then>
         <else>
+          <property expression="get-property('defaultPackageType')"
+                    name="userpackagetype" scope="default" type="STRING"/>
           <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
         </else>
       </filter>
