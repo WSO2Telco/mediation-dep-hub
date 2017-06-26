@@ -13,7 +13,7 @@
   <property expression="fn:normalize-space($ctx:endUserId)" group="1"
     name="endUserId" pattern="((^(?!null).*$)|(^(null).+$))"
     scope="default" type="STRING"/>
-  <property expression="json-eval($.amountTransaction.endUserId)"
+  <property expression="$ctx:endUserId"
     name="MSISDN" scope="default" type="STRING"/>
   <property
     expression="json-eval($.amountTransaction.paymentAmount.chargingInformation.amount)"
@@ -67,14 +67,7 @@
   <property expression="fn:normalize-space($ctx:referenceCode)"
     group="1" name="referenceCode"
     pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-  <property
-    expression="json-eval($.amountTransaction.transactionOperationStatus)"
-    name="transactionOperationStatus" scope="default" type="STRING"/>
-  <property
-    expression="fn:normalize-space($ctx:transactionOperationStatus)"
-    group="1" name="transactionOperationStatus"
-    pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <filter xpath="boolean($ctx:endUserId) and boolean($ctx:transactionOperationStatus) and boolean($ctx:referenceCode) and ((boolean($ctx:amount) and boolean($ctx:currency)) or boolean($ctx:code))">
+  <filter xpath="boolean($ctx:endUserId) and boolean($ctx:referenceCode) and ((boolean($ctx:amount) and boolean($ctx:currency)) or boolean($ctx:code))">
     <then>
       <filter xpath="boolean($ctx:amount)">
         <then>
@@ -96,14 +89,6 @@
         <then>
           <property
             expression="fn:concat($ctx:missingParameters, ' endUserId,')"
-            name="missingParameters" scope="default" type="STRING"/>
-        </then>
-        <else/>
-      </filter>
-      <filter xpath="not(boolean($ctx:transactionOperationStatus))">
-        <then>
-          <property
-            expression="fn:concat($ctx:missingParameters, ' transactionOperationStatus,')"
             name="missingParameters" scope="default" type="STRING"/>
         </then>
         <else/>
