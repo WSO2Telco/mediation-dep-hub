@@ -25,7 +25,7 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.update.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.update.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>
+    
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
     <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
     <com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>
@@ -85,13 +85,7 @@
       <version>1.0.0</version>
       <type>zip</type>
     </dependency>
-    <dependency>
-      <groupId>com.wso2telco.dep.hub.sequence</groupId>
-      <artifactId>com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
+        <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
