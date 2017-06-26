@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/PaymentAPI/customerInfoConfig.xml')"
+    name="customerInfoConfig" scope="default" type="OM"/>
+  <property
+    expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/tokenPoolEnabled"
+    name="isTokenPoolEnabled" scope="default" type="STRING"/>
+  <filter regex="true" source="get-property('isTokenPoolEnabled')">
+    <then>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.Sequence"/>
+    </then>
+    <else>
+      <property
+        expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/accessToken"
+        name="access.token" scope="default" type="STRING"/>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
+    </else>
+  </filter>
+</sequence>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+    <!-- Mediation  -->
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+        name="mediationConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
+         
+    <!-- SpendLimit ConfigReader -->
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
+        name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
+        
+</sequence>

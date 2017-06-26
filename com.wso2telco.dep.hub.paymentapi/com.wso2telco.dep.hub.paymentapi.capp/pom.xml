@@ -22,6 +22,9 @@
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
     <com.wso2telco.dep.hub.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._paymentAPI>
     <com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>
     <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>
     <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>
@@ -69,6 +72,24 @@
       <artifactId>spendLimit</artifactId>
       <version>1.0.0</version>
       <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
     </dependency>
   </dependencies>
   <repositories>

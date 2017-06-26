@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+     
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/PaymentAPI/operatorConfig.xml')"
+              name="operatorConfig" scope="default" type="OM"/>
+    <property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/operatorId"
+              name="operatorId" scope="default" type="STRING"/>
+    <property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/defaultPackageType"
+              name="defaultPackageType" scope="default" type="STRING"/>
+    <property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/ttl"
+              name="ttl" scope="default" type="STRING"/>
+	<property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/hitCount"   
+			  name="hitCount" scope="default" type="STRING"/>	  
+	<property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/maxValue"   
+			  name="maxValue" scope="default" type="STRING"/>	
+	<property expression="$ctx:operatorConfig//operator[@name=get-property('OPERATOR_NAME')]/fraudTtl"   
+			  name="fraudTtl" scope="default" type="STRING"/>	
+			  			  
+</sequence>
