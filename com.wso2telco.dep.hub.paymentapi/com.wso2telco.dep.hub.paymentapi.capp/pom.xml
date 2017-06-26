@@ -14,21 +14,25 @@
   <name>com.wso2telco.dep.hub.paymentapi.capp</name>
   <description>com.wso2telco.dep.hub.paymentapi.capp</description>
   <properties>
-    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
-    <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,lib/registry/handlers=jar,service/rule=aar,lib/registry/filter=jar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
-    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
-    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
-    <com.wso2telco.dep.hub.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._paymentAPI>
-    <com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.api_._paymentAPI>
+    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>
+    <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,lib/registry/handlers=jar,service/rule=aar,lib/registry/filter=jar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence>
+    <com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.synapse.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence>
     <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._operatorConfig>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.list.Sequence>
-    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._customerInfoConfig>
-    <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>
+    <com.wso2telco.dep.hub.api_._paymentAPI>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.api_._paymentAPI>
   </properties>
   <dependencies>
     <dependency>
@@ -88,6 +92,30 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

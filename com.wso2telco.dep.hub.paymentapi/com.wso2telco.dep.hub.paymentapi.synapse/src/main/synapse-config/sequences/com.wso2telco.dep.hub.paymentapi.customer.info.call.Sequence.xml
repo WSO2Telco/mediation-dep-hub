@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"
+  onError="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property
+        expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/infoapi/apiEndpoint"
+        name="uri.var.infoapiendpoint" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <script language="js"><![CDATA[var requestIdentifier=Math.floor(Math.random() * (999999 - 100000) + 100000);          mc.setProperty("requestIdentifier", requestIdentifier);]]></script>
+ 
+  <property expression="fn:concat('Bearer ', get-property('access.token'))"
+    name="Authorization" scope="transport" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>   
+  <property expression="get-property('endUserId')"
+        name="uri.var.endUserId" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property expression="get-property('onBehalfOf')"
+        name="uri.var.onBehalfOf" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property expression="get-property('requestIdentifier')"
+        name="uri.var.requestIdentifier" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property expression="get-property('uri.var.customerendpoint')"
+    name="API_ENDPOINT" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+    <with-param name="direction" value="REQUESTOUT"/>
+  </call-template>
+  
+  <call>
+    <endpoint key="com.wso2telco.dep.hub.paymentapi.customer.info.Endpoint"/>
+  </call>
+  
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+    <with-param name="direction" value="RESPONSEIN"/>
+  </call-template>
+  
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  
+  <switch source="get-property('axis2', 'HTTP_SC')" xmlns:ns="http://org.apache.synapse/xsd">
+	<case regex="200">
+      <property expression="json-eval($.customer.accountType)"
+        name="userpackagetype" scope="default" type="STRING"/>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.package.type.set.Sequence"/>
+    </case>
+    <case regex="401|403">
+      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>
+    </case>
+    <default>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>
+    </default>
+  </switch>
+  
+  <property
+    expression="fn:concat($ctx:OPERATOR_ENDPOINT,'/',$ctx:endUserId,'/transactions/amount')"
+    name="API_ENDPOINT" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <header expression="get-property('auth-header')" name="Authorization"
+    scope="transport" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <header expression="get-property('jwt-header')" name="x-jwt-assertion"
+    scope="transport" xmlns:ns="http://org.apache.synapse/xsd"/>
+</sequence>

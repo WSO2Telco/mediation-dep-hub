@@ -20,4 +20,16 @@
     <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence.xml</file>
+    </artifact>
 </artifacts>

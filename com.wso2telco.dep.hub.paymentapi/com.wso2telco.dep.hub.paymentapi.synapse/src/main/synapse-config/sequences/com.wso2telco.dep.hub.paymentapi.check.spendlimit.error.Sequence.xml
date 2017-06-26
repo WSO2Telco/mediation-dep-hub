@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <filter regex="false"
+    source="boolean(get-property('axis2', 'HTTP_SC'))" xmlns:ns="http://org.apache.synapse/xsd">
+    <then>
+      <log level="custom">
+        <property name="customerInfoErrorSeq" value="Customer info request timed out. Using default package type."/>
+      </log>
+    </then>
+    <else>
+      <log level="custom">
+        <property name="customerInfoErrorSeq" value="Error calling customer info endpoint. Using default package type."/>
+      </log>
+    </else>
+  </filter>
+  <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
+</sequence>
