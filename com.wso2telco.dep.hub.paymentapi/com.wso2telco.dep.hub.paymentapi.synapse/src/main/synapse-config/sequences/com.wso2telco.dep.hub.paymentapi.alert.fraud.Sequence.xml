@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <log level="custom">
+   	 <property name="Send Emails" value="This is a possible fraud Senario send Email !!!"/>
+  </log>
+  <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+</sequence>
