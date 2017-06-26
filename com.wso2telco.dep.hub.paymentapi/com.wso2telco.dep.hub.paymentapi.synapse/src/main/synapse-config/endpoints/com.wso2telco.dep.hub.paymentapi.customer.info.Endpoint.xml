@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="com.wso2telco.dep.hub.paymentapi.customer.info.Endpoint" xmlns="http://ws.apache.org/ns/synapse">
+  <http method="get" trace="disable" uri-template="{uri.var.infoapiendpoint}/customer/profile?msisdn={uri.var.endUserId}&amp;onBehalfOf={uri.var.onBehalfOf}&amp;requestIdentifier={uri.var.requestIdentifier}"/>
+</endpoint>
