@@ -15,11 +15,13 @@
   <description>com.wso2telco.dep.hub.paymentapi.capp</description>
   <properties>
     <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.filter.check.limit.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.filter.check.limit.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.spendlimit.error.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
+    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.update.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.update.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence>
@@ -137,6 +139,18 @@
     <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.paymentapi.package.type.set.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.hub.sequence</groupId>
+      <artifactId>com.wso2telco.dep.hub.paymentapi.cache.update.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

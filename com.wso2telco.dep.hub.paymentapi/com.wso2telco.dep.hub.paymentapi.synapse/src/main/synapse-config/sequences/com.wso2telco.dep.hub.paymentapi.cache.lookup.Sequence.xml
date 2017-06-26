@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property expression="$trp:Authorization" name="auth-header"
+    scope="default" type="STRING"/>
+  <script language="js"><![CDATA[var temp_auth = mc.getProperty('jwt-header').trim();var val = new Array();val= temp_auth.split("\\.");
+    var auth=val[1];var jsonStr = Packages.java.lang.String(Packages.org.apache.axiom.om.util.Base64.decode(auth), "UTF-8");
+    var tempStr = new Array();tempStr= jsonStr.split('http://wso2.org/claims/subscriber\":\"'); var decoded = new Array();
+    decoded = tempStr[0].split("\"");mc.setProperty("uri.var.onBehalfOf",decoded[0]);]]></script>
+  <property expression="get-property('endUserId')"
+    name="uri.var.userAddress" scope="default" type="STRING"/>
+  <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.PackageTypeLookupMediator"/>
+  
+  <filter regex="true" source="boolean(get-property('userpackagetype'))" xmlns:ns="http://org.apache.synapse/xsd">
+    <then>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.filter.check.limit.Sequence"/>
+    </then>
+    <else>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+    </else>
+  </filter>
+</sequence>
