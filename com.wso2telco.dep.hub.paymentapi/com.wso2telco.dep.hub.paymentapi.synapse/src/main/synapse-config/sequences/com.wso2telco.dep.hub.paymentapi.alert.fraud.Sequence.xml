@@ -4,5 +4,5 @@
   <log level="custom">
    	 <property name="Send Emails" value="This is a possible fraud Senario send Email !!!"/>
   </log>
-  <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+
 </sequence>

@@ -3,29 +3,28 @@
     xmlns="http://ws.apache.org/ns/synapse">
 
     <script language="js"><![CDATA[
-        var requestedAmount = parseInt(mc.getProperty('amount'));
-        var configFraudAmount = parseInt(mc.getProperty('maxValue'));
+        var requestedAmount = parseFloat(mc.getProperty('amount'));
+        var configFraudAmount = parseFloat(mc.getProperty('maxValue'));
         var flag = "false";
 
         if(requestedAmount > configFraudAmount) {
             flag = "true";
         }
 
-        mc.setProperty('result', flag);]]></script>
+        mc.setProperty('isFraud', flag);]]></script>
  
-    <filter regex="true" source="$ctx:result" xmlns:ns="http://org.apache.synapse/xsd">
+    <filter regex="true" source="$ctx:isFraud" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
+            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum amount"/>
             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
         </then>
-       <else>
+        <else>
             <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheLookupMediator"/>
             <filter xpath="boolean(get-property('fraudValue'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>
-                    <property expression="$ctx:fraudValue" name="fraud" scope="default"/>
-
-                    <script language="js"><![CDATA[var cachedFraud = parseInt(mc.getProperty('fraudValue'));
-                        var requestedAmount = parseInt(mc.getProperty('amount'));
-                        var configFraudAmount = parseInt(mc.getProperty('maxValue'));
+                    <script language="js"><![CDATA[
+                        var cachedFraud = parseInt(mc.getProperty('fraudValue'));
                         var flag = "false";
                         var configHitCount = parseInt(mc.getProperty('hitCount'));
 
@@ -33,20 +32,21 @@
                             flag = "true";
                         }
 
-                        mc.setProperty('result', flag);]]></script>
-                    <filter regex="true" source="boolean(get-property('result'))">
+                        mc.setProperty('isFraud', flag);]]></script>
+                    <filter regex="true" source="$ctx:isFraud">
                         <then>
+                            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum hit count for payment"/>
                             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
+                            <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
                         </then>
                         <else/>
                     </filter>
-
                 </then>
                 <else>
                      <sequence key="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"/>
                 </else>
             </filter>
-       </else>
+        </else>
     </filter>
     <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheMediator"/>
 </sequence>
