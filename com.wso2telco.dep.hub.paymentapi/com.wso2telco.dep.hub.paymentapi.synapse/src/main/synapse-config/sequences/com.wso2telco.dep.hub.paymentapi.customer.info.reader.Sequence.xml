@@ -11,13 +11,14 @@
     name="isTokenPoolEnabled" scope="default" type="STRING"/>
   <filter regex="true" source="get-property('isTokenPoolEnabled')">
     <then>
-      <sequence key="com.wso2telco.dep.hub.paymentapi.token.endpoint.call.Sequence"/>
+      <!-- TODO: need to implement when token-pool for customer-info call is ready -->
     </then>
     <else>
       <property
         expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/accessToken"
         name="access.token" scope="default" type="STRING"/>
-      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
     </else>
   </filter>
+  <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
+
 </sequence>

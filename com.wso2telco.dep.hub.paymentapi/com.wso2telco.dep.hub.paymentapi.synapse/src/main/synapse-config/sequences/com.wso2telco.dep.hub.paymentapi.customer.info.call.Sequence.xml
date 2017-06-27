@@ -39,9 +39,6 @@
         name="userpackagetype" scope="default" type="STRING"/>
       <sequence key="com.wso2telco.dep.hub.paymentapi.package.type.set.Sequence"/>
     </case>
-    <case regex="401|403">
-      <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>
-    </case>
     <default>
       <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>
     </default>
