@@ -5,15 +5,15 @@
     <script language="js"><![CDATA[
         var requestedAmount = parseFloat(mc.getProperty('amount'));
         var configFraudAmount = parseFloat(mc.getProperty('maxValue'));
-        var flag = "false";
+        var flag = false;
 
         if(requestedAmount > configFraudAmount) {
-            flag = "true";
+            flag = true;
         }
 
-        mc.setProperty('isFraud', flag);]]></script>
- 
-    <filter regex="true" source="$ctx:isFraud" xmlns:ns="http://org.apache.synapse/xsd">
+        mc.setProperty('paymentAmountFraud', flag);]]></script>
+
+    <filter xpath="boolean($ctx:paymentAmountFraud)" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
             <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum amount"/>
             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
@@ -25,15 +25,15 @@
                 <then>
                     <script language="js"><![CDATA[
                         var cachedFraud = parseInt(mc.getProperty('fraudValue'));
-                        var flag = "false";
                         var configHitCount = parseInt(mc.getProperty('hitCount'));
+                        var flag = false;
 
                         if(cachedFraud > configHitCount) {
-                            flag = "true";
+                            flag = true;
                         }
 
-                        mc.setProperty('isFraud', flag);]]></script>
-                    <filter regex="true" source="$ctx:isFraud">
+                        mc.setProperty('paymentHitCountFraud', flag);]]></script>
+                    <filter xpath="boolean($ctx:paymentHitCountFraud)">
                         <then>
                             <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum hit count for payment"/>
                             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
@@ -42,11 +42,15 @@
                         <else/>
                     </filter>
                 </then>
-                <else>
-                     <sequence key="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"/>
-                </else>
+                <else/>
             </filter>
         </else>
+    </filter>
+    <filter xpath="(not(boolean($ctx:paymentAmountFraud)) and not(boolean($ctx:paymentHitCountFraud)))" xmlns:ns="http://org.apache.synapse/xsd">
+        <then>
+            <sequence key="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"/>
+        </then>
+        <else/>
     </filter>
     <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheMediator"/>
 </sequence>
