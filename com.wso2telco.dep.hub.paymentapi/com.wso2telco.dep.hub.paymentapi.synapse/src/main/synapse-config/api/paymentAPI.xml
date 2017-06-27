@@ -11,11 +11,9 @@
         pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
       <switch source="$ctx:transactionOperationStatus">
         <case regex="Charged">
-          <sequence key="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"/>
           <sequence key="com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence"/>
         </case>
         <case regex="Refunded">
-          <sequence key="com.wso2telco.dep.hub.paymentapi.common.config.reader.Sequence"/>
           <sequence key="com.wso2telco.dep.hub.paymentapi.handle.refund.Sequence"/>
         </case>
         <default>
