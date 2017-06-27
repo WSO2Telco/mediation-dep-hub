@@ -190,34 +190,34 @@
       <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
           <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
+          <filter xpath="$ctx:CUSTOMER_INFO_CALL_REQUIRED">
+            <then>
+              <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+            </then>
+            <else/>
+          </filter>
         </then>
         <else>
           <property expression="get-property('defaultPackageType')"
                     name="userpackagetype" scope="default" type="STRING"/>
-          <property name="CUSTOMER_INFO_CALL_REQUIRED" value="false" type="BOOLEAN"/>
         </else>
       </filter>
-      <filter xpath="$ctx:CUSTOMER_INFO_CALL_REQUIRED">
-        <then>
-          <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
-        </then>
-        <else/>
-      </filter>
+
       <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
     </then>
   </filter>
 
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
-    <!-- generating request json -->
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+  <!-- generating request json -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
 	payload.amountTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	mc.setPayloadJSON(payload);]]></script>
-    <!-- send request to operator endpoint -->
-    <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-    <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
-    <!-- generating response json -->
-    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+  <!-- send request to operator endpoint -->
+  <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
+  <!-- generating response json -->
+  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
 	var hubURL = mc.getProperty("HUB_URL");
 	var apiName = mc.getProperty("API_NAME");
 	var apiVersion = mc.getProperty("VERSION");
@@ -228,5 +228,5 @@
 	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
 	payload.amountTransaction.resourceURL = hubResourceURL;
 	mc.setPayloadJSON(payload);]]></script>
-    <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+  <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

@@ -18,7 +18,6 @@
         <then>
             <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum amount for a single request"/>
             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
-            <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
             <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
         </then>
         <else>
@@ -39,7 +38,6 @@
                         <then>
                             <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum request hit count for payment"/>
                             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
-                            <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
                             <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
                         </then>
                         <else/>
@@ -59,11 +57,9 @@
 
             <filter regex="true" source="boolean(get-property('userpackagetype'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>
-                    <!--<sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>-->
                     <property name="CUSTOMER_INFO_CALL_REQUIRED" value="false" type="BOOLEAN"/>
                 </then>
                 <else>
-                    <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
                     <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
                 </else>
             </filter>
