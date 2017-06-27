@@ -194,9 +194,16 @@
         <else>
           <property expression="get-property('defaultPackageType')"
                     name="userpackagetype" scope="default" type="STRING"/>
-          <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
+          <property name="CUSTOMER_INFO_CALL_REQUIRED" value="false" type="BOOLEAN"/>
         </else>
       </filter>
+      <filter xpath="$ctx:CUSTOMER_INFO_CALL_REQUIRED">
+        <then>
+          <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+        </then>
+        <else/>
+      </filter>
+      <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
     </then>
   </filter>
 

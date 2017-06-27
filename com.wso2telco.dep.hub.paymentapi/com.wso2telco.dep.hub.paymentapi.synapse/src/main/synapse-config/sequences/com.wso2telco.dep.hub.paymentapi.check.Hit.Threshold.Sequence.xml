@@ -11,13 +11,15 @@
             flag = true;
         }
 
-        mc.setProperty('paymentAmountFraud', flag);]]></script>
+        mc.setProperty('paymentAmountFraud', flag);
+        mc.setProperty('paymentHitCountFraud', false);]]></script>
 
     <filter xpath="boolean($ctx:paymentAmountFraud)" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
-            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum amount"/>
+            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum amount for a single request"/>
             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
-            <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+            <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
+            <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
         </then>
         <else>
             <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheLookupMediator"/>
@@ -35,9 +37,10 @@
                         mc.setProperty('paymentHitCountFraud', flag);]]></script>
                     <filter xpath="boolean($ctx:paymentHitCountFraud)">
                         <then>
-                            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum hit count for payment"/>
+                            <property name="PAYMENT_FRAUD_CAUSE" value="Exceeding maximum request hit count for payment"/>
                             <sequence key="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence"/>
-                            <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+                            <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
+                            <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
                         </then>
                         <else/>
                     </filter>
@@ -56,10 +59,12 @@
 
             <filter regex="true" source="boolean(get-property('userpackagetype'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>
-                    <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
+                    <!--<sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>-->
+                    <property name="CUSTOMER_INFO_CALL_REQUIRED" value="false" type="BOOLEAN"/>
                 </then>
                 <else>
-                    <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+                    <!--<sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>-->
+                    <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
                 </else>
             </filter>
         </then>

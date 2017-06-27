@@ -8,7 +8,7 @@
         name="uri.var.infoapiendpoint" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <script language="js"><![CDATA[var requestIdentifier=Math.floor(Math.random() * (999999 - 100000) + 100000);          mc.setProperty("requestIdentifier", requestIdentifier);]]></script>
  
-  <property expression="fn:concat('Bearer ', get-property('access.token'))"
+  <property expression="fn:concat('Bearer ', get-property('customerInfo.access.token'))"
     name="Authorization" scope="transport" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>   
   <property expression="get-property('endUserId')"
         name="uri.var.endUserId" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
@@ -37,7 +37,7 @@
 	<case regex="200">
       <property expression="json-eval($.customer.accountType)"
         name="userpackagetype" scope="default" type="STRING"/>
-      <sequence key="com.wso2telco.dep.hub.paymentapi.package.type.set.Sequence"/>
+      <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.PackageTypeCacheMediator"/>
     </case>
     <default>
       <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>

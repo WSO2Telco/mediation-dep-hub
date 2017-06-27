@@ -16,7 +16,7 @@
     <else>
       <property
         expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/accessToken"
-        name="access.token" scope="default" type="STRING"/>
+        name="customerInfo.access.token" scope="default" type="STRING"/>
     </else>
   </filter>
   <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
