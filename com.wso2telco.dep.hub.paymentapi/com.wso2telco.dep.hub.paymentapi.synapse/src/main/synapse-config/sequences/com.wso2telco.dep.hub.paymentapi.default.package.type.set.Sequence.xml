@@ -3,7 +3,8 @@
   name="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
 
-  <filter regex="Postpaid|Prepaid" source="get-property('userpackagetype')">
+  <!-- TODO : rename with a proper name -->
+  <filter regex="Postpaid|Prepaid" source="$ctx:userpackagetype">
     <then>
       <sequence key="com.wso2telco.dep.hub.paymentapi.check.spendlimit.Sequence"/>
     </then>
