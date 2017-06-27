@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<sequence
-    name="com.wso2telco.dep.hub.paymentapi.filter.check.limit.Sequence" xmlns="http://ws.apache.org/ns/synapse">
-
-    <!-- TO REMOVE : Replaced with: com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence -->
-
-</sequence>
