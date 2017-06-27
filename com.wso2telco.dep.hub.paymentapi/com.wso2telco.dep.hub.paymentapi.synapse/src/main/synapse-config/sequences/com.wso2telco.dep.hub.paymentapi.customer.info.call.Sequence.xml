@@ -3,9 +3,6 @@
   name="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"
   onError="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <property
-    expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/infoapi/apiEndpoint"
-    name="uri.var.infoapiendpoint" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <script language="js"><![CDATA[var requestIdentifier=Math.floor(Math.random() * (999999 - 100000) + 100000);          mc.setProperty("requestIdentifier", requestIdentifier);]]></script>
   <property
     expression="fn:concat('Bearer ', get-property('customerInfo.access.token'))"

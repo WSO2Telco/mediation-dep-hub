@@ -19,6 +19,7 @@
         name="customerInfo.access.token" scope="default" type="STRING"/>
     </else>
   </filter>
-  <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
-
+  <property
+          expression="$ctx:customerInfoConfig//config[@operatorName=get-property('OPERATOR_NAME')]/infoapi/apiEndpoint"
+          name="uri.var.infoapiendpoint" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
 </sequence>

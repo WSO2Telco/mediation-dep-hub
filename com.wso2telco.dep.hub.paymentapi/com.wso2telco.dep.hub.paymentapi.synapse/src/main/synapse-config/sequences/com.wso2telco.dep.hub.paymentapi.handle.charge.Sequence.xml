@@ -193,6 +193,7 @@
           <filter xpath="$ctx:CUSTOMER_INFO_CALL_REQUIRED">
             <then>
               <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
+              <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
             </then>
             <else/>
           </filter>
