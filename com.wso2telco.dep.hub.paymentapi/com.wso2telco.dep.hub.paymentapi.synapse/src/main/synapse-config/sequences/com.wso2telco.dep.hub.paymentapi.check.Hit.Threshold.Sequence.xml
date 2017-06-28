@@ -2,6 +2,9 @@
 <sequence name="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"
     xmlns="http://ws.apache.org/ns/synapse">
 
+<property expression="$trp:x-jwt-assertion" name="jwt-header"
+   scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+
     <script language="js"><![CDATA[
         var requestedAmount = parseFloat(mc.getProperty('amount'));
         var configFraudAmount = parseFloat(mc.getProperty('maxValue'));
