@@ -53,7 +53,7 @@
     <filter xpath="(not(boolean($ctx:paymentAmountFraud)) and not(boolean($ctx:paymentHitCountFraud)))" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
             <!-- retrieve the package type from cache -->
-            <sequence key="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"/>
+            <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.PackageTypeLookupMediator"/>
 
             <filter regex="true" source="boolean(get-property('userpackagetype'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>
