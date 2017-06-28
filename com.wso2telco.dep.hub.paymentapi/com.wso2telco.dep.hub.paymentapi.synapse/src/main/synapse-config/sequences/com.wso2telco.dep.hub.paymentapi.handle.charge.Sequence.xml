@@ -176,6 +176,10 @@
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+  
+  <!-- retrieve payload for payment -->
+  <script language="js"><![CDATA[var payload = mc.getPayloadJSON(); 
+  var paymentPayload = mc.setProperty('payment',payload);]]></script>
 
   <filter regex="true" source="$ctx:mediationConfig//spend_limit_enabled">
     <then>
@@ -211,7 +215,7 @@
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
-  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
+  <script language="js"><![CDATA[var payload = mc.getProperty("payment");
 	payload.amountTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
 	mc.setPayloadJSON(payload);]]></script>
   <!-- send request to operator endpoint -->
