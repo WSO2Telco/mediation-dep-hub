@@ -16,7 +16,7 @@
   <properties>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence>
     <com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.paymentapi.registry.resources.resource_._spendLimit>
-    <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence>
+    
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence>
     <com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.hub.sequence_._com.wso2telco.dep.hub.paymentapi.handle.charge.Sequence>
@@ -103,13 +103,7 @@
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
-    <dependency>
-      <groupId>com.wso2telco.dep.hub.sequence</groupId>
-      <artifactId>com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
-      <type>xml</type>
-    </dependency>
-    <dependency>
+        <dependency>
       <groupId>com.wso2telco.dep.hub.sequence</groupId>
       <artifactId>com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>

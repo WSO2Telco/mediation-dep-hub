@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.paymentapi.cache.lookup.Sequence"
-  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <!-- TODO : remove -->
-</sequence>
