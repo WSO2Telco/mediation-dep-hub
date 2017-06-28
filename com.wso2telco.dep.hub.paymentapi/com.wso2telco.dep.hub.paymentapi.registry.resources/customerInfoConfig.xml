@@ -31,7 +31,7 @@
 		<infoapi>
 			<serviceProvider>hubsp</serviceProvider>
 			<applicationName>testapp</applicationName>
-			<apiEndpoint>http://laocalhost:8280/customerinfo/v1</apiEndpoint>
+			<apiEndpoint>http://localhost:8280/customerinfo/v1</apiEndpoint>
 		</infoapi>
 		<tokenEndpoint>http://localhost:8181/tokenservice</tokenEndpoint>
 	</config>
