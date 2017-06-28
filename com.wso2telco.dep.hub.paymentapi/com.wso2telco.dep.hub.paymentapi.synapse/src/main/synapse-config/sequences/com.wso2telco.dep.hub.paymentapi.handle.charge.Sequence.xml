@@ -183,13 +183,14 @@
 
   <filter regex="true" source="$ctx:mediationConfig//spend_limit_enabled">
     <then>
-      <!-- operator config Reader Sequence -->
-      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
       <!-- read SpendLimit config file -->
       <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
       name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
       <!-- checking for customerInfo call is enabled -->
       <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
+
+      <!-- operator config Reader Sequence -->
+      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
 
       <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
