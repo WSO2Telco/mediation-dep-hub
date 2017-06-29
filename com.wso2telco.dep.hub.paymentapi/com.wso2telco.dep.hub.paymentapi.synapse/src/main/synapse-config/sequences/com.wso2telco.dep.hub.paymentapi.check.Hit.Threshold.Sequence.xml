@@ -24,7 +24,9 @@
             <property name="CUSTOMER_INFO_CALL_REQUIRED" value="true" type="BOOLEAN"/>
         </then>
         <else>
-            <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheLookupMediator"/>
+       <class name="com.wso2telco.dep.common.mediation.RedisCacheAccessMediator">
+    		<property name="action" value="GET_HIT_COUNT"/>
+ 	   </class> 
             <filter xpath="boolean(get-property('fraudValue'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>
                     <script language="js"><![CDATA[
@@ -50,13 +52,17 @@
             </filter>
         </else>
     </filter>
-
-    <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.FraudCacheMediator"/>
+    
+  <class name="com.wso2telco.dep.common.mediation.RedisCacheAccessMediator">
+    <property name="action" value="SET_HIT_COUNT"/>
+ </class>
 
     <filter xpath="(not(boolean($ctx:paymentAmountFraud)) and not(boolean($ctx:paymentHitCountFraud)))" xmlns:ns="http://org.apache.synapse/xsd">
         <then>
             <!-- retrieve the package type from cache -->
-            <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.PackageTypeLookupMediator"/>
+			<class name="com.wso2telco.dep.common.mediation.RedisCacheAccessMediator">
+    		    <property name="action" value="GET_PACKAGE_TYPE"/>
+			</class>
 
             <filter regex="true" source="boolean(get-property('userpackagetype'))" xmlns:ns="http://org.apache.synapse/xsd">
                 <then>

@@ -29,7 +29,9 @@
     <case regex="200">
       <property expression="json-eval($.customer.accountType)"
         name="userpackagetype" scope="default" type="STRING"/>
-      <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.PackageTypeCacheMediator"/>
+      <class name="com.wso2telco.dep.common.mediation.RedisCacheAccessMediator">
+         <property name="action" value="SET_PACKAGE_TYPE"/>
+      </class> 
     </case>
     <default>
       <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence"/>
