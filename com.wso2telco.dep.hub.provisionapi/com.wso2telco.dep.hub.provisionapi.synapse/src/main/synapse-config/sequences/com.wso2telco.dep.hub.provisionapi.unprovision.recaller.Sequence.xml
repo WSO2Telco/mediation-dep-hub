@@ -53,23 +53,27 @@
     <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <!-- send request to operator endpoint -->
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
-    <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	var hubURL = mc.getProperty("HUB_URL");
-	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("VERSION");
-	var payload = mc.getPayloadJSON();
-	var gatewayClientCorrelator = payload.serviceRemoveResponse.clientCorrelator;
-	var clientCorrelatorArray = gatewayClientCorrelator.split(":urn:uuid:");
-	if (clientCorrelatorArray.length == 2) {
-		clientCorrelator = clientCorrelatorArray[0];
-	} else {
-		clientCorrelator = "";
-	}
-	payload.serviceRemoveResponse.clientCorrelator = clientCorrelator;
-	var gatewayResourceURL = payload.serviceRemoveResponse.callbackReference.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-	payload.serviceRemoveResponse.callbackReference.resourceURL = hubResourceURL;
-	mc.setPayloadJSON(payload);]]></script>
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+			var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+			var hubURL = mc.getProperty('HUB_URL');
+			var apiName = mc.getProperty('API_NAME');
+			var apiVersion = mc.getProperty('VERSION');
+			var payload = mc.getPayloadJSON();
+			var gatewayClientCorrelator = payload.serviceRemoveResponse.clientCorrelator;
+			var clientCorrelatorArray = gatewayClientCorrelator.split(':urn:uuid:');
+			if (clientCorrelatorArray.length == 2) {
+				clientCorrelator = clientCorrelatorArray[0];
+			} else {
+				clientCorrelator = '';
+			}
+			payload.serviceRemoveResponse.clientCorrelator = clientCorrelator;
+			var gatewayResourceURL = payload.serviceRemoveResponse.callbackReference.resourceURL;
+			var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+			var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
+			payload.serviceRemoveResponse.callbackReference.resourceURL = hubResourceURL;
+			mc.setPayloadJSON(payload);
+		"/>
+	</class>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
