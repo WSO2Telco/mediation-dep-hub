@@ -168,6 +168,13 @@
   <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
   </call-template>
+
+  <!-- use common.notification.url.readModify.Template -->
+  <call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
+    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>
+    <with-param name="apiResourceSuffix" value="/paymentnotification"/>
+  </call-template>
+
   <!-- read mediationConfig -->
   <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
         name="mediationConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
