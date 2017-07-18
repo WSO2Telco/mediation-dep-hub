@@ -190,16 +190,24 @@
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
-  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.makePayment.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-	payload.makePayment.notifyURL = mc.getProperty("generatedNotifyURL");
-	mc.setPayloadJSON(payload);]]></script>
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+			var payload = mc.getPayloadJSON();
+			payload.makePayment.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			payload.makePayment.notifyURL = mc.getProperty('generatedNotifyURL');
+			mc.setPayloadJSON(payload);
+		"/>
+	</class>
   <!-- send request to the gateway -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <!-- generating response json -->
-  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.makePayment.clientCorrelator = mc.getProperty("clientCorrelator");
-	payload.makePayment.notifyURL = mc.getProperty("notifyURL");
-	mc.setPayloadJSON(payload);]]></script>
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+			var payload = mc.getPayloadJSON();
+			payload.makePayment.clientCorrelator = mc.getProperty('clientCorrelator');
+			payload.makePayment.notifyURL = mc.getProperty('notifyURL');
+			mc.setPayloadJSON(payload);
+		"/>
+	</class>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
