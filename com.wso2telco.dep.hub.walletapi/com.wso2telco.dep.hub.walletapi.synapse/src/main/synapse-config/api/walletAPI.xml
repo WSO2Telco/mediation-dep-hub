@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/wallet" name="walletAPI" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/wallet/v1" name="walletAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/transaction/{endUserId}/payment">
     <inSequence>
       <sequence key="com.wso2telco.dep.hub.walletapi.handle.payment.Sequence"/>
