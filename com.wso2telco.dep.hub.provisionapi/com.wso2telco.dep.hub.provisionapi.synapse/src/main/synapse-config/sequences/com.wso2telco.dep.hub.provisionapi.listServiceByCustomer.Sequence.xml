@@ -76,10 +76,21 @@
         <with-param name="paramValue" value="{$ctx:msisdn}"/>
     </call-template>
     <sequence key="com.wso2telco.dep.common.mccMncValidator.Sequence"/>
-    <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
-    <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+    <filter xpath="(boolean($ctx:purchaseCategoryCode))">
         <then>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+            <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
+            <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+                <then>
+                    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                </then>
+                <else/>
+            </filter>
+            <filter regex="true" source="get-property('INTERNAL_ERROR')">
+                <then>
+                    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                </then>
+                <else/>
+            </filter>
         </then>
         <else/>
     </filter>
@@ -104,12 +115,15 @@
     <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
     <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
     <!-- extract response resource url -->
-	  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	  	var payload = mc.getPayloadJSON();
-	  	var gatewayResourceURL = payload.serviceList.resourceURL;
-	  	var gatewayResourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	  	mc.setProperty("GATEWAY_RESOURCE_PATH", gatewayResourcePath);]]>
-	  </script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+            var payload = mc.getPayloadJSON();
+            var gatewayResourceURL = payload.serviceList.resourceURL;
+            var gatewayResourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+            mc.setProperty('GATEWAY_RESOURCE_PATH', gatewayResourcePath);
+        "/>
+    </class>
     <!-- replace requestIdentifier in GATEWAY_RESOURCE_PATH from service provider's requestIdentifier -->
     <sequence key="com.wso2telco.dep.common.replace.hub.request.identifier.Sequence"/>
     <property expression="json-eval($)" name="responseBody" scope="default" type="STRING"/>
@@ -132,13 +146,17 @@
         </then>
         <else/>
     </filter>
-    <script language="js"><![CDATA[var hubURL = mc.getProperty("HUB_URL");
-	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("VERSION");
-	var payload = mc.getPayloadJSON();
-	payload.serviceList.requestIdentifier = mc.getProperty("requestIdentifier");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(mc.getProperty("GATEWAY_RESOURCE_PATH"));
-	payload.serviceList.resourceURL = hubResourceURL;
-	mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var hubURL = mc.getProperty('HUB_URL');
+            var apiName = mc.getProperty('API_NAME');
+            var apiVersion = mc.getProperty('VERSION');
+            var payload = mc.getPayloadJSON();
+            payload.serviceList.requestIdentifier = mc.getProperty('requestIdentifier');
+            var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(mc.getProperty('GATEWAY_RESOURCE_PATH'));
+            payload.serviceList.resourceURL = hubResourceURL;
+            mc.setPayloadJSON(payload);
+		"/>
+    </class>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

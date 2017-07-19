@@ -4,17 +4,21 @@
     <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
     <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
     <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.serviceRemoveResponse.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-	payload.serviceRemoveResponse.callbackReference.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
-	mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var payload = mc.getPayloadJSON();
+            payload.serviceRemoveResponse.clientCorrelator = mc.getProperty('NOTIFY_INFO_CLIENT_CORRELATOR');
+            payload.serviceRemoveResponse.callbackReference.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
+            mc.setPayloadJSON(payload);
+        "/>
+    </class>
     <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
     <!-- update notify status to 1 -->
-	  <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
-	    <then>
-	      <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
-	    </then>
-	    <else/>
-	  </filter>
+    <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
+        <then>
+            <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
+        </then>
+        <else/>
+    </filter>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
