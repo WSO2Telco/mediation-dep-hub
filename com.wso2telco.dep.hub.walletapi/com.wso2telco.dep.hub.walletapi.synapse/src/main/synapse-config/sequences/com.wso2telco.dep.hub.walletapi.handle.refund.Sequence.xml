@@ -160,16 +160,31 @@
     </else>
   </filter>
   <!-- validate purchase category code in request -->
-  <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
-  <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+  <filter xpath="(boolean($ctx:purchaseCategoryCode))">
     <then>
-      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.purchase.category.code.validate.Sequence"/>
+      <filter regex="false" source="get-property('PURCHASE_CATEGORY_VALIDATED')">
+        <then>
+          <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+      </filter>
+      <filter regex="true" source="get-property('INTERNAL_ERROR')">
+        <then>
+          <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </then>
+        <else/>
+      </filter>
     </then>
     <else/>
   </filter>
-  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+  <!-- validate channel in request -->
+  <filter xpath="(boolean($ctx:channel))">
     <then>
-      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+      <call-template target="com.wso2telco.dep.common.channelValidation.Template">
+        <with-param name="paramName" value="channel"/>
+        <with-param name="paramValue" value="{$ctx:channel}"/>
+      </call-template>
     </then>
     <else/>
   </filter>
@@ -188,23 +203,31 @@
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
-  <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.refundTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-	mc.setPayloadJSON(payload);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var payload = mc.getPayloadJSON();
+      payload.refundTransaction.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+      mc.setPayloadJSON(payload);
+    "/>
+  </class>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
   <!-- generating response json -->
-  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	var hubURL = mc.getProperty("HUB_URL");
-	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("VERSION");
-	var payload = mc.getPayloadJSON();
-	payload.refundTransaction.clientCorrelator = mc.getProperty("clientCorrelator");
-	var gatewayResourceURL = payload.refundTransaction.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-	payload.refundTransaction.resourceURL = hubResourceURL;
-	mc.setPayloadJSON(payload);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+      var hubURL = mc.getProperty('HUB_URL');
+      var apiName = mc.getProperty('API_NAME');
+      var apiVersion = mc.getProperty('VERSION');
+      var payload = mc.getPayloadJSON();
+      payload.refundTransaction.clientCorrelator = mc.getProperty('clientCorrelator');
+      var gatewayResourceURL = payload.refundTransaction.resourceURL;
+      var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+      var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
+      payload.refundTransaction.resourceURL = hubResourceURL;
+      mc.setPayloadJSON(payload);
+    "/>
+  </class>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
