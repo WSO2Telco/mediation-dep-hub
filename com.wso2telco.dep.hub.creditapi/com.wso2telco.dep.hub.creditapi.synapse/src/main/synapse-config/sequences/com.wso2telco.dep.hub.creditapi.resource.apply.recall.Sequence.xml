@@ -5,7 +5,7 @@
 	
     <property expression="$ctx:uri.var.msisdn" name="msisdn" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:msisdn)" name="msisdn" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
-    
+
     <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
         <with-param name="paramName" value="msisdn"/>
         <with-param name="paramValue" value="{$ctx:msisdn}"/>
@@ -21,8 +21,10 @@
   	<!-- send request to operator endpoint -->
   	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
-  	    
-   	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>  
+
+	<!-- retrieve hub url from registry -->
+	<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>
 
     <property expression="json-eval($.creditApplyResponse.receiptResponse.notifyURL)" name="notifyURL" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
@@ -35,15 +37,15 @@
   		<else/>
   	</filter> 
 
-	<script language="js">
-		<![CDATA[
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
 			var payload = mc.getPayloadJSON();
 			var clientCorrelator = payload.creditApplyResponse.clientCorrelator;
-			var notifyURLId = mc.getProperty("NOTIFY_URL_ID");
+			var notifyURLId = mc.getProperty('NOTIFY_URL_ID');
 			var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;			
 			         								
-			if (clientCorrelator != null && clientCorrelator !="") {			    
-				var clientCorrelatorArray = clientCorrelator.split(":urn:uuid:");
+			if (clientCorrelator != null &amp;&amp; clientCorrelator !='') {
+				var clientCorrelatorArray = clientCorrelator.split(':urn:uuid:');
 				if (clientCorrelatorArray.length == 2) {
 			    	payload.creditApplyResponse.clientCorrelator = clientCorrelatorArray[0];
 				} else {
@@ -53,20 +55,20 @@
 				delete payload.creditApplyResponse.clientCorrelator;
 			}
 
-			if (notifyURLId != null && notifyURLId != "") {
-				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+			if (notifyURLId != null &amp;&amp; notifyURLId != '') {
+				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
 			} else {
 				delete payload.creditApplyResponse.receiptResponse.notifyURL;
 			}
 			
-			if (resourceURL != null && resourceURL != "") {
-				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-				var hubURL = mc.getProperty("hubUrl");
-				var apiName = mc.getProperty("API_NAME");
-				var apiVersion = mc.getProperty("VERSION");
+			if (resourceURL != null &amp;&amp; resourceURL != '') {
+				var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+				var hubURL = mc.getProperty('hubUrl');
+				var apiName = mc.getProperty('API_NAME');
+				var apiVersion = mc.getProperty('VERSION');
 				
-				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
-					.concat(apiName).concat("/").concat(apiVersion));
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat('/')
+					.concat(apiName).concat('/').concat(apiVersion));
 			
 				payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;				
 			} else {
@@ -74,8 +76,8 @@
 			}
 
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>
+		"/>
+	</class>
 
   	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
      

@@ -31,7 +31,7 @@
                 <with-param name="paramName" value="amount"/>
                 <with-param name="paramValue" value="{$ctx:amount}"/>
                 <with-param name="validationType" value="GE_ZERO"/>
-            </call-template>    
+            </call-template>
             
 			<!-- validate purchase category code in request -->
 			<filter xpath="boolean($ctx:purchaseCategoryCode)">
@@ -50,6 +50,7 @@
 			  			<else/>
 					</filter>  	
 				</then>
+				<else/>
 			</filter>
               
             <filter xpath="boolean($ctx:taxAmount)">
