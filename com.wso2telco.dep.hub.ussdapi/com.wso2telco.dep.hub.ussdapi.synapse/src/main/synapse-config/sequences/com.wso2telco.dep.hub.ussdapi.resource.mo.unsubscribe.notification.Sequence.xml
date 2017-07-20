@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.Sequence" trace="disable"
+          xmlns="http://ws.apache.org/ns/synapse">
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <property expression="get-property('uri.var.subscriptionID')" name="SUBSCRIPTION_ID" scope="default" type="STRING"/>
-	<log level="custom">
-		<property name="TEST" value="STARTED unsubscribe"></property>
-		<property name="subscriptionID" expression="$ctx:SUBSCRIPTION_ID"></property>
-	</log>
-    <!-- Delete DB records -->
-    <dbreport>
-        <connection>
-            <pool>
-                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
-            </pool>
-        </connection>
-        <statement>
-            <sql><![CDATA[delete from mo_ussd_subscription where ussd_request_did=?;]]></sql>
-            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
-        </statement>
-    </dbreport>
-    <dbreport>
-        <connection>
-            <pool>
-                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
-            </pool>
-        </connection>
-        <statement>
-            <sql><![CDATA[delete from deptnotificationurls where notifyurldid=?;]]></sql>
-            <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
-        </statement>
-    </dbreport>
-	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
-    <property name="HTTP_SC" scope="axis2" type="STRING" value="204"/>
-    <respond/>
+
+    <property expression="fn:concat('SELECT * FROM mo_ussd_subscription where ussd_request_did = ', $ctx:SUBSCRIPTION_ID)"
+            name="SELECT_QUERY" scope="default" type="STRING"/>
+    <property name="SELECT_QUERY_ENRICH_BODY" scope="default" type="STRING" value="true"/>
+    <sequence key="com.wso2telco.dep.common.execute.select.query.Sequence"/>
+
+    <filter xpath="boolean(//RESULT_ARRAY/operator)">
+        <then>
+            <iterate attachPath="$body" continueParent="false" expression="//RESULT_ARRAY"
+                     id="ussdapi.stop.outbound.notifications.splitter" preservePayload="true">
+                <target>
+                    <sequence>
+                        <property expression="//RESULT_ARRAY/operator/text()" name="OPERATOR_NAME" scope="default"
+                                  type="STRING"/>
+                        <property expression="fn:normalize-space($ctx:OPERATOR_NAME)" group="1" name="OPERATOR_NAME"
+                                  pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                        <property expression="//RESULT_ARRAY/domainurl/text()" name="OPERATOR_ENDPOINT" scope="default"
+                                  type="STRING"/>
+                        <property expression="//RESULT_ARRAY/domainurl/text()" name="API_ENDPOINT" scope="default"
+                                  type="STRING"/>
+                        <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+
+                        <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+
+                        <sequence
+                                key="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.gather.Sequence"/>
+                    </sequence>
+                </target>
+            </iterate>
+        </then>
+        <else>
+            <!--error response for invalid subscription ID-->
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+            <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+
+            <property name="errorVariable" value="Subscription ID" scope="default" type="STRING"/>
+
+            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+        </else>
+    </filter>
+
 </sequence>
