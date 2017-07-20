@@ -48,6 +48,24 @@
 	<property expression="$ctx:msisdn" name="MSISDN" scope="default" type="STRING"/>
 	<!-- retrieve operator's endpoint -->
 	<sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
+
+    <filter xpath="boolean($ctx:notifyURL)">
+		<then>
+			<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/notificationURL.xml')"
+			  name="notificationURLConfig" scope="default" type="OM"/>
+			<property expression="$ctx:notificationURLConfig//credit" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+			<!-- save service provider's notify url and generate new notify url from hub -->
+			<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+			<filter regex="true" source="get-property('INTERNAL_ERROR')">
+			  <then>
+			    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+			  </then>
+			  <else/>
+			</filter>
+		</then>
+		<else/>
+    </filter>
+
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 	
@@ -62,11 +80,11 @@
 	</call-template>
 
             
-	<script language="js">
-		<![CDATA[
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
 			var payload = mc.getPayloadJSON();
-			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
-			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+			var uniqueClientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			var generatedNotifyURL = mc.getProperty('generatedNotifyURL');
 
 			if (uniqueClientCorrelator != null) {
 				payload.creditApplyRequest.clientCorrelator = uniqueClientCorrelator;
@@ -77,29 +95,29 @@
 			}
 
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>
+		"/>
+	</class>
 	
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
 
   	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>
-  		
-	<script language="js">
-		<![CDATA[
+
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
 			var payload = mc.getPayloadJSON();
-			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
-			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
-			var clientCorrelator = mc.getProperty("clientCorrelator");
+			var uniqueClientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			var generatedNotifyURL = mc.getProperty('generatedNotifyURL');
+			var clientCorrelator = mc.getProperty('clientCorrelator');
 			         								
-			if (clientCorrelator != null && clientCorrelator !="") {			    
+			if (clientCorrelator != null &amp;&amp; clientCorrelator !='') {
 				payload.creditApplyResponse.clientCorrelator = clientCorrelator;
 			} else {
 				delete payload.creditApplyResponse.clientCorrelator;
 			}
 
 			if (generatedNotifyURL != null) {
-				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty("notifyURL");
+				payload.creditApplyResponse.receiptResponse.notifyURL = mc.getProperty('notifyURL');
 			}
 			
 			
@@ -107,23 +125,23 @@
 				var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;
 			}
 
-			if (resourceURL != null && resourceURL !="") {
-				var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-				var hubURL = mc.getProperty("hubUrl");
-				var apiName = mc.getProperty("API_NAME");
-				var apiVersion = mc.getProperty("VERSION");
+			if (resourceURL != null &amp;&amp; resourceURL !='') {
+				var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+				var hubURL = mc.getProperty('hubUrl');
+				var apiName = mc.getProperty('API_NAME');
+				var apiVersion = mc.getProperty('VERSION');
 				
-				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
-					.concat(apiName).concat("/").concat(apiVersion));
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat('/')
+					.concat(apiName).concat('/').concat(apiVersion));
 			
 				payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;				
 			} else {
 				delete payload.creditApplyResponse.receiptResponse.resourceURL;
 			}
-			
+
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>
+		"/>
+	</class>
 	
 	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
   

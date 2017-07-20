@@ -11,65 +11,65 @@
 
   	<property name="OPERATOR_CODE" action="set" scope="default" expression="$ctx:NOTIFY_INFO_OPERATOR_NAME" type="STRING"/>  	
   	<sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
-  	
+
+	<!-- retrieve hub url from registry -->
+	<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
   	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>   	
   	  
-  	<script language="js">
-  		<![CDATA[
-  			var payload = mc.getPayloadJSON();
+	<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+		var payload = mc.getPayloadJSON();
+
+		var clientCorrelator = mc.getProperty('NOTIFY_INFO_CLIENT_CORRELATOR');
+		var notifyURL = mc.getProperty('NOTIFY_INFO_URL');
+
+		var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+		var hubURL = mc.getProperty('hubUrl');
+		var apiName = mc.getProperty('API_NAME');
+		var apiVersion = mc.getProperty('VERSION');
+
+		if (payload.creditApplyResponse != null &amp;&amp; payload.creditApplyResponse != '') {
+
+			var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;
   			
-	  		var clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-	  		var notifyURL = mc.getProperty("NOTIFY_INFO_URL");
-	  		
-			var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-			var hubURL = mc.getProperty("hubUrl");
-			var apiName = mc.getProperty("API_NAME");
-			var apiVersion = mc.getProperty("VERSION"); 
-			
-	  		if (payload.creditApplyResponse != null && payload.creditApplyResponse != "") {
-	  			
-	  			var resourceURL = payload.creditApplyResponse.receiptResponse.resourceURL;
-	  			
-	  			if (resourceURL != null && resourceURL != "") {
-					var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
-						.concat(apiName).concat("/").concat(apiVersion));
-					payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;	  
-	  			} else {
-	  				delete payload.creditApplyResponse.receiptResponse.resourceURL;
-	  			}    			
-	  		
-	  			if (clientCorrelator != null && clientCorrelator !="") {
-	  				payload.creditApplyResponse.clientCorrelator = clientCorrelator;
-	  			} else {
-	  				delete payload.creditApplyResponse.clientCorrelator;
-	  			}
-	  			
-	  			payload.creditApplyResponse.receiptResponse.notifyURL = notifyURL;
-	  			   			
-	  		} else if (payload.refundResponse != null) {
-	  		
-	  			var resourceURL = payload.refundResponse.resourceURL;
-	  			
-	  			if (resourceURL != null && resourceURL != "") {
-					var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat("/")
-						.concat(apiName).concat("/").concat(apiVersion));
-					payload.refundResponse.resourceURL = hubResourceURL;	  
-	  			} else {
-	  				delete payload.refundResponse.resourceURL;
-	  			}   			
-	  		
-	  			if (clientCorrelator != null && clientCorrelator !="") {
-	  				payload.refundResponse.clientCorrelator = clientCorrelator;
-	  			} else {
-	  				delete payload.refundResponse.clientCorrelator;
-	  			} 
-	  			
-	  			payload.refundResponse.receiptResponse.notifyURL = notifyURL;   		  		
-	  		}
+			if (resourceURL != null &amp;&amp; resourceURL != '') {
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat('/')
+					.concat(apiName).concat('/').concat(apiVersion));
+				payload.creditApplyResponse.receiptResponse.resourceURL = hubResourceURL;
+			} else {
+				delete payload.creditApplyResponse.receiptResponse.resourceURL;
+			}
   		
-			mc.setPayloadJSON(payload);
-		]]>
-  	</script>
+			if (clientCorrelator != null &amp;&amp; clientCorrelator !='') {
+				payload.creditApplyResponse.clientCorrelator = clientCorrelator;
+			} else {
+				delete payload.creditApplyResponse.clientCorrelator;
+			}
+
+			payload.creditApplyResponse.receiptResponse.notifyURL = notifyURL;
+		} else if (payload.refundResponse != null) {
+
+			var resourceURL = payload.refundResponse.resourceURL;
+			if (resourceURL != null &amp;&amp; resourceURL != '') {
+				var hubResourceURL = resourceURL.replace(operatorEndpoint, hubURL.concat('/')
+					.concat(apiName).concat('/').concat(apiVersion));
+				payload.refundResponse.resourceURL = hubResourceURL;
+			} else {
+				delete payload.refundResponse.resourceURL;
+			}
+
+			if (clientCorrelator != null &amp;&amp; clientCorrelator !='') {
+				payload.refundResponse.clientCorrelator = clientCorrelator;
+			} else {
+				delete payload.refundResponse.clientCorrelator;
+			}
+
+			payload.refundResponse.receiptResponse.notifyURL = notifyURL;
+		}
+
+		mc.setPayloadJSON(payload);
+		"/>
+	</class>
   	
   	<!-- send notification to notification endpoint -->
   	<sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
