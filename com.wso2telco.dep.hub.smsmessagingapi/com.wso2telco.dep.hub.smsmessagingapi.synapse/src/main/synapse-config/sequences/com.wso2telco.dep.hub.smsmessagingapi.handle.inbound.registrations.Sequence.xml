@@ -5,7 +5,6 @@
     <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.inboundSMSMessages.maxBatchSize)" name="MAX_BATCH_SIZE" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:MAX_BATCH_SIZE)" group="1" name="MAX_BATCH_SIZE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-
     <script language="js">
         <![CDATA[
             var payload = mc.getPayloadJSON();
@@ -13,8 +12,6 @@
             mc.setProperty('REGISTRATIONS_COUNT', registration_count);
         ]]>
     </script>
-
-
     <!-- validate registration details -->
     <foreach expression="//registrations">
         <sequence>
@@ -58,7 +55,5 @@
         </then>
         <else/>
     </filter>
-
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.splitter.Sequence"/>
-
 </sequence>
