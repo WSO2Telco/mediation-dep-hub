@@ -184,9 +184,6 @@
     <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
   </call-template>
   <!-- retrieve hub url from registry -->
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
   <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
