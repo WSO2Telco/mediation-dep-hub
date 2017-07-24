@@ -41,10 +41,6 @@
     name="requestIdentifier" scope="default" type="STRING"/>
   <property expression="fn:normalize-space($ctx:requestIdentifier)"
     name="requestIdentifier" scope="default" type="STRING"/>
-  <!-- load mediation configurations from registry -->
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
   <!-- validate mandatory parameters of the request -->
   <filter xpath="not(boolean($ctx:requestIdentifier))">
     <then>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.hub.creditapi.resource.refund.msisdnValidator.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//msisdn_regex" name="msisdnRegex" scope="default" type="STRING"/>
     <property expression="$ctx:mediationConfig//msisdn_regex_num_grp" name="msisdnRegexGr" scope="default" type="INTEGER"/>
     
