@@ -23,7 +23,6 @@
   	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
 
 	<!-- retrieve hub url from registry -->
-	<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
 	<property expression="$ctx:mediationConfig//huburl" name="hubUrl" scope="default" type="STRING"/>
 
     <property expression="json-eval($.creditApplyResponse.receiptResponse.notifyURL)" name="notifyURL" scope="default" type="STRING"/>

@@ -18,8 +18,6 @@
     <property expression="fn:normalize-space($ctx:offset)" name="offset" scope="default" type="STRING"/>
     <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:limit)" name="limit" scope="default" type="STRING"/>
-    <!-- load mediation configurations from registry -->
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <!-- MANDATORY PARAMETER VALIDATION -->
     <filter xpath="boolean($ctx:mcc)">
         <then>
