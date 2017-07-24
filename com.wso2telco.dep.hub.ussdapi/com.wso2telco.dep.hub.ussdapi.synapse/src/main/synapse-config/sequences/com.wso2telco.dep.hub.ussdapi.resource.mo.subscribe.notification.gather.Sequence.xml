@@ -51,7 +51,7 @@
         <onComplete enclosingElementProperty="collection" expression="//shortCodes">
             <!-- retrieve hub url from registry -->
             <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
-            <property expression="fn:concat($ctx:HUB_URL, $ctx:REST_FULL_REQUEST_PATH, '/', $ctx:notifyURLTableId)" name="responseResourceURL" scope="default" type="STRING"/>
+            <property expression="fn:concat($ctx:HUB_URL, '/', $ctx:API_NAME, '/', $ctx:VERSION, $ctx:REST_SUB_REQUEST_PATH, '/', $ctx:notifyURLTableId)" name="responseResourceURL" scope="default" type="STRING"/>
             <payloadFactory media-type="xml">
                 <format>
                     <subscription>
