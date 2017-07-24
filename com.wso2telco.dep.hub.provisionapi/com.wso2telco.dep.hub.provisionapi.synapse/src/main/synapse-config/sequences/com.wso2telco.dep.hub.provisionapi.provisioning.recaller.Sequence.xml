@@ -45,7 +45,6 @@
     </call-template>
     <sequence key="com.wso2telco.dep.common.mccMncValidator.Sequence"/>
     <!-- retrieve hub url from registry -->
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
     <!-- retrieve operator's endpoint -->
     <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
