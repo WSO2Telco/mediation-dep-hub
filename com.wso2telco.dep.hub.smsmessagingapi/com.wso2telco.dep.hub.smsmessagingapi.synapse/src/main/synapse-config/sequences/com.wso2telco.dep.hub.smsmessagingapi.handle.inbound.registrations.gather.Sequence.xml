@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+    <foreach expression="//inboundSMSMessage">
+        <sequence>
+            <script language="js">
+                <![CDATA[
+                    var payload = mc.getPayloadXML();
+
+                    var operator_code_value = mc.getProperty('OPERATOR_CODE');
+                    var criteria_value = '';
+                    if (mc.getProperty('CRITERIA')) {
+                        criteria_value = mc.getProperty('CRITERIA');
+                    }
+
+                    var operator_code_tag = new XML(<operatorCode>{operator_code_value}</operatorCode>);
+                    var criteria_tag = new XML(<criteria>{criteria_value}</criteria>);
+
+                    payload.inboundSMSMessage = operator_code_tag;
+                    payload.inboundSMSMessage = criteria_tag;
+
+                    mc.setPayloadXML(payload);
+                ]]>
+            </script>
+        </sequence>
+    </foreach>
+
+    <property name="collection" scope="default">
+        <collection xmlns=""/>
+    </property>
+
+    <aggregate id="smsmessagingapi.inbound.registrations.splitter">
+        <completeCondition timeout="10">
+            <messageCount max="-1" min="-1"/>
+        </completeCondition>
+        <onComplete enclosingElementProperty="collection" expression="//inboundSMSMessage">
+
+            <!-- remove jsonObject creates when using with a single operator -->
+            <filter xpath="//collection/jsonObject">
+                <enrich>
+                    <source type="custom" xpath="//collection/jsonObject/inboundSMSMessageList/inboundSMSMessage" clone="false"/>
+                    <target type="custom" action="child" xpath="//collection"/>
+                </enrich>
+
+                <script language="js">
+                    <![CDATA[
+                        var payload = mc.getPayloadXML();
+                        delete payload..*::jsonObject;
+                        mc.setPayloadXML(payload);
+                    ]]>
+                </script>
+            </filter>
+
+            <!-- retrieve hub url from registry -->
+            <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
+                      scope="default" type="STRING"/>
+
+            <!-- generating response json -->
+            <script language="js">
+                <![CDATA[
+                    var hubURL = mc.getProperty("HUB_URL");
+                    var apiName = mc.getProperty("API_NAME");
+                    var apiVersion = mc.getProperty("VERSION");
+                    var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat("/inbound/registrations/messages");
+                    mc.setProperty("hubResourceURL", hubResourceURL);
+                ]]>
+            </script>
+
+            <payloadFactory media-type="xml">
+                <format>
+                    <inboundSMSMessageList>
+                        <?xml-multiple inboundSMSMessage?>$1
+                        <numberOfMessagesInThisBatch>$2</numberOfMessagesInThisBatch>
+                        <totalNumberOfPendingMessages>$3</totalNumberOfPendingMessages>
+                        <clientCorrelator>$4</clientCorrelator>
+                        <resourceURL>$5</resourceURL>
+                    </inboundSMSMessageList>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="//collection/node()" xmlns:ns="http://org.apache.synapse/xsd"/>
+                    <arg evaluator="xml" expression="get-property('operation', 'TOTAL_RESPONSE_COUNT')" xmlns:ns="http://org.apache.synapse/xsd"/>
+                    <arg evaluator="xml" expression="get-property('operation', 'TOTAL_PENDING_COUNT')" xmlns:ns="http://org.apache.synapse/xsd"/>
+                    <arg evaluator="xml" expression="$ctx:clientCorrelator" xmlns:ns="http://org.apache.synapse/xsd"/>
+                    <arg evaluator="xml" expression="$ctx:hubResourceURL" xmlns:ns="http://org.apache.synapse/xsd"/>
+                </args>
+            </payloadFactory>
+
+            <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+        </onComplete>
+    </aggregate>
+</sequence>

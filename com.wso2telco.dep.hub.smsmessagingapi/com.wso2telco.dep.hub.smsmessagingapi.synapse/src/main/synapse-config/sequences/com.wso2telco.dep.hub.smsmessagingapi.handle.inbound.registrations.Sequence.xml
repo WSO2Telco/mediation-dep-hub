@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.Sequence" trace="disable" onError="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.splitter.fault.Sequence" xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
+    <property expression="json-eval($.inboundSMSMessages.clientCorrelator)" name="clientCorrelator" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <property expression="json-eval($.inboundSMSMessages.maxBatchSize)" name="MAX_BATCH_SIZE" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:MAX_BATCH_SIZE)" group="1" name="MAX_BATCH_SIZE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+    <script language="js">
+        <![CDATA[
+            var payload = mc.getPayloadJSON();
+            var registration_count = payload.inboundSMSMessages.registrations.length;
+            mc.setProperty('REGISTRATIONS_COUNT', registration_count);
+        ]]>
+    </script>
+    <!-- validate registration details -->
+    <foreach expression="//registrations">
+        <sequence>
+            <property expression="//registrationID/text()" name="registrationID" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:registrationID)" group="1" name="registrationID" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="not(boolean($ctx:registrationID))">
+                <then>
+                    <property expression="fn:concat('registrationID',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+            <property expression="//operatorCode/text()" name="operatorCode" scope="default" type="STRING"/>
+            <property expression="fn:normalize-space($ctx:operatorCode)" group="1" name="operatorCode" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+            <filter xpath="not(boolean($ctx:operatorCode))">
+                <then>
+                    <property expression="fn:concat('operatorCode',',')" name="missingParameters" scope="default" type="STRING"/>
+                    <property name="MANDATORY_PARAMETER_VALIDATED" scope="default" type="STRING" value="false"/>
+                </then>
+                <else/>
+            </filter>
+        </sequence>
+    </foreach>
+    <filter xpath="(boolean($ctx:MAX_BATCH_SIZE))">
+        <then>
+            <property name="OPERATOR_BATCH_SIZE" scope="default" type="INTEGER" value="0"/>
+            <script language="js">
+                <![CDATA[
+                    var max_batch_size = mc.getProperty('MAX_BATCH_SIZE');
+            	 	var registrations_count = mc.getProperty('REGISTRATIONS_COUNT');
+            	 	
+            	 	var operator_batch_size = parseInt(max_batch_size) / registrations_count;
+            	 	
+            	 	mc.setProperty('OPERATOR_BATCH_SIZE', parseInt(operator_batch_size));
+                ]]>
+            </script>
+
+            <property name="REMAINING_BATCH_SIZE" scope="operation" value="0" type="INTEGER"/>
+            <property name="TOTAL_RESPONSE_COUNT" scope="operation" value="0" type="INTEGER"/>
+            <property name="TOTAL_PENDING_COUNT" scope="operation" value="0" type="INTEGER"/>
+        </then>
+        <else/>
+    </filter>
+    <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.registrations.splitter.Sequence"/>
+</sequence>
