@@ -28,8 +28,7 @@
                         <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
                         <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 
-                        <sequence
-                                key="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.gather.Sequence"/>
+                        <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.gather.Sequence"/>
                     </sequence>
                 </target>
             </iterate>
