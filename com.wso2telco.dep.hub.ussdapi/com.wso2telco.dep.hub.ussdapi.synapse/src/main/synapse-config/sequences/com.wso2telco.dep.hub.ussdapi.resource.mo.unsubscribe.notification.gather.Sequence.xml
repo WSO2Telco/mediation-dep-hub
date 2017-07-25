@@ -40,15 +40,14 @@
             }
         </format>
         <args>
-            <arg evaluator="xml" expression="get-property('OPERATOR_NAME')"/>
-            <arg evaluator="xml" expression="get-property('status')"/>
+            <arg evaluator="xml" expression="$ctx:OPERATOR_NAME"/>
+            <arg evaluator="xml" expression="$ctx:status"/>
         </args>
     </payloadFactory>
 
     <property name="collection" scope="default">
         <deleteSubscription xmlns=""/>
     </property>
-
 
     <aggregate id="ussdapi.stop.outbound.notifications.splitter">
         <completeCondition>
@@ -70,9 +69,9 @@
                 </statement>
             </dblookup>
 
-            <switch source="$ctx:RESULT">
-                <case regex="0">
-                    Success response from all operators. Delete notification url.
+            <filter regex="0" source="$ctx:RESULT">
+                <then>
+                    <!--Success response from all operators. Delete notification url.-->
                     <dbreport>
                         <connection>
                             <pool>
@@ -84,9 +83,9 @@
                             <parameter expression="$ctx:SUBSCRIPTION_ID" type="VARCHAR"/>
                         </statement>
                     </dbreport>
-                </case>
-                <default/>
-            </switch>
+                </then>
+                <else/>
+            </filter>
 
             <payloadFactory media-type="xml">
                 <format>
@@ -100,7 +99,6 @@
             </payloadFactory>
 
             <property name="HTTP_SC" value="200" scope="axis2"/>
-            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
             <property name="NO_ENTITY_BODY" action="remove" scope="axis2"/>
             <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
         </onComplete>
