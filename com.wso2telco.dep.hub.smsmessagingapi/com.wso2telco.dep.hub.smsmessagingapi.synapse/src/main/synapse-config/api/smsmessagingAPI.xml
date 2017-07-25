@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/smsmessaging" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/smsmessaging/v1" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" protocol="http" uri-template="/inbound/registrations">
         <inSequence>
             <!-- SMS : Receiving SMS -->
