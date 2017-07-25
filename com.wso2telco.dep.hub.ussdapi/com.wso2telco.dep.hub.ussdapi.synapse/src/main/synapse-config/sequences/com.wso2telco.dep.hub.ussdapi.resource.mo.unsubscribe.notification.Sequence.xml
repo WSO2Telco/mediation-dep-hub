@@ -4,7 +4,8 @@
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
     <property expression="get-property('uri.var.subscriptionID')" name="SUBSCRIPTION_ID" scope="default" type="STRING"/>
 
-    <property expression="fn:concat('SELECT * FROM mo_ussd_subscription where ussd_request_did = ', $ctx:SUBSCRIPTION_ID)"
+    <property
+            expression="fn:concat('SELECT * FROM mo_ussd_subscription where ussd_request_did = ', $ctx:SUBSCRIPTION_ID)"
             name="SELECT_QUERY" scope="default" type="STRING"/>
     <property name="SELECT_QUERY_ENRICH_BODY" scope="default" type="STRING" value="true"/>
     <sequence key="com.wso2telco.dep.common.execute.select.query.Sequence"/>
@@ -26,8 +27,8 @@
                         <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 
                         <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
-                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
 
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
                         <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.unsubscribe.notification.gather.Sequence"/>
                     </sequence>
                 </target>
@@ -39,7 +40,6 @@
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-
             <property name="errorVariable" value="Subscription ID" scope="default" type="STRING"/>
 
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
