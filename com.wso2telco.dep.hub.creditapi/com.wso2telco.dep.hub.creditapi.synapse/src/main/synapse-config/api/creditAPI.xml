@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/credit" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/credit/v1" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" uri-template="/credit/{+msisdn}/apply">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/ussd" name="ussdAPI" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/ussd/v1" name="ussdAPI" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" uri-template="/outbound/{+msisdn}">
         <inSequence>
         	<sequence key="com.wso2telco.dep.hub.ussdapi.resource.ni.mt.Sequence"/>
