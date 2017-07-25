@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/payment" name="paymentAPI" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/payment/v1" name="paymentAPI" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="POST" protocol="http" uri-template="/{endUserId}/transactions/amount">
     <inSequence>
       <property

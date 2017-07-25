@@ -175,9 +175,6 @@
     <with-param name="apiResourceSuffix" value="/paymentnotification"/>
   </call-template>
 
-  <!-- read mediationConfig -->
-  <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-        name="mediationConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
   <!-- retrieve hub url from registry -->
   <property expression="$ctx:mediationConfig//huburl" name="HUB_URL"
     scope="default" type="STRING"/>
