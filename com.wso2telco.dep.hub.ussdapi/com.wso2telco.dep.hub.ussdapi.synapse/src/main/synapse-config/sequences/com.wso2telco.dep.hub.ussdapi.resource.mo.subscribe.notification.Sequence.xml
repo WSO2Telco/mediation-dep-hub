@@ -106,9 +106,13 @@
     <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
         <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
     </call-template>
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-    payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-    mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var payload = mc.getPayloadJSON();
+            payload.subscription.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+            mc.setPayloadJSON(payload);
+        "/>
+    </class>
     <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.splitter.Sequence"/>
     <sequence key="com.wso2telco.dep.hub.ussdapi.resource.mo.subscribe.notification.gather.Sequence"/>
 </sequence>
