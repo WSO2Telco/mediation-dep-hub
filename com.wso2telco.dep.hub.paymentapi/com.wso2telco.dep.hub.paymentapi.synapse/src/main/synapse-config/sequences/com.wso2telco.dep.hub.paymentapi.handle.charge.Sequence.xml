@@ -182,8 +182,12 @@
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
   
   <!-- retrieve payload for payment -->
-  <script language="js"><![CDATA[var payload = mc.getPayloadJSON(); 
-  var paymentPayload = mc.setProperty('payment',payload);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var payload = mc.getPayloadJSON();
+      var paymentPayload = mc.setProperty('payment',payload);
+    "/>
+  </class>
 
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
@@ -195,16 +199,20 @@
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
   <!-- generating response json -->
-  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	var hubURL = mc.getProperty("HUB_URL");
-	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("VERSION");
-	var payload = mc.getPayloadJSON();
-	payload.amountTransaction.clientCorrelator = mc.getProperty("clientCorrelator");
-	var gatewayResourceURL = payload.amountTransaction.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-	payload.amountTransaction.resourceURL = hubResourceURL;
-	mc.setPayloadJSON(payload);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+      var hubURL = mc.getProperty('HUB_URL');
+      var apiName = mc.getProperty('API_NAME');
+      var apiVersion = mc.getProperty('VERSION');
+      var payload = mc.getPayloadJSON();
+      payload.amountTransaction.clientCorrelator = mc.getProperty('clientCorrelator');
+      var gatewayResourceURL = payload.amountTransaction.resourceURL;
+      var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+      var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
+      payload.amountTransaction.resourceURL = hubResourceURL;
+      mc.setPayloadJSON(payload);
+    "/>
+  </class>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>

@@ -29,16 +29,20 @@
   <filter regex="true" source="json-eval($.)">
     <then>
       <!-- generating response json -->
-      <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-        var hubURL = mc.getProperty("HUB_URL");
-        var apiName = mc.getProperty("API_NAME");
-        var apiVersion = mc.getProperty("VERSION");
-        var payload = mc.getPayloadJSON();
-        var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
-        var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-        var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-        payload.paymentTransactionList.resourceURL = hubResourceURL;
-        mc.setPayloadJSON(payload);]]></script>
+      <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+          var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+          var hubURL = mc.getProperty('HUB_URL');
+          var apiName = mc.getProperty('API_NAME');
+          var apiVersion = mc.getProperty('VERSION');
+          var payload = mc.getPayloadJSON();
+          var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
+          var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+          var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
+          payload.paymentTransactionList.resourceURL = hubResourceURL;
+          mc.setPayloadJSON(payload);
+        "/>
+      </class>
     </then>
     <else/>
   </filter>
