@@ -25,16 +25,22 @@
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
-  <!-- generating response json -->
-  <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
-	var hubURL = mc.getProperty("HUB_URL");
-	var apiName = mc.getProperty("API_NAME");
-	var apiVersion = mc.getProperty("VERSION");
-	var payload = mc.getPayloadJSON();
-	var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
-	var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
-	var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
-	payload.paymentTransactionList.resourceURL = hubResourceURL;
-	mc.setPayloadJSON(payload);]]></script>
+  <!-- check for the existence of message body in response -->
+  <filter regex="true" source="json-eval($.)">
+    <then>
+      <!-- generating response json -->
+      <script language="js"><![CDATA[var operatorEndpoint = mc.getProperty("OPERATOR_ENDPOINT");
+        var hubURL = mc.getProperty("HUB_URL");
+        var apiName = mc.getProperty("API_NAME");
+        var apiVersion = mc.getProperty("VERSION");
+        var payload = mc.getPayloadJSON();
+        var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
+        var resourcePath = gatewayResourceURL.replace(operatorEndpoint, "");
+        var hubResourceURL = hubURL.concat("/").concat(apiName).concat("/").concat(apiVersion).concat(resourcePath);
+        payload.paymentTransactionList.resourceURL = hubResourceURL;
+        mc.setPayloadJSON(payload);]]></script>
+    </then>
+    <else/>
+  </filter>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
