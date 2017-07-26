@@ -185,38 +185,6 @@
   <script language="js"><![CDATA[var payload = mc.getPayloadJSON(); 
   var paymentPayload = mc.setProperty('payment',payload);]]></script>
 
-  <filter regex="true" source="$ctx:mediationConfig//spend_limit_enabled">
-    <then>
-      <!-- read SpendLimit config file -->
-      <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/paymentAPI/spendLimit.xml')"
-      name="spendLimitConfig" scope="default" type="OM" xmlns:ns="http://org.apache.synapse/xsd"/>
-      <!-- checking for customerInfo call is enabled -->
-      <class name="com.wso2telco.dep.common.mediation.spendlimit.mediator.CustomerInfoMediator"/>
-
-      <!-- operator config Reader Sequence -->
-      <sequence key="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence"/>
-
-      <filter regex="true" source="$ctx:customerInfoEnabled" xmlns:ns="http://org.apache.synapse/xsd">
-        <then>
-          <sequence key="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence"/>
-          <filter xpath="$ctx:CUSTOMER_INFO_CALL_REQUIRED">
-            <then>
-              <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence"/>
-              <sequence key="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence"/>
-            </then>
-            <else/>
-          </filter>
-        </then>
-        <else>
-          <property expression="get-property('defaultPackageType')"
-                    name="userpackagetype" scope="default" type="STRING"/>
-        </else>
-      </filter>
-
-      <sequence key="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence"/>
-    </then>
-  </filter>
-
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->

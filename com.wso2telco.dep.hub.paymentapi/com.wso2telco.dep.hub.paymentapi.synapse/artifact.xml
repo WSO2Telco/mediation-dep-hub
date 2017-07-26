@@ -11,28 +11,4 @@
     <artifact name="com.wso2telco.dep.hub.paymentapi.handle.list.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.handle.list.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.operator.config.reader.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.reader.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.call.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.default.package.type.set.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.check.Hit.Threshold.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.alert.fraud.Sequence.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.Endpoint" groupId="com.wso2telco.dep.hub.endpoint" version="3.0.0-SNAPSHOT" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/endpoints/com.wso2telco.dep.hub.paymentapi.customer.info.Endpoint.xml</file>
-    </artifact>
-    <artifact name="com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence" groupId="com.wso2telco.dep.hub.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/com.wso2telco.dep.hub.paymentapi.customer.info.call.error.Sequence.xml</file>
-    </artifact>
 </artifacts>
