@@ -192,9 +192,13 @@
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
-  <script language="js"><![CDATA[var payload = mc.getProperty("payment");
-	payload.amountTransaction.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-	mc.setPayloadJSON(payload);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var payload = mc.getProperty('payment');
+      payload.amountTransaction.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+      mc.setPayloadJSON(payload);
+    "/>
+  </class>
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
