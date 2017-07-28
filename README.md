@@ -24,13 +24,13 @@ Add following .jar files to ESB as described (WSO2.Telco related files are bundl
  msisdn-validator.jar (repository: WSO2Telco/core-util)
  operator-service.jar (repository: WSO2Telco/component-dep)
  subscription-validator.jar (repository: WSO2Telco/component-dep)
+ nashorn-mediator.jar (repository: WSO2Telco/component-dep)
  javax.persistence_1.0.0.jar (external: http://www.java2s.com/Code/Jar/j/Downloadjavaxpersistence100jar.htm)
 ```
 
 * To  *ESB_HOME/repository/components/lib*
 
 ```
- com.wso2telco.dep.spend.limit.mediator.jar (repository: WSO2Telco/mediation-dep)
  mysql-connector-java-5.1.36-bin.jar (external: http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar)
  com.wso2telco.dep.common.mediation.jar(repository: WSO2Telco/mediation-dep-common) 
 ```
@@ -42,8 +42,6 @@ Add following configuration files:
 * *MobileCountryConfig.xml* to *ESB_HOME/repository/conf*
 (repository: https://github.com/WSO2Telco/component-dep/blob/master/features/com.wso2telco.dep.hub.core.feature/src/main/resources/config/MobileCountryConfig.xml)
 
-* *spendLimit.xml* to *ESB_HOME/repository/conf*
-(repository:https://github.com/WSO2Telco/component-dep/blob/master/features/com.wso2telco.dep.hub.core.feature/src/main/resources/config/spendLimit.xml)
 
 Add following property to *ESB_HOME/repository/conf/synapse.properties*
 `synapse.commons.json.output.autoPrimitive=false`
@@ -66,10 +64,11 @@ There will be 10 CApp files (.car files)
 * com.wso2telco.dep.hub.locationapi.capp_3.0.0-SNAPSHOT.car
 * com.wso2telco.dep.hub.paymentapi.capp_3.0.0-SNAPSHOT.car
 * com.wso2telco.dep.hub.provisionapi.capp_3.0.0-SNAPSHOT.car
+* com.wso2telco.dep.hub.smsmessagingapi.capp_3.0.0-SNAPSHOT.car
 * com.wso2telco.dep.hub.ussdapi.capp_3.0.0-SNAPSHOT.car
 * com.wso2telco.dep.hub.walletapi.capp_3.0.0-SNAPSHOT.car
 
-Start WSO2 ESB and upload CApp files (Refer: *https://docs.wso2.com/display/ESB481/Creating+and+Deploying+a+Carbon+Application*)
+Start WSO2 ESB and upload CApp files (Refer: *https://docs.wso2.com/display/ESB500/Creating+and+Deploying+a+Carbon+Application*)
 
 
 ## Configuring WSO2 TELCO HUB
@@ -85,14 +84,14 @@ Workflow configurations: *http://docs.wso2telco.com/display/HG/Install+workflows
 
 4. Create APIs for necessary use-cases and configure endpoint to ESB APIs. API __context__  and __name__ should be as follows:
 
-* payment
-* ussd
-* location
-* smsmessaging
 * credit
-* wallet
-* provision
 * customerinfo
+* location
+* payment
+* provision
+* smsmessaging
+* ussd
+* wallet
 
 If WSO2 Telco Hub is port offset, change the port numbers at the following files accordingly
     (Ref: http://docs.wso2telco.com/display/HG/Offsetting+Product)
@@ -101,13 +100,13 @@ If WSO2 Telco Hub is port offset, change the port numbers at the following files
 * TELCO_HUB_HOME/repository/conf/workflow.properties
 * TELCO_HUB_HOME/repository/resources/workflow-extensions.xml
 
-If MSISDN blacklist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
+If MSISDN blacklist feature needs to be enabled for a particular API, then add following property to the insequence of the corresponding api synapse file in API manager.
 
 ```
 <property name="api.check.blacklist" value="true" scope="transport"/>
 ```
 
-If MSISDN whitelist feature needs to be enabled for a particular api, then add following property to the insequence of the corresponding api synapse file in API manager.
+If MSISDN whitelist feature needs to be enabled for a particular API, then add following property to the insequence of the corresponding api synapse file in API manager.
 ```
 <property name="api.check.whitelist" value="true" scope="transport"/>
 ```
