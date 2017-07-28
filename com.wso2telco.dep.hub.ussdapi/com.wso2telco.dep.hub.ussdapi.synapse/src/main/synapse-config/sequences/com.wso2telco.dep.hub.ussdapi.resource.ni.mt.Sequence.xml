@@ -60,14 +60,14 @@
 	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
 	    <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}"/>
 	</call-template>
-	
-	<script language="js">
-		<![CDATA[
+
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
 			var payload = mc.getPayloadJSON();
-			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
-			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
+			var uniqueClientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			var generatedNotifyURL = mc.getProperty('generatedNotifyURL');
 			var outboundUSSDMessageStr = mc.getProperty('outboundUSSDMessage');
-			var modifiedMessage = outboundUSSDMessageStr.replace("\n", "\\n").replace("\r", "\\r");
+			var modifiedMessage = outboundUSSDMessageStr.replace('\n', '\\n').replace('\r', '\\r');
 
 			if (uniqueClientCorrelator != null) {
 				payload.outboundUSSDMessageRequest.clientCorrelator = uniqueClientCorrelator;
@@ -79,32 +79,32 @@
 
 			payload.outboundUSSDMessageRequest.outboundUSSDMessage = modifiedMessage;
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>
+        "/>
+    </class>
 	
 	<sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>	
 	<sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
-	
-	<script language="js">
-		<![CDATA[
+
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
 			var payload = mc.getPayloadJSON();
-			var uniqueClientCorrelator = mc.getProperty("uniqueClientCorrelator");
-			var generatedNotifyURL = mc.getProperty("generatedNotifyURL");
-			var clientCorrelator = mc.getProperty("clientCorrelator");
+			var uniqueClientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			var generatedNotifyURL = mc.getProperty('generatedNotifyURL');
+			var clientCorrelator = mc.getProperty('clientCorrelator');
 						
-			if (clientCorrelator != null && clientCorrelator !="") {
+			if (clientCorrelator != null &amp;&amp; clientCorrelator !='') {
 				payload.outboundUSSDMessageRequest.clientCorrelator = clientCorrelator;
 			} else {
 				delete payload.outboundUSSDMessageRequest.clientCorrelator;
 			}
 
 			if (generatedNotifyURL != null) {
-				payload.outboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty("notifyURL");
+				payload.outboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty('notifyURL');
 			}
 
 			mc.setPayloadJSON(payload);
-		]]>
-	</script>	
+		"/>
+    </class>
 	 
 	<sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 	  

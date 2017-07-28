@@ -83,10 +83,14 @@
         <else/>
     </filter>
     <!-- update clientCorrelator and notifyURL with generated values -->
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-	payload.subscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
-	mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var payload = mc.getPayloadJSON();
+            payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
+            payload.subscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
+            mc.setPayloadJSON(payload);
+        "/>
+    </class>
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.splitter.Sequence"/>
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.inbound.subscriptions.gather.Sequence"/>
 </sequence>

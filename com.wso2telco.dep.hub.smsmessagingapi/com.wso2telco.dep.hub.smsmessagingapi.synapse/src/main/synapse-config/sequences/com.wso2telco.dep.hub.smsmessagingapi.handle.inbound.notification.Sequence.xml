@@ -13,10 +13,14 @@
     </call-template>
     <!-- change date -->
     <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" name="DATE_TIME" scope="default" type="STRING"/>
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-    			var date_time = mc.getProperty("DATE_TIME").replace(" ", "T"); 
-                payload.inboundSMSMessageNotification.inboundSMSMessage.dateTime = date_time;
-                mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
+            var payload = mc.getPayloadJSON();
+            var date_time = mc.getProperty('DATE_TIME').replace(' ', 'T');
+            payload.inboundSMSMessageNotification.inboundSMSMessage.dateTime = date_time;
+            mc.setPayloadJSON(payload);
+        "/>
+    </class>
     <!-- send notification to notification endpoint -->
     <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
     <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>

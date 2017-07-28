@@ -130,10 +130,14 @@
         <with-param name="apiResourceSuffix" value="/outbound/notification"/>
     </call-template>
     <!-- update clientCorrelator and notifyURL with generated values -->
-    <script language="js"><![CDATA[var payload = mc.getPayloadJSON();
-	payload.deliveryReceiptSubscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-	payload.deliveryReceiptSubscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
-	mc.setPayloadJSON(payload);]]></script>
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+		<property name="script" value="
+			var payload = mc.getPayloadJSON();
+			payload.deliveryReceiptSubscription.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+			payload.deliveryReceiptSubscription.callbackReference.notifyURL = mc.getProperty('generatedNotifyURL');
+			mc.setPayloadJSON(payload);
+		"/>
+    </class>
 	<sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.splitter.Sequence"/>
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.subscriptions.gather.Sequence"/>
 </sequence>
