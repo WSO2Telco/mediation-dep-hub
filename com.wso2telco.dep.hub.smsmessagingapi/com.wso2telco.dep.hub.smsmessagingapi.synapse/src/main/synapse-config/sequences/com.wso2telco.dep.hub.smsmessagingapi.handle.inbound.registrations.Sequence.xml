@@ -5,13 +5,13 @@
     <property expression="fn:normalize-space($ctx:clientCorrelator)" group="1" name="clientCorrelator" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
     <property expression="json-eval($.inboundSMSMessages.maxBatchSize)" name="MAX_BATCH_SIZE" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:MAX_BATCH_SIZE)" group="1" name="MAX_BATCH_SIZE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
-    <script language="js">
-        <![CDATA[
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
             var payload = mc.getPayloadJSON();
             var registration_count = payload.inboundSMSMessages.registrations.length;
             mc.setProperty('REGISTRATIONS_COUNT', registration_count);
-        ]]>
-    </script>
+        "/>
+    </class>
     <!-- validate registration details -->
     <foreach expression="//registrations">
         <sequence>
@@ -38,16 +38,16 @@
     <filter xpath="(boolean($ctx:MAX_BATCH_SIZE))">
         <then>
             <property name="OPERATOR_BATCH_SIZE" scope="default" type="INTEGER" value="0"/>
-            <script language="js">
-                <![CDATA[
+            <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+                <property name="script" value="
                     var max_batch_size = mc.getProperty('MAX_BATCH_SIZE');
             	 	var registrations_count = mc.getProperty('REGISTRATIONS_COUNT');
             	 	
             	 	var operator_batch_size = parseInt(max_batch_size) / registrations_count;
             	 	
             	 	mc.setProperty('OPERATOR_BATCH_SIZE', parseInt(operator_batch_size));
-                ]]>
-            </script>
+                "/>
+            </class>
 
             <property name="REMAINING_BATCH_SIZE" scope="operation" value="0" type="INTEGER"/>
             <property name="TOTAL_RESPONSE_COUNT" scope="operation" value="0" type="INTEGER"/>
