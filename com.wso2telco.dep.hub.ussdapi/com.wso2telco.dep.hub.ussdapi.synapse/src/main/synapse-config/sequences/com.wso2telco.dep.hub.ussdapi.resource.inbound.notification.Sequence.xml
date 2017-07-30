@@ -60,7 +60,7 @@
         <property expression="$ctx:callbackData" name="callbackData"/>
     </log>
 
-    <sequence key="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.validation.Sequence.xml"/>
+    <sequence key="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.validation.Sequence"/>
 
     <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
     <!-- retrieve notification endpoint -->
