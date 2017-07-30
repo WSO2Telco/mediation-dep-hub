@@ -1,19 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence" onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
-  <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
-  <!-- retrieve notification endpoint -->
-  <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
-  <!-- generating request json -->
+<sequence name="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.Sequence"
+          onError="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable"
+          xmlns="http://ws.apache.org/ns/synapse">
+    <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
 
-  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-    <property name="script" value="
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.address)" name="address" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:address)" name="address" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.sessionID)" name="sessionID" scope="default"
+              type="STRING"/>
+    <property expression="fn:normalize-space($ctx:sessionID)" name="sessionID" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.shortCode)" name="shortCode" scope="default"
+              type="STRING"/>
+    <property expression="fn:normalize-space($ctx:shortCode)" name="shortCode" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.keyword)" name="keyword" scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:keyword)" name="keyword" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.inboundUSSDMessage)" name="inboundUSSDMessage"
+              scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:inboundUSSDMessage)" name="inboundUSSDMessage" scope="default"
+              type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.clientCorrelator)" name="clientCorrelator"
+              scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:clientCorrelator)" name="clientCorrelator" scope="default"
+              type="STRING" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.responseRequest.notifyURL)" name="notifyURL"
+              scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:notifyURL)" name="notifyURL" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.responseRequest.callbackData)" name="callbackData"
+              scope="default" type="STRING"/>
+    <property expression="fn:normalize-space($ctx:callbackData)" name="callbackData" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <property expression="json-eval($.inboundUSSDMessageRequest.ussdAction)" name="ussdAction" scope="default"
+              type="STRING"/>
+    <property expression="fn:normalize-space($ctx:ussdAction)" name="ussdAction" scope="default" type="STRING"
+              pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+
+    <log category="DEBUG" level="custom">
+        <property expression="$ctx:address" name="address"/>
+        <property expression="$ctx:sessionID" name="sessionID"/>
+        <property expression="$ctx:shortCode" name="shortCode"/>
+        <property expression="$ctx:clientCorrelator" name="clientCorrelator"/>
+        <property expression="$ctx:keyword" name="keyword"/>
+        <property expression="$ctx:inboundUSSDMessage" name="inboundUSSDMessage"/>
+        <property expression="$ctx:ussdAction" name="ussdAction"/>
+        <property expression="$ctx:notifyURL" name="notifyURL"/>
+        <property expression="$ctx:callbackData" name="callbackData"/>
+    </log>
+
+    <sequence key="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.validation.Sequence.xml"/>
+
+    <property expression="get-property('uri.var.notifyURLId')" name="NOTIFY_URL_ID" scope="default" type="STRING"/>
+    <!-- retrieve notification endpoint -->
+    <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
+    <!-- generating request json -->
+
+    <script language="js">
+        <![CDATA[
   		var payload = mc.getPayloadJSON();
 		payload.inboundUSSDMessageRequest.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
 		payload.inboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
 		mc.setPayloadJSON(payload);
-	"/>
-  </class>
+	]]>
+  </script>
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
 
