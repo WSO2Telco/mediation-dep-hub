@@ -18,6 +18,27 @@
 				<else/>
             </filter>
 
+            <filter regex="^true$" source="boolean($ctx:ussdAction)">
+                <then>
+                    <filter regex="(mtinit|mtcont|moinit|mocont|mtfin)" source="$ctx:ussdAction">
+                        <then/>
+                        <else>
+                            <log level="custom">
+                                <property name="ussd.mt.validation.log.1" value="invalid ussd action"/>
+                            </log>
+                            <!--error response for invalid USSD Action-->
+                            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+                            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                            <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+                            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+                            <property name="errorVariable" value="ussdAction" scope="default" type="STRING"/>
+
+                            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                        </else>
+                    </filter>
+                </then>
+                <else/>
+            </filter>
         </then>
         <else>
             <filter xpath="not(boolean($ctx:msisdn))">
