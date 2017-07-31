@@ -67,14 +67,15 @@
     <sequence key="com.wso2telco.dep.common.notification.url.retriever.Sequence"/>
     <!-- generating request json -->
 
-    <script language="js">
-        <![CDATA[
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+        <property name="script" value="
   		var payload = mc.getPayloadJSON();
-		payload.inboundUSSDMessageRequest.clientCorrelator = mc.getProperty("NOTIFY_INFO_CLIENT_CORRELATOR");
-		payload.inboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty("NOTIFY_INFO_URL");
+		payload.inboundUSSDMessageRequest.clientCorrelator = mc.getProperty('NOTIFY_INFO_CLIENT_CORRELATOR');
+		payload.inboundUSSDMessageRequest.responseRequest.notifyURL = mc.getProperty('NOTIFY_INFO_URL');
 		mc.setPayloadJSON(payload);
-	]]>
-  </script>
+	"/>
+    </class>
+
   <!-- send notification to notification endpoint -->
   <sequence key="com.wso2telco.dep.common.call.notification.endpoint.Sequence"/>
 
