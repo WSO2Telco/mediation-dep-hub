@@ -3,10 +3,10 @@
           name="com.wso2telco.dep.hub.ussdapi.resource.inbound.notification.validation.Sequence">
     <filter xpath="boolean($ctx:address) and boolean($ctx:sessionID) and boolean($ctx:shortCode) and boolean($ctx:inboundUSSDMessage) and boolean($ctx:clientCorrelator) and boolean($ctx:ussdAction)">
         <then>
-            <!--<call-template target="com.wso2telco.dep.common.msisdnValidator.Template">-->
-                <!--<with-param name="paramName" value="msisdn"/>-->
-                <!--<with-param name="paramValue" value="{$ctx:msisdn}"/>-->
-            <!--</call-template>-->
+            <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
+                <with-param name="paramName" value="address"/>
+                <with-param name="paramValue" value="{$ctx:address}"/>
+            </call-template>
 
             <filter regex="^true$" source="boolean($ctx:notifyURL)">
                 <then>
