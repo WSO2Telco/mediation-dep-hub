@@ -3,6 +3,22 @@
  
    <filter xpath="boolean($ctx:msisdn) and boolean($ctx:address) and boolean($ctx:shortCode) and boolean($ctx:outboundUSSDMessage) and boolean($ctx:clientCorrelator) and boolean($ctx:ussdAction)">
         <then>
+
+            <property name="msisdnCompare" expression="$ctx:msisdn = $ctx:address"/>
+
+            <filter regex="^true$" source="$ctx:msisdnCompare">
+                <then/>
+                <else>
+                    <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+                    <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                    <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+                    <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+                    <property name="errorVariable" value="EndUserId mismatch between query string and request body" scope="default" type="STRING"/>
+
+                    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                </else>
+            </filter>
+
             <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
                 <with-param name="paramName" value="msisdn"/>
                 <with-param name="paramValue" value="{$ctx:msisdn}"/>
