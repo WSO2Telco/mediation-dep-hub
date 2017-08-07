@@ -180,21 +180,13 @@
     scope="default" type="STRING"/>
   <!-- retrieve operator's endpoint -->
   <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
-  
-  <!-- retrieve payload for payment -->
-  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-    <property name="script" value="
-      var payload = mc.getPayloadJSON();
-      var paymentPayload = mc.setProperty('payment',payload);
-    "/>
-  </class>
 
   <!-- retrieve operator's access token -->
   <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
   <!-- generating request json -->
   <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
     <property name="script" value="
-      var payload = mc.getProperty('payment');
+      var payload = mc.getPayloadJSON();
       payload.amountTransaction.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
       mc.setPayloadJSON(payload);
     "/>
