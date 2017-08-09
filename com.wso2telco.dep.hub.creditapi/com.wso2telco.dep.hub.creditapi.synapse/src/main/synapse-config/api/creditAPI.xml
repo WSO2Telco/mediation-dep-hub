@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/credit/v1" name="creditAPI" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/credit/{+msisdn}/apply">
+    <resource methods="POST" uri-template="/{+msisdn}/apply">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.in.Sequence"/>
         </inSequence>
@@ -9,7 +9,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
-    <resource methods="GET" uri-template="/credit/{+msisdn}/apply/{requestId}">
+    <resource methods="GET" uri-template="/{+msisdn}/apply/{requestId}">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.apply.recall.Sequence"/>
         </inSequence>
@@ -18,7 +18,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>    
-    <resource methods="POST" uri-template="/credit/{+msisdn}/refund">
+    <resource methods="POST" uri-template="/{+msisdn}/refund">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.in.Sequence"/>
         </inSequence>
@@ -27,7 +27,7 @@
             <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
         </faultSequence>
     </resource>
-    <resource methods="GET" uri-template="/credit/{+msisdn}/refund/{requestId}">
+    <resource methods="GET" uri-template="/{+msisdn}/refund/{requestId}">
         <inSequence>
 			<sequence key="com.wso2telco.dep.hub.creditapi.resource.refund.recall.Sequence"/>
         </inSequence>
