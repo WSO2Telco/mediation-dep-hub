@@ -39,9 +39,6 @@
                     <filter regex="(mtinit|mtcont|moinit|mocont|mtfin)" source="$ctx:ussdAction">
                         <then/>
                         <else>
-                            <log level="custom">
-                                <property name="ussd.mt.validation.log.1" value="invalid ussd action"/>
-                            </log>
                             <!--error response for invalid USSD Action-->
                             <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
                             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>

@@ -4,7 +4,6 @@
           xmlns="http://ws.apache.org/ns/synapse">
     <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
 
-
     <property expression="json-eval($.inboundUSSDMessageRequest.address)" name="address" scope="default" type="STRING"/>
     <property expression="fn:normalize-space($ctx:address)" name="address" scope="default" type="STRING"
               pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
