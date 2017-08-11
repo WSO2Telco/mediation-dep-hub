@@ -3,10 +3,6 @@
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-  <property description="offset" expression="$ctx:query.param.offset" name="offset" scope="default" type="STRING"/>
-  <property expression="fn:normalize-space($ctx:offset)" name="offset" scope="default" type="STRING"/>
-  <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
-  <property expression="fn:normalize-space($ctx:limit)" name="limit" scope="default" type="STRING"/>
   <property expression="get-property('uri.var.endUserId')"
     name="endUserId" scope="default" type="STRING"/>
   <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
