@@ -198,13 +198,12 @@
     <property name="script" value="
       var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
       var hubURL = mc.getProperty('HUB_URL');
-      var apiName = mc.getProperty('API_NAME');
-      var apiVersion = mc.getProperty('VERSION');
+      var context = mc.getProperty('CONTEXT');
       var payload = mc.getPayloadJSON();
       payload.amountTransaction.clientCorrelator = mc.getProperty('clientCorrelator');
       var gatewayResourceURL = payload.amountTransaction.resourceURL;
       var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
-      var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
+      var hubResourceURL = hubURL.concat(context).concat(resourcePath);
       payload.amountTransaction.resourceURL = hubResourceURL;
       mc.setPayloadJSON(payload);
     "/>
