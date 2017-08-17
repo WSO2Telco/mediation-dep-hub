@@ -3,10 +3,6 @@
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <sequence key="com.wso2telco.dep.common.main.request.Sequence"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-  <property description="offset" expression="$ctx:query.param.offset" name="offset" scope="default" type="STRING"/>
-  <property expression="fn:normalize-space($ctx:offset)" name="offset" scope="default" type="STRING"/>
-  <property description="limit" expression="$ctx:query.param.limit" name="limit" scope="default" type="STRING"/>
-  <property expression="fn:normalize-space($ctx:limit)" name="limit" scope="default" type="STRING"/>
   <property expression="get-property('uri.var.endUserId')"
     name="endUserId" scope="default" type="STRING"/>
   <call-template target="com.wso2telco.dep.common.msisdnValidator.Template">
@@ -25,26 +21,27 @@
   <!-- send request to operator endpoint -->
   <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
   <sequence key="com.wso2telco.dep.common.handle.gateway.error.Sequence"/>
-  <!-- check for the existence of message body in response -->
-  <filter regex="true" source="json-eval($.)">
-    <then>
-      <!-- generating response json -->
-      <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-        <property name="script" value="
-          var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
-          var hubURL = mc.getProperty('HUB_URL');
-          var apiName = mc.getProperty('API_NAME');
-          var apiVersion = mc.getProperty('VERSION');
-          var payload = mc.getPayloadJSON();
-          var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
-          var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
-          var hubResourceURL = hubURL.concat('/').concat(apiName).concat('/').concat(apiVersion).concat(resourcePath);
-          payload.paymentTransactionList.resourceURL = hubResourceURL;
-          mc.setPayloadJSON(payload);
-        "/>
-      </class>
-    </then>
-    <else/>
-  </filter>
+  <!-- generating response json -->
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var operatorEndpoint = mc.getProperty('OPERATOR_ENDPOINT');
+      var hubURL = mc.getProperty('HUB_URL');
+      var context = mc.getProperty('CONTEXT');
+      var payload = mc.getPayloadJSON();
+      var gatewayResourceURL = payload.paymentTransactionList.resourceURL;
+      var resourcePath = gatewayResourceURL.replace(operatorEndpoint, '');
+      var hubResourceURL = hubURL.concat(context).concat(resourcePath);
+      payload.paymentTransactionList.resourceURL = hubResourceURL;
+
+      var transactions = payload.paymentTransactionList.amountTransaction;
+      for (var i in transactions) {
+        var transactionGatewayResourceURL = transactions[i].resourceURL;
+        var transactionResourcePath = transactionGatewayResourceURL.replace(operatorEndpoint, '');
+        var transactionHubResourceURL = hubURL.concat(context).concat(transactionResourcePath);
+        transactions[i].resourceURL = transactionHubResourceURL + transactions[i].serverReferenceCode;
+      }
+      mc.setPayloadJSON(payload);
+    "/>
+  </class>
   <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
 </sequence>
