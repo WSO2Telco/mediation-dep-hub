@@ -94,8 +94,9 @@
             </call-template>
         </sequence>
     </foreach>
+    <!-- preserve original payload -->
+    <property name="requestJSONPayload" expression="json-eval($.)"/>
     <!-- generating request clientCorrelator -->
-    <!-- disabled temporary -->
     <call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
         <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}" />
     </call-template>
@@ -119,9 +120,6 @@
 					mc.setPayloadJSON(stringifiedPayload);
 		]]>
     </script>
-    <log level="custom">
-        <property name="status" value="foo"/>
-    </log>
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.splitter.Sequence" />
     <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.gather.Sequence" />
 </sequence>
