@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.gather.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="Not Provisioned|Failed" source="$ctx:messageStatus">
+        <then/>
+        <else>
+            <filter xpath="$body//deliveryInfo">
+                <then>
+                    <property name="messageStatus" scope="default" type="STRING" value="Created"/>
+                    <property expression="json-eval($.outboundSMSMessageRequest.deliveryInfoList.resourceURL)" name="resourceURL" scope="default" type="STRING"/>
+                    <!-- Temporary Disabled -->
+                    <!--<dbreport>
+                        <connection>
+                            <pool>
+                                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+                            </pool>
+                        </connection>
+                        <statement>
+                            <sql><![CDATA[insert into operatorsubs(mo_subscription_did, domainurl, operator) values(?, ?, ?);]]></sql>
+                            <parameter expression="$ctx:notifyURLTableId" type="VARCHAR"/>
+                            <parameter expression="$ctx:resourceURL" type="VARCHAR"/>
+                            <parameter expression="$ctx:OPERATOR_CODE" type="VARCHAR"/>
+                        </statement>
+                    </dbreport>-->
+                </then>
+                <else>
+                    <property name="messageStatus" scope="default" type="STRING" value="Not Created"/>
+                </else>
+            </filter>
+        </else>
+    </filter>
+
+    <property name="collection" scope="default">
+        <subscription xmlns=""/>
+    </property>
+    <aggregate id="smsmessagingapi.outbound.requests.splitter">
+        <completeCondition timeout="60">
+            <messageCount max="-1" min="-1"/>
+        </completeCondition>
+        <onComplete enclosingElementProperty="collection" expression="//outboundSMSMessageRequest/deliveryInfoList/deliveryInfo">
+            <!-- retrieve hub url from registry -->
+            <property expression="$ctx:mediationConfig//huburl" name="HUB_URL" scope="default" type="STRING"/>
+            <property expression="fn:concat($ctx:HUB_URL, $ctx:REST_FULL_REQUEST_PATH, '/', $ctx:notifyURLTableId)" name="responseResourceURL" scope="default" type="STRING"/>
+
+            <!-- using script mediator to fetch original request and add deliveryInfo -->
+            <script language="js">
+                <![CDATA[
+                        var requestJSONPayloadString = mc.getProperty('requestJSONPayload');
+                        var requestJSONPayload = JSON.parse(requestJSONPayloadString);
+                        requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList = {};
+                        requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList.deliveryInfo = [];
+
+                        var payload = mc.getPayloadXML();
+                        var deliveryInfoList = payload..*::deliveryInfo;
+
+                        for (var i=0; i<deliveryInfoList.length(); i++) {
+                            requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList.deliveryInfo[i] = {};
+                            requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList.deliveryInfo[i].address = deliveryInfoList[i]..*::address.toString();
+                            requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList.deliveryInfo[i].deliveryStatus = deliveryInfoList[i]..*::deliveryStatus.toString();
+                        }
+
+                        mc.setPayloadJSON(JSON.stringify(requestJSONPayload));
+                ]]>
+            </script>
+            <!-- TODO: solve resourceURL in deliveryInfoList and main -->
+            <sequence key="com.wso2telco.dep.common.main.response.Sequence"/>
+        </onComplete>
+    </aggregate>
+</sequence>
