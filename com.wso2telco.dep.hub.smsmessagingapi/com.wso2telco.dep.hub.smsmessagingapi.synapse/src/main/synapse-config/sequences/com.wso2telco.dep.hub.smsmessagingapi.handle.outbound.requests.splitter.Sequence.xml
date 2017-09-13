@@ -1,4 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.splitter.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <log/>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.splitter.Sequence" trace="disable" onError="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.splitter.fault.Sequence" xmlns="http://ws.apache.org/ns/synapse">
+    <iterate attachPath="//outboundSMSMessageRequest" expression="//senderAddresses" id="smsmessagingapi.send.sms.splitter" preservePayload="true" sequential="true">
+        <target>
+            <sequence>
+                <property expression="//outboundSMSMessageRequest/senderAddresses/operatorCode/text()" name="OPERATOR_CODE" scope="default" type="STRING"/>
+                <property expression="fn:normalize-space($ctx:OPERATOR_CODE)" group="1" name="OPERATOR_CODE" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING"/>
+                <property name="MSISDN_LIST_XPATH" value="//outboundSMSMessageRequest/address"/>
+                <!-- calling msisdn filtering sequence -->
+                <sequence key="com.wso2telco.dep.common.msisdn.list.filter.Sequence"/>
+
+                <!-- Handle with single address case -->
+                <script language="js">
+                    <![CDATA[
+                        var log = mc.getServiceLog();
+                        var payload = mc.getPayloadXML();
+                        var addresses = payload..*::address;
+
+                        if (addresses.length() == 1) {
+                          var originalJSONPayload = mc.getPayloadJSON();
+                          var newJSONPayload = {};
+                          newJSONPayload.outboundSMSMessageRequest = {};
+
+                          newJSONPayload.outboundSMSMessageRequest.address = [String(addresses)];
+
+                          newJSONPayload.outboundSMSMessageRequest.outboundSMSTextMessage = {};
+                          newJSONPayload.outboundSMSMessageRequest.outboundSMSTextMessage.message = String(originalJSONPayload.outboundSMSMessageRequest.outboundSMSTextMessage.message.toString());
+                          newJSONPayload.outboundSMSMessageRequest.clientCorrelator = originalJSONPayload.outboundSMSMessageRequest.clientCorrelator;
+                          newJSONPayload.outboundSMSMessageRequest.receiptRequest = originalJSONPayload.outboundSMSMessageRequest.receiptRequest;
+
+                          newJSONPayload.outboundSMSMessageRequest.senderAddress = payload..*::senderAddress.toString();
+                          newJSONPayload.outboundSMSMessageRequest.senderName = payload..*::senderName.toString();
+
+                          var stringifiedNewJSONPayload = JSON.stringify(newJSONPayload);
+                          mc.setPayloadJSON(stringifiedNewJSONPayload);
+                        }
+                    ]]>
+                </script>
+
+                <!-- retrieve operator's endpoint -->
+                <sequence key="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence"/>
+                <filter regex="true" source="get-property('default', 'ENDPOINT_NOT_PROVISIONED')">
+                    <then>
+                        <property name="messageStatus" scope="default" type="STRING" value="Not Provisioned"/>
+                        <!-- dummy endpoint call to step-out from iterate -->
+                        <call>
+                            <endpoint key="com.wso2telco.dep.hub.smsmessagingapi.dummy.Endpoint"/>
+                        </call>
+                    </then>
+                    <else>
+                        <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
+                        <sequence key="com.wso2telco.dep.common.call.endpoint.Sequence"/>
+                    </else>
+                </filter>
+            </sequence>
+        </target>
+    </iterate>
 </sequence>
