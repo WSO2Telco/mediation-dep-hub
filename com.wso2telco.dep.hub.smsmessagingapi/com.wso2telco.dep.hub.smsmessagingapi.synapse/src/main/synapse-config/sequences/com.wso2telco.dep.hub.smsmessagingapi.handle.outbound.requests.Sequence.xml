@@ -101,8 +101,7 @@
         <with-param name="clientCorrelator" value="{$ctx:clientCorrelator}" />
     </call-template>
     <!-- save service provider's notify url and generate new notify url from hub -->
-    <!-- disabled temporary -->
-    <!--<filter xpath="boolean($ctx:notifyURL)">
+    <filter xpath="boolean($ctx:notifyURL)">
         <then>
             <call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
                 <with-param name="notifyURL" value="{$ctx:notifyURL}" />
@@ -110,7 +109,7 @@
             </call-template>
         </then>
         <else />
-    </filter>-->
+    </filter>
     <!-- update clientCorrelator and notifyURL with generated values -->
     <script language="js">
         <![CDATA[	var payload = mc.getPayloadJSON();

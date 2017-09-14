@@ -58,6 +58,8 @@
                             requestJSONPayload.outboundSMSMessageRequest.deliveryInfoList.deliveryInfo[i].deliveryStatus = deliveryInfoList[i]..*::deliveryStatus.toString();
                         }
 
+                        requestJSONPayload.outboundSMSMessageRequest.resourceURL = String(mc.getProperty('responseResourceURL'));
+
                         mc.setPayloadJSON(JSON.stringify(requestJSONPayload));
                 ]]>
             </script>
