@@ -7,20 +7,45 @@
                 <then>
                     <property name="messageStatus" scope="default" type="STRING" value="Created"/>
                     <property expression="json-eval($.outboundSMSMessageRequest.deliveryInfoList.resourceURL)" name="resourceURL" scope="default" type="STRING"/>
-                    <!-- Temporary Disabled -->
-                    <!--<dbreport>
-                        <connection>
-                            <pool>
-                                <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
-                            </pool>
-                        </connection>
-                        <statement>
-                            <sql><![CDATA[insert into operatorsubs(mo_subscription_did, domainurl, operator) values(?, ?, ?);]]></sql>
-                            <parameter expression="$ctx:notifyURLTableId" type="VARCHAR"/>
-                            <parameter expression="$ctx:resourceURL" type="VARCHAR"/>
-                            <parameter expression="$ctx:OPERATOR_CODE" type="VARCHAR"/>
-                        </statement>
-                    </dbreport>-->
+                    <property expression="json-eval($.outboundSMSMessageRequest.senderAddress)" name="senderAddress" scope="default" type="STRING"/>
+
+                    <script language="js">
+                        <![CDATA[
+                                var payload= mc.getPayloadJSON();
+                                var responseResourceUrl = payload.outboundSMSMessageRequest.resourceURL;
+                                var operatorRequestId = responseResourceUrl.substring(responseResourceUrl.lastIndexOf('/') + 1);
+                                if (!operatorRequestId) {
+                                    throw 'ERROR - Unable extract operator request id (plugin_requestid) from response';
+                                }
+                                mc.setProperty('SEND_SMS_OPERATOR_REQUEST_ID', operatorRequestId);
+                        ]]>
+                    </script>
+                    <foreach expression="//outboundSMSMessageRequest/address" xmlns:ns="http://org.apache.synapse/xsd">
+                        <sequence>
+                            <property expression="json-eval($.address)" name="address" scope="default" type="STRING" />
+                            <property expression="fn:normalize-space($ctx:address)" group="1" name="address" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING" />
+                            <log level="custom">
+                                <property name="aaaa" expression="$ctx:REQUEST_ID"/>
+                                <property name="aaaa" expression="$ctx:senderAddress"/>
+                                <property name="aaaa" expression="$ctx:address"/>
+                                <property name="aaaa" expression="$ctx:SEND_SMS_OPERATOR_REQUEST_ID"/>
+                            </log>
+                            <dbreport>
+                                <connection>
+                                    <pool>
+                                        <dsName>jdbc/WSO2TELCO_DEP_DB</dsName>
+                                    </pool>
+                                </connection>
+                                <statement>
+                                    <sql><![CDATA[insert into sendsms_reqid(hub_requestid, sender_address, delivery_address, plugin_requestid) values(?, ?, ?, ?);]]></sql>
+                                    <parameter expression="$ctx:REQUEST_ID" type="VARCHAR"/>
+                                    <parameter expression="$ctx:senderAddress" type="VARCHAR"/>
+                                    <parameter expression="$ctx:address" type="VARCHAR"/>
+                                    <parameter expression="$ctx:SEND_SMS_OPERATOR_REQUEST_ID" type="VARCHAR"/>
+                                </statement>
+                            </dbreport>
+                        </sequence>
+                    </foreach>
                 </then>
                 <else>
                     <property name="messageStatus" scope="default" type="STRING" value="Not Created"/>
