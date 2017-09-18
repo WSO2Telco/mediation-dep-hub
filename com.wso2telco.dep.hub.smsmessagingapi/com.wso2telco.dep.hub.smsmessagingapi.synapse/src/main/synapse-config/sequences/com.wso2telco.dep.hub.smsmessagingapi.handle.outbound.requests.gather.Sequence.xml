@@ -24,12 +24,6 @@
                         <sequence>
                             <property expression="json-eval($.address)" name="address" scope="default" type="STRING" />
                             <property expression="fn:normalize-space($ctx:address)" group="1" name="address" pattern="((^(?!null).*$)|(^(null).+$))" scope="default" type="STRING" />
-                            <log level="custom">
-                                <property name="aaaa" expression="$ctx:REQUEST_ID"/>
-                                <property name="aaaa" expression="$ctx:senderAddress"/>
-                                <property name="aaaa" expression="$ctx:address"/>
-                                <property name="aaaa" expression="$ctx:SEND_SMS_OPERATOR_REQUEST_ID"/>
-                            </log>
                             <dbreport>
                                 <connection>
                                     <pool>
