@@ -52,10 +52,7 @@
 	<!-- retrieve operator's access token -->
 	<sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
 	
-	<call-template target="com.wso2telco.dep.common.notification.url.readModify.Template">
-	    <with-param name="notifyURL" value="{$ctx:notifyURL}"/>	
-	    <with-param name="apiResourceSuffix" value="/creditnotification"/>   
-	</call-template> 
+	<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/> 
 
 	<!-- generating request clientCorrelator -->
 	<call-template target="com.wso2telco.dep.common.clientCorrelator.generator.Template">
