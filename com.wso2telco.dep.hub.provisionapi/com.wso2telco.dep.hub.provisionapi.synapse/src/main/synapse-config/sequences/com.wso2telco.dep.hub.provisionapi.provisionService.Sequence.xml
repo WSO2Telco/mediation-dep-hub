@@ -132,7 +132,14 @@
     <sequence key="com.wso2telco.dep.common.endpoint.retriever.Sequence"/>
     <sequence key="com.wso2telco.dep.common.select.token.Sequence"/>
     <filter xpath="boolean($ctx:serviceCode)">
-        <then/>
+        <then>
+            <filter xmlns:ns="http://org.apache.synapse/xsd" xpath="boolean($ctx:serviceName)">
+                <then>
+                    <sequence key="com.wso2telco.dep.common.serviceCode.retriever.Sequence"/>
+                </then>
+                <else/>
+            </filter>
+        </then>
         <else>
             <sequence key="com.wso2telco.dep.common.serviceCode.retriever.Sequence"/>
             <filter xpath="boolean($ctx:serviceCode)">
