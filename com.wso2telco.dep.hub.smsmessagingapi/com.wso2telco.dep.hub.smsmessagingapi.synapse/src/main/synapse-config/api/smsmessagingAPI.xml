@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/smsmessaging/v1" name="smsmessagingAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" protocol="http" uri-template="/outbound/requests">
+        <inSequence>
+            <!-- SMS : Send SMS -->
+            <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.Sequence"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+        </faultSequence>
+    </resource>
     <resource methods="POST" protocol="http" uri-template="/inbound/registrations">
         <inSequence>
             <!-- SMS : Receiving SMS -->

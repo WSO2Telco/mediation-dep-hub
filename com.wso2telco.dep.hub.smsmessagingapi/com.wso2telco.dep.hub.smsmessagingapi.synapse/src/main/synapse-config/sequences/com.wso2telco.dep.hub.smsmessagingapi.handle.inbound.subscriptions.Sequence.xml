@@ -86,8 +86,8 @@
     <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
         <property name="script" value="
             var payload = mc.getPayloadJSON();
-            payload.subscription.clientCorrelator = mc.getProperty("uniqueClientCorrelator");
-            payload.subscription.callbackReference.notifyURL = mc.getProperty("generatedNotifyURL");
+            payload.subscription.clientCorrelator = mc.getProperty('uniqueClientCorrelator');
+            payload.subscription.callbackReference.notifyURL = mc.getProperty('generatedNotifyURL');
             mc.setPayloadJSON(payload);
         "/>
     </class>

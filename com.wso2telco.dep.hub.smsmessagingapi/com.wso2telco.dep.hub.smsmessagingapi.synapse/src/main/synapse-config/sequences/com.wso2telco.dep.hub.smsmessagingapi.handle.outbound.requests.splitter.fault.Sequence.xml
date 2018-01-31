@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.splitter.fault.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="Not Provisioned" source="$ctx:messageStatus">
+        <then/>
+        <else>
+            <property name="messageStatus" scope="default" type="STRING" value="Failed"/>
+        </else>
+    </filter>
+    <sequence key="com.wso2telco.dep.hub.smsmessagingapi.handle.outbound.requests.gather.Sequence"/>
+</sequence>
